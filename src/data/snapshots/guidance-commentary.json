@@ -2,18 +2,19 @@
   "meta": {
     "snapshotId": "guidance-commentary",
     "description": "Extracted forward-looking statements from earnings call transcripts.",
-    "generatedAt": "2026-05-12T11:11:17.181Z",
+    "generatedAt": "2026-05-12T15:16:59.479Z",
     "rowCount": 0,
     "status": "empty",
-    "notes": "Transcript ingestion is Audit-status; not wired until extraction is reviewed.",
+    "notes": "Transcript extraction is Audit-status and intentionally not wired in Step 2.",
     "source": {
       "sourceClass": "concall_transcript",
       "sourceUrl": null,
-      "sourceLabel": "Placeholder adapter — no real source wired yet",
-      "fetchedAt": "2026-05-12T11:11:17.176Z",
+      "sourceLabel": "Discovery adapters wired; financial-row extraction not yet implemented (Audit-status).",
+      "fetchedAt": "2026-05-12T15:16:59.342Z",
       "publishedAt": null,
-      "notes": "Replace placeholderAdapter in scripts/ingest/dhamma-dashboard-1.ts with a real adapter."
-    }
+      "notes": "Quarterly/annual financial rows still require a parser. See dhamma-dashboard-1-metric-audit.md."
+    },
+    "errors": []
   },
   "rows": []
 }

@@ -156,7 +156,7 @@ export function revenueMix(
 
 export interface PeerComparisonEntry<TValue = number | null> {
   companyId: string;
-  shortName: string;
+  displayName: string;
   value: TValue;
   rank: number | null;
 }
@@ -171,7 +171,7 @@ export function peerComparison(
       const company = companies.find((c) => c.companyId === companyId);
       return {
         companyId,
-        shortName: company ? company.shortName : companyId,
+        displayName: company ? company.displayName : companyId,
         value: valueFor(companyId),
         rank: null,
       };

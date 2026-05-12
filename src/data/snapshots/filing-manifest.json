@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "snapshotId": "filing-manifest",
+    "description": "Discovered filings per company from NSE / BSE / company IR sources.",
+    "generatedAt": "2026-05-12T15:16:59.473Z",
+    "rowCount": 0,
+    "status": "error",
+    "notes": "All sources failed (8 errors recorded).",
+    "source": {
+      "sourceClass": "nse_bse_filing",
+      "sourceUrl": null,
+      "sourceLabel": "NSE corporate-announcements + BSE AnnGetData",
+      "fetchedAt": "2026-05-12T15:16:59.473Z",
+      "publishedAt": null,
+      "notes": null
+    },
+    "errors": [
+      {
+        "sourceId": "nse",
+        "companyId": "tcs",
+        "message": "NSE HTTP 403",
+        "occurredAt": "2026-05-12T15:16:59.344Z"
+      },
+      {
+        "sourceId": "bse",
+        "companyId": "tcs",
+        "message": "BSE HTTP 403",
+        "occurredAt": "2026-05-12T15:16:59.426Z"
+      },
+      {
+        "sourceId": "nse",
+        "companyId": "infosys",
+        "message": "NSE HTTP 403",
+        "occurredAt": "2026-05-12T15:16:59.449Z"
+      },
+      {
+        "sourceId": "bse",
+        "companyId": "infosys",
+        "message": "BSE HTTP 403",
+        "occurredAt": "2026-05-12T15:16:59.454Z"
+      },
+      {
+        "sourceId": "nse",
+        "companyId": "hcltech",
+        "message": "NSE HTTP 403",
+        "occurredAt": "2026-05-12T15:16:59.458Z"
+      },
+      {
+        "sourceId": "bse",
+        "companyId": "hcltech",
+        "message": "BSE HTTP 403",
+        "occurredAt": "2026-05-12T15:16:59.462Z"
+      },
+      {
+        "sourceId": "nse",
+        "companyId": "wipro",
+        "message": "NSE HTTP 403",
+        "occurredAt": "2026-05-12T15:16:59.466Z"
+      },
+      {
+        "sourceId": "bse",
+        "companyId": "wipro",
+        "message": "BSE HTTP 403",
+        "occurredAt": "2026-05-12T15:16:59.469Z"
+      }
+    ]
+  },
+  "rows": []
+}

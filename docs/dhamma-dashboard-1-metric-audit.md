@@ -89,3 +89,49 @@ Source classes referenced:
 | Investor presentation   | Most large-caps              | Useful for segment colour and management-stated growth drivers.                |
 | Annual report           | Universal, lagged 2–4 months | Source of truth for full BS + CFS.                                             |
 | Concall transcript      | Most large-/mid-caps         | Quality varies; some hosted by company, some by aggregators. Best-effort only. |
+
+## Step 2 — Source discovery, pilot run
+
+### Pilot universe
+
+`tcs`, `infosys`, `hcltech`, `wipro` — peer group
+`indian-it-services-largecap`. Pipeline-test universe only.
+
+### Source registry attempted
+
+| sourceId      | supports discovery | reliability |
+| ------------- | ------------------ | ----------- |
+| `nse`         | yes                | primary     |
+| `bse`         | yes                | primary     |
+| `company_ir`  | no (manual only)   | secondary   |
+| `manual`      | no                 | audit       |
+
+### Last Step 2 run result (this development sandbox)
+
+- 4 companies probed × 2 discovery sources = 8 probes.
+- 8/8 `blocked` with HTTP 403 (sandbox egress filter).
+- 0 filings discovered, 0 rows produced.
+- No fake data, no fake zeroes. Every error is recorded verbatim in
+  `filing-manifest.json` `meta.errors` and per-row in
+  `source-health.json`.
+
+### What stays Audit
+
+All Audit items from the Step 1 table remain Audit. Specifically:
+
+- Filing → financial row extraction. Discovery is wired; parsing PDF /
+  XBRL into `quarterly-financials.json` is not, by design.
+- Segment-level metrics (long tail).
+- All guidance/transcript items.
+
+### What is now Build (in terms of plumbing, not financial data)
+
+- `filing-manifest.json` (discovery layer).
+- `source-health.json` (sourceability monitoring).
+- `company-master.json` (4 pilot companies).
+- Pipeline-level CLI: `--company`, `--source`, `--max-filings`,
+  `--discover-only`.
+
+These are plumbing — they unblock everything downstream, but they do
+not by themselves produce any of the user-facing Build metrics in
+the tables above. Those still require a working extraction layer.

@@ -23,6 +23,10 @@ export interface AnnualPeriod {
 
 export type FinancialPeriod = QuarterPeriod | AnnualPeriod;
 
+export type SourceReliability = "primary" | "secondary" | "audit";
+
+export type SourceType = "exchange" | "company_ir" | "transcript" | "manual";
+
 export interface SourceMeta {
   sourceClass:
     | "nse_bse_filing"
@@ -38,7 +42,25 @@ export interface SourceMeta {
   notes: string | null;
 }
 
+export interface SourceRegistryEntry {
+  sourceId: string;
+  sourceName: string;
+  baseUrl: string | null;
+  sourceType: SourceType;
+  reliability: SourceReliability;
+  supportsDiscovery: boolean;
+  supportsDownload: boolean;
+  notes: string | null;
+}
+
 export type SnapshotStatus = "ok" | "partial" | "empty" | "stale" | "error";
+
+export interface SnapshotError {
+  sourceId: string | null;
+  companyId: string | null;
+  message: string;
+  occurredAt: string;
+}
 
 export interface SnapshotMeta {
   snapshotId: string;
@@ -48,6 +70,7 @@ export interface SnapshotMeta {
   status: SnapshotStatus;
   notes: string | null;
   source: SourceMeta;
+  errors?: SnapshotError[];
 }
 
 export interface Snapshot<TRow> {
@@ -55,17 +78,30 @@ export interface Snapshot<TRow> {
   rows: TRow[];
 }
 
+export type Exchange = "NSE" | "BSE";
+
+export interface CompanyExchangeListing {
+  exchange: Exchange;
+  symbol: string;
+}
+
+export type CompanyStatus = "active" | "pilot" | "watch" | "inactive";
+
 export interface CompanyMaster {
   companyId: string;
+  displayName: string;
   legalName: string;
-  shortName: string;
   nseSymbol: string | null;
   bseCode: string | null;
+  exchanges: CompanyExchangeListing[];
+  country: string;
   sector: string | null;
   industry: string | null;
+  peerGroupId: string | null;
   fiscalYearEndMonth: number;
   reportingBasisDefault: ReportingBasis;
   irPageUrl: string | null;
+  status: CompanyStatus;
   notes: string | null;
 }
 
@@ -202,5 +238,77 @@ export interface GuidanceActualComparisonRow {
   variancePct: number | null;
   evaluatedAt: string | null;
   source: SourceMeta;
+  notes: string | null;
+}
+
+// Source discovery: a manifest of filings located for each company.
+// A row is created at `discovered` even if we haven't downloaded the
+// document yet; status moves forward (`downloaded`, `parsed`) as the
+// pipeline matures. `error` rows record what went wrong without
+// blocking the rest of the pipeline.
+
+export type FilingType =
+  | "quarterly_result"
+  | "annual_report"
+  | "investor_presentation"
+  | "concall_transcript"
+  | "guidance_commentary"
+  | "other";
+
+export type FilingPeriodType = "quarter" | "year" | "unknown";
+
+export type FilingDocFileType =
+  | "pdf"
+  | "xlsx"
+  | "xls"
+  | "xml"
+  | "html"
+  | "zip"
+  | "unknown";
+
+export type FilingStatus =
+  | "discovered"
+  | "downloaded"
+  | "parsed"
+  | "skipped"
+  | "error";
+
+export interface FilingManifestRow {
+  companyId: string;
+  companyName: string;
+  sourceId: string;
+  filingType: FilingType;
+  periodType: FilingPeriodType;
+  period: string | null;
+  filingDate: string | null;
+  title: string | null;
+  sourceUrl: string | null;
+  documentUrl: string | null;
+  fileType: FilingDocFileType | null;
+  status: FilingStatus;
+  fetchedAt: string | null;
+  errorMessage: string | null;
+  sourceReliability: SourceReliability;
+}
+
+// Source health: one row per (sourceId, companyId) probe, so we can
+// see at a glance which sources are reachable for which companies
+// before assuming any UI metric is trustworthy.
+
+export type SourceHealthStatus =
+  | "ok"
+  | "partial"
+  | "blocked"
+  | "error"
+  | "not_configured";
+
+export interface SourceHealthRow {
+  sourceId: string;
+  companyId: string | null;
+  checkedAt: string | null;
+  status: SourceHealthStatus;
+  filingsDiscovered: number;
+  latestFilingDate: string | null;
+  errorMessage: string | null;
   notes: string | null;
 }

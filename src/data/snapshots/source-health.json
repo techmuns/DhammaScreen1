@@ -1,0 +1,101 @@
+{
+  "meta": {
+    "snapshotId": "source-health",
+    "description": "Per (sourceId, companyId) probe of source reachability and freshness.",
+    "generatedAt": "2026-05-12T15:16:59.475Z",
+    "rowCount": 8,
+    "status": "ok",
+    "notes": null,
+    "source": {
+      "sourceClass": "derived",
+      "sourceUrl": null,
+      "sourceLabel": "Derived from discovery adapter results",
+      "fetchedAt": "2026-05-12T15:16:59.475Z",
+      "publishedAt": null,
+      "notes": null
+    },
+    "errors": []
+  },
+  "rows": [
+    {
+      "sourceId": "nse",
+      "companyId": "tcs",
+      "checkedAt": "2026-05-12T15:16:59.344Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE HTTP 403",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "tcs",
+      "checkedAt": "2026-05-12T15:16:59.426Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE HTTP 403",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "infosys",
+      "checkedAt": "2026-05-12T15:16:59.449Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE HTTP 403",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "infosys",
+      "checkedAt": "2026-05-12T15:16:59.454Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE HTTP 403",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "hcltech",
+      "checkedAt": "2026-05-12T15:16:59.458Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE HTTP 403",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "hcltech",
+      "checkedAt": "2026-05-12T15:16:59.462Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE HTTP 403",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "wipro",
+      "checkedAt": "2026-05-12T15:16:59.466Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE HTTP 403",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "wipro",
+      "checkedAt": "2026-05-12T15:16:59.469Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE HTTP 403",
+      "notes": "Source returned an error; see errorMessage."
+    }
+  ]
+}

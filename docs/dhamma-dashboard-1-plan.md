@@ -92,3 +92,86 @@ must link to a source so the investment team can verify before acting.
 - Social media / news sentiment.
 - Stock price charting, technicals, or order-book data.
 - Forecasting or any model-implied target prices.
+
+## Step 2 — Source discovery and pilot ingestion
+
+### Pilot peer group (testing only — NOT the final Dhamma universe)
+
+| companyId | NSE   | BSE    | Sector |
+| --------- | ----- | ------ | ------ |
+| `tcs`     | TCS     | 532540 | IT Services |
+| `infosys` | INFY    | 500209 | IT Services |
+| `hcltech` | HCLTECH | 532281 | IT Services |
+| `wipro`   | WIPRO   | 507685 | IT Services |
+
+All four belong to the `indian-it-services-largecap` peer group. BSE/NSE
+identifiers are publicly listed but must be reverified against the
+exchange directory before production use.
+
+### Sources attempted
+
+| sourceId      | sourceType  | reliability | supports discovery | supports download |
+| ------------- | ----------- | ----------- | ------------------ | ----------------- |
+| `nse`         | exchange    | primary     | yes                | yes               |
+| `bse`         | exchange    | primary     | yes                | yes               |
+| `company_ir`  | company_ir  | secondary   | no (manual only)   | yes               |
+| `manual`      | manual      | audit       | no                 | no                |
+
+NSE and BSE are wired as live discovery adapters using their public
+corporate-announcement endpoints. `company_ir` and `manual` are
+registered but not auto-discoverable.
+
+### What worked / what didn't (Step 2 run from this development sandbox)
+
+| Source | Companies probed | Status                 |
+| ------ | ---------------- | ---------------------- |
+| NSE    | 4                | **blocked** (HTTP 403) |
+| BSE    | 4                | **blocked** (HTTP 403) |
+
+Sandbox egress traffic is filtered; NSE and BSE return 403 before any
+data is returned. This is expected and is recorded honestly:
+`filing-manifest.json` has zero rows and `meta.status: "error"`;
+`source-health.json` shows 8 `blocked` probes with the verbatim error
+message. **No fake data was generated.**
+
+When the same script runs from a GitHub Actions runner (different
+egress), BSE typically responds and NSE may still rate-limit. The
+pipeline is designed so that whatever the live result is, snapshots
+remain valid and explicit about success/failure.
+
+### Financial rows produced
+
+**None.** Step 2 was explicit about not forcing fragile extraction.
+Discovery wires up; extraction (PDF / XBRL parsing into
+`quarterly-financials.json` rows) stays Audit-status. Existing
+financial snapshots remain structurally valid with `status: "empty"`
+and notes indicating that filings appear in the manifest but are not
+yet parsed.
+
+### Snapshots in play after Step 2
+
+| Snapshot                          | Step 2 row source              | Step 2 status |
+| --------------------------------- | ------------------------------ | ------------- |
+| `company-master.json`             | 4 pilot companies              | `ok`          |
+| `filing-manifest.json`            | NSE + BSE discovery            | depends on egress |
+| `source-health.json`              | NSE + BSE probes (× 4 cos)     | `ok` (8 rows) |
+| `quarterly-financials.json`       | extraction pending             | `empty`       |
+| `annual-financials.json`          | extraction pending             | `empty`       |
+| `segment-revenue.json`            | extraction pending             | `empty`       |
+| `balance-sheet.json`              | extraction pending             | `empty`       |
+| `cash-flow.json`                  | extraction pending             | `empty`       |
+| `guidance-commentary.json`        | Audit — not wired              | `empty`       |
+| `guidance-actual-comparison.json` | derived — not wired            | `empty`       |
+
+### Step 2 build sequence (delta from Step 1)
+
+1. Add pilot company config (done).
+2. Wire NSE + BSE discovery adapters that gracefully record errors (done).
+3. Emit `filing-manifest.json` + `source-health.json` (done).
+4. Add CLI flags `--company`, `--source`, `--max-filings`, `--discover-only` (done).
+5. Add commit-back step to the GitHub Actions workflow (done).
+6. **Next (Step 3):** verify the workflow's egress reaches BSE / NSE; if
+   yes, capture the first real `filing-manifest` rows. If still
+   blocked, decide between (a) a self-hosted runner with a residential
+   IP, (b) an analyst-curated manual source list, or (c) a paid feed
+   (out of current scope).

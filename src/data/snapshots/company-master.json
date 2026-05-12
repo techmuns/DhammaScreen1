@@ -2,18 +2,124 @@
   "meta": {
     "snapshotId": "company-master",
     "description": "Master list of tracked Indian companies and their identifiers.",
-    "generatedAt": "2026-05-12T11:11:17.177Z",
-    "rowCount": 0,
-    "status": "empty",
-    "notes": "No companies configured. Edit scripts/config/dhamma-companies.ts.",
+    "generatedAt": "2026-05-12T15:16:59.342Z",
+    "rowCount": 4,
+    "status": "ok",
+    "notes": null,
     "source": {
       "sourceClass": "manual",
       "sourceUrl": null,
       "sourceLabel": "scripts/config/dhamma-companies.ts",
-      "fetchedAt": "2026-05-12T11:11:17.177Z",
+      "fetchedAt": "2026-05-12T15:16:59.342Z",
       "publishedAt": null,
       "notes": null
-    }
+    },
+    "errors": []
   },
-  "rows": []
+  "rows": [
+    {
+      "companyId": "tcs",
+      "displayName": "TCS",
+      "legalName": "Tata Consultancy Services Limited",
+      "nseSymbol": "TCS",
+      "bseCode": "532540",
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "TCS"
+        },
+        {
+          "exchange": "BSE",
+          "symbol": "532540"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "indian-it-services-largecap",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": "https://www.tcs.com/investor-relations",
+      "status": "pilot",
+      "notes": "Pilot company for Step 2 source-discovery validation. Reverify BSE code 532540 and NSE symbol TCS before production."
+    },
+    {
+      "companyId": "infosys",
+      "displayName": "Infosys",
+      "legalName": "Infosys Limited",
+      "nseSymbol": "INFY",
+      "bseCode": "500209",
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "INFY"
+        },
+        {
+          "exchange": "BSE",
+          "symbol": "500209"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "indian-it-services-largecap",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": "https://www.infosys.com/investors/",
+      "status": "pilot",
+      "notes": "Pilot company. Reverify BSE code 500209 and NSE symbol INFY before production."
+    },
+    {
+      "companyId": "hcltech",
+      "displayName": "HCLTech",
+      "legalName": "HCL Technologies Limited",
+      "nseSymbol": "HCLTECH",
+      "bseCode": "532281",
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "HCLTECH"
+        },
+        {
+          "exchange": "BSE",
+          "symbol": "532281"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "indian-it-services-largecap",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": "https://www.hcltech.com/investors",
+      "status": "pilot",
+      "notes": "Pilot company. Reverify BSE code 532281 and NSE symbol HCLTECH before production."
+    },
+    {
+      "companyId": "wipro",
+      "displayName": "Wipro",
+      "legalName": "Wipro Limited",
+      "nseSymbol": "WIPRO",
+      "bseCode": "507685",
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "WIPRO"
+        },
+        {
+          "exchange": "BSE",
+          "symbol": "507685"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "indian-it-services-largecap",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": "https://www.wipro.com/investors/",
+      "status": "pilot",
+      "notes": "Pilot company. Reverify BSE code 507685 and NSE symbol WIPRO before production."
+    }
+  ]
 }

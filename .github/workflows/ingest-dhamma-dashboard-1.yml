@@ -7,16 +7,25 @@ on:
     # the first real source adapter is wired and we know its cost profile.
     - cron: "30 3 * * 1"
 
+# Required so the commit-back step can push refreshed snapshots.
+permissions:
+  contents: write
+
 jobs:
   ingest:
     name: Pull snapshots, typecheck, build
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    permissions:
-      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Need a real token (not the ephemeral one) so the subsequent push
+          # is authenticated.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # Fetch the full history is not required, but persist-credentials
+          # is needed so `git push` works without a manual remote setup.
+          persist-credentials: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -36,7 +45,23 @@ jobs:
       - name: Build
         run: npm run build
 
-      # TODO: this repo does not yet have an established pattern for committing
-      # generated snapshots back. Once the team decides (PR-from-bot vs.
-      # direct-push-to-data-branch), wire it here. Until then, the workflow
-      # only validates that ingestion + typecheck + build succeed.
+      - name: Commit refreshed snapshots
+        # Only commit-back on dispatch or schedule (not on accidental
+        # pushes that might trigger this workflow in future).
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+        env:
+          GIT_AUTHOR_NAME: "github-actions[bot]"
+          GIT_AUTHOR_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+          GIT_COMMITTER_NAME: "github-actions[bot]"
+          GIT_COMMITTER_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+        run: |
+          set -euo pipefail
+          git add src/data/snapshots/
+          if git diff --cached --quiet; then
+            echo "No snapshot changes to commit."
+            exit 0
+          fi
+          # [skip ci] in the commit message prevents the resulting commit
+          # from triggering downstream workflows.
+          git commit -m "chore(data): refresh Dhamma dashboard snapshots [skip ci]"
+          git push origin HEAD:${GITHUB_REF_NAME}
