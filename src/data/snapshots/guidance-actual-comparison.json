@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "snapshotId": "guidance-actual-comparison",
+    "description": "Derived comparison of actual results against prior management commentary.",
+    "generatedAt": "2026-05-12T11:11:17.182Z",
+    "rowCount": 0,
+    "status": "empty",
+    "notes": "Derivation not yet implemented; pending guidance ingestion.",
+    "source": {
+      "sourceClass": "derived",
+      "sourceUrl": null,
+      "sourceLabel": "Derived from guidance-commentary + quarterly/annual financials",
+      "fetchedAt": "2026-05-12T11:11:17.182Z",
+      "publishedAt": null,
+      "notes": null
+    }
+  },
+  "rows": []
+}

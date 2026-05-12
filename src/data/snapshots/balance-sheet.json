@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "snapshotId": "balance-sheet",
+    "description": "Summary balance sheet rows from quarterly filings and annual reports.",
+    "generatedAt": "2026-05-12T11:11:17.180Z",
+    "rowCount": 0,
+    "status": "empty",
+    "notes": "Adapter not yet wired.",
+    "source": {
+      "sourceClass": "nse_bse_filing",
+      "sourceUrl": null,
+      "sourceLabel": "Placeholder adapter — no real source wired yet",
+      "fetchedAt": "2026-05-12T11:11:17.176Z",
+      "publishedAt": null,
+      "notes": "Replace placeholderAdapter in scripts/ingest/dhamma-dashboard-1.ts with a real adapter."
+    }
+  },
+  "rows": []
+}

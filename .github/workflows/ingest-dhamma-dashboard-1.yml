@@ -1,0 +1,42 @@
+name: Ingest Dhamma Dashboard 1
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Weekly run, Mondays 03:30 UTC (~09:00 IST). Re-evaluate cadence once
+    # the first real source adapter is wired and we know its cost profile.
+    - cron: "30 3 * * 1"
+
+jobs:
+  ingest:
+    name: Pull snapshots, typecheck, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Ingest snapshots
+        run: npm run ingest:dhamma
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      # TODO: this repo does not yet have an established pattern for committing
+      # generated snapshots back. Once the team decides (PR-from-bot vs.
+      # direct-push-to-data-branch), wire it here. Until then, the workflow
+      # only validates that ingestion + typecheck + build succeed.
