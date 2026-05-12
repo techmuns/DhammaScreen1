@@ -39,6 +39,12 @@ jobs:
       - name: Ingest snapshots
         run: npm run ingest:dhamma
 
+      # Optional: parses client-provided Screener exports from
+      # data/manual/screener/. Passes cleanly (empty snapshots) when no
+      # files are present, so this step is safe to leave always-on.
+      - name: Ingest Screener exports (optional)
+        run: npm run ingest:screener
+
       - name: Typecheck
         run: npm run typecheck
 

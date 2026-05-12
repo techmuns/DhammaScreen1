@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "segment-revenue",
     "description": "Per-segment revenue rows from the segment disclosure block of NSE/BSE filings.",
-    "generatedAt": "2026-05-12T15:16:59.477Z",
+    "generatedAt": "2026-05-12T16:11:00.283Z",
     "rowCount": 0,
     "status": "empty",
     "notes": "Segment extraction depends on a per-company alias map (pending).",
@@ -10,7 +10,7 @@
       "sourceClass": "nse_bse_filing",
       "sourceUrl": null,
       "sourceLabel": "Discovery adapters wired; financial-row extraction not yet implemented (Audit-status).",
-      "fetchedAt": "2026-05-12T15:16:59.342Z",
+      "fetchedAt": "2026-05-12T16:11:00.117Z",
       "publishedAt": null,
       "notes": "Quarterly/annual financial rows still require a parser. See dhamma-dashboard-1-metric-audit.md."
     },

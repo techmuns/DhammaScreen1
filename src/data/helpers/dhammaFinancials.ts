@@ -13,6 +13,8 @@ import type {
   PeerGroup,
   QuarterPeriod,
   QuarterlyFinancialRow,
+  ScreenerCompanyFinancialRow,
+  ScreenerImportStatusRow,
   SegmentRevenueRow,
 } from "../types/dhammaDashboard";
 
@@ -239,6 +241,111 @@ export function guidanceAccuracyStatus(
 export function formatMissingAsDash(value: string | null | undefined): string {
   if (value === null || value === undefined || value === "") return MISSING_DASH;
   return value;
+}
+
+// ---------------------------------------------------------------------------
+// Screener-import helpers.
+//
+// These operate on the import-backed snapshots only. They must never be
+// composed with official-snapshot helpers in a way that lets imported
+// values silently replace source-backed values.
+// ---------------------------------------------------------------------------
+
+export function rowsFromScreenerImport(
+  rows: readonly ScreenerCompanyFinancialRow[],
+  companyId: string
+): ScreenerCompanyFinancialRow[] {
+  return rows.filter((row) => row.companyId === companyId);
+}
+
+export interface ScreenerSeriesPoint {
+  period: string;
+  value: number | null;
+}
+
+export function screenerMetricSeries(
+  rows: readonly ScreenerCompanyFinancialRow[],
+  companyId: string,
+  metricName: string
+): ScreenerSeriesPoint[] {
+  return rows
+    .filter(
+      (row) =>
+        row.companyId === companyId &&
+        row.metricName === metricName &&
+        row.period !== null
+    )
+    .map((row) => ({ period: row.period as string, value: row.metricValue }))
+    .sort((a, b) => a.period.localeCompare(b.period));
+}
+
+export type OfficialVsScreenerMatch =
+  | "match"
+  | "partial"
+  | "mismatch"
+  | "unverifiable";
+
+export interface OfficialVsScreenerResult {
+  match: OfficialVsScreenerMatch;
+  variancePct: number | null;
+}
+
+export function compareOfficialVsScreener(
+  official: number | null,
+  imported: number | null,
+  tolerancePct = 0.02
+): OfficialVsScreenerResult {
+  if (!isFiniteNumber(official) || !isFiniteNumber(imported)) {
+    return { match: "unverifiable", variancePct: null };
+  }
+  if (official === 0) return { match: "unverifiable", variancePct: null };
+  const variancePct = (imported - official) / Math.abs(official);
+  const abs = Math.abs(variancePct);
+  if (abs <= tolerancePct) return { match: "match", variancePct };
+  if (abs <= tolerancePct * 3) return { match: "partial", variancePct };
+  return { match: "mismatch", variancePct };
+}
+
+export interface ScreenerImportCoverage {
+  filesAttempted: number;
+  filesOk: number;
+  filesPartial: number;
+  filesError: number;
+  filesSkipped: number;
+  filesNotFound: number;
+}
+
+export function screenerImportCoverage(
+  statusRows: readonly ScreenerImportStatusRow[]
+): ScreenerImportCoverage {
+  const coverage: ScreenerImportCoverage = {
+    filesAttempted: statusRows.length,
+    filesOk: 0,
+    filesPartial: 0,
+    filesError: 0,
+    filesSkipped: 0,
+    filesNotFound: 0,
+  };
+  for (const row of statusRows) {
+    switch (row.status) {
+      case "ok":
+        coverage.filesOk++;
+        break;
+      case "partial":
+        coverage.filesPartial++;
+        break;
+      case "error":
+        coverage.filesError++;
+        break;
+      case "skipped":
+        coverage.filesSkipped++;
+        break;
+      case "not_found":
+        coverage.filesNotFound++;
+        break;
+    }
+  }
+  return coverage;
 }
 
 // Re-exports used by helper consumers; keeps the public surface explicit.

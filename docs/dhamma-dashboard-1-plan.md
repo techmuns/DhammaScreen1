@@ -175,3 +175,63 @@ yet parsed.
    blocked, decide between (a) a self-hosted runner with a residential
    IP, (b) an analyst-curated manual source list, or (c) a paid feed
    (out of current scope).
+
+## Data-source strategy
+
+Three paths exist for getting numbers into the dashboard. Only the first
+is the production "source-of-truth"; the others are clearly labelled as
+import-backed or audit-backed so the team always knows what they're
+looking at.
+
+### 1. Official filing source path (production, source-backed)
+
+- Inputs: NSE corporate filings, BSE corporate filings, company IR pages.
+- Discovery: `scripts/config/dhamma-sources.ts` (`nse`, `bse` adapters).
+- Manifest: `src/data/snapshots/filing-manifest.json`.
+- Status: discovery wired, extraction Audit.
+- This is the only path whose rows are allowed to appear in the
+  official financial snapshots (`quarterly-financials.json`,
+  `annual-financials.json`, `balance-sheet.json`, `cash-flow.json`,
+  `segment-revenue.json`).
+
+### 2. Screener-compatible import path (prototyping, import-backed)
+
+- Inputs: client-provided Screener-style `.xlsx` or `.csv` exports
+  dropped into `data/manual/screener/`.
+- Parser: `scripts/ingest/screener-export.ts`
+  (`npm run ingest:screener`).
+- Output: separate snapshot files
+  (`screener-normalized-financials.json`,
+  `screener-peer-comparison.json`,
+  `screener-import-status.json`).
+- Status: ready to consume files, but treated as **import-backed**, not
+  source-backed. Imported rows are never merged into the official
+  snapshots; UI must visually mark them when shown.
+- This path lets the team prototype dashboard tables quickly when
+  filing extraction is still unreliable, without compromising the
+  source-of-truth guarantee.
+
+### 3. Screener page scraping — deferred
+
+- Automatic scraping of `screener.in` web pages is **not** done. It is
+  deferred unless the client confirms permission or supplies licensed
+  access.
+- This is a deliberate restraint: Screener's terms restrict automated
+  access, and even if permitted, scraped HTML is brittle relative to
+  filed XBRL.
+
+### 4. Guidance / commentary tracker
+
+- Stays Audit. Inputs (concall transcripts, investor presentations)
+  are also gated on client-provided or hand-curated sources for now.
+- Will reuse the Screener-style "import folder" idea — e.g., a future
+  `data/manual/transcripts/` — rather than scraping aggregators.
+
+### Decision rules
+
+- If a metric is in an official snapshot, it came from path 1 and is
+  source-backed.
+- If a metric is in a `screener-*` snapshot, it came from path 2 and
+  is import-backed. UI must reflect this when surfaced.
+- Path 3 (page scraping) does not produce snapshots in this codebase.
+- Missing values stay `null`, render as `—`. Never zero, never fake.

@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "company-master",
     "description": "Master list of tracked Indian companies and their identifiers.",
-    "generatedAt": "2026-05-12T15:16:59.342Z",
+    "generatedAt": "2026-05-12T16:11:00.118Z",
     "rowCount": 4,
     "status": "ok",
     "notes": null,
@@ -10,7 +10,7 @@
       "sourceClass": "manual",
       "sourceUrl": null,
       "sourceLabel": "scripts/config/dhamma-companies.ts",
-      "fetchedAt": "2026-05-12T15:16:59.342Z",
+      "fetchedAt": "2026-05-12T16:11:00.117Z",
       "publishedAt": null,
       "notes": null
     },

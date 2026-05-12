@@ -312,3 +312,83 @@ export interface SourceHealthRow {
   errorMessage: string | null;
   notes: string | null;
 }
+
+// ---------------------------------------------------------------------------
+// Screener-compatible import path.
+//
+// Rows in this section are IMPORT-BACKED, not source-backed. They come from
+// client-provided Screener-style exports dropped into data/manual/screener/.
+// They live in their own snapshot files (`screener-*.json`) and must never
+// be merged into the official financial snapshots.
+// ---------------------------------------------------------------------------
+
+export type ScreenerSheetType =
+  | "quarterly_results"
+  | "profit_and_loss"
+  | "balance_sheet"
+  | "cash_flow"
+  | "ratios"
+  | "peer_comparison"
+  | "unknown";
+
+export type ScreenerImportConfidence = "high" | "medium" | "low";
+
+export type ScreenerPeriodType = "quarter" | "year" | "unknown";
+
+export interface ScreenerImportMeta {
+  importId: string;
+  sourceFile: string;
+  sourceSheet: string | null;
+  sheetType: ScreenerSheetType | null;
+  importedAt: string;
+  rowCount: number;
+  notes: string | null;
+}
+
+// Base shape used by every per-sheet specialized row.
+export interface ScreenerCompanyFinancialRow {
+  companyId: string;
+  companyName: string;
+  sourceFile: string;
+  sourceSheet: string | null;
+  sheetType: ScreenerSheetType;
+  period: string | null;
+  periodType: ScreenerPeriodType;
+  metricName: string;
+  metricValue: number | null;
+  unit: string | null;
+  currency: string | null;
+  sourceLabel: string | null;
+  importedAt: string;
+  confidence: ScreenerImportConfidence;
+  notes: string | null;
+}
+
+export type ScreenerQuarterlyRow = ScreenerCompanyFinancialRow;
+export type ScreenerAnnualProfitLossRow = ScreenerCompanyFinancialRow;
+export type ScreenerBalanceSheetRow = ScreenerCompanyFinancialRow;
+export type ScreenerCashFlowRow = ScreenerCompanyFinancialRow;
+export type ScreenerRatioRow = ScreenerCompanyFinancialRow;
+
+export interface ScreenerPeerComparisonRow extends ScreenerCompanyFinancialRow {
+  peerCompanyName: string;
+}
+
+export type ScreenerImportFileStatus =
+  | "ok"
+  | "partial"
+  | "skipped"
+  | "error"
+  | "not_found";
+
+export interface ScreenerImportStatusRow {
+  sourceFile: string;
+  sourceSheet: string | null;
+  sheetType: ScreenerSheetType | null;
+  companyId: string | null;
+  status: ScreenerImportFileStatus;
+  rowCount: number;
+  importedAt: string;
+  notes: string | null;
+  errorMessage: string | null;
+}

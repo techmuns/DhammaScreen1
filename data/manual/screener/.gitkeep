@@ -1,0 +1,13 @@
+# This file exists to keep the empty folder under version control.
+#
+# Drop client-provided Screener-style exports here, named <companyId>.xlsx
+# (or .csv). The parser `npm run ingest:screener` will pick them up.
+#
+# Examples (when supplied):
+#   tcs.xlsx
+#   infosys.xlsx
+#   hcltech.xlsx
+#   wipro.xlsx
+#
+# These files are import-backed, NOT source-backed. They never merge
+# into the official financial snapshots.

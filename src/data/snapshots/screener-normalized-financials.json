@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "snapshotId": "screener-normalized-financials",
+    "description": "Normalized rows from client-provided Screener exports — import-backed, NOT source-backed.",
+    "generatedAt": "2026-05-12T16:11:16.730Z",
+    "rowCount": 0,
+    "status": "empty",
+    "notes": "No Screener exports have been provided yet. Drop files into data/manual/screener/.",
+    "source": {
+      "sourceClass": "manual",
+      "sourceUrl": null,
+      "sourceLabel": "data/manual/screener/ — client-provided exports",
+      "fetchedAt": "2026-05-12T16:11:16.728Z",
+      "publishedAt": null,
+      "notes": "Import-backed. Never merged into the official financial snapshots."
+    },
+    "errors": []
+  },
+  "rows": []
+}

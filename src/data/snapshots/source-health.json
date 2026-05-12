@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "source-health",
     "description": "Per (sourceId, companyId) probe of source reachability and freshness.",
-    "generatedAt": "2026-05-12T15:16:59.475Z",
+    "generatedAt": "2026-05-12T16:11:00.280Z",
     "rowCount": 8,
     "status": "ok",
     "notes": null,
@@ -10,7 +10,7 @@
       "sourceClass": "derived",
       "sourceUrl": null,
       "sourceLabel": "Derived from discovery adapter results",
-      "fetchedAt": "2026-05-12T15:16:59.475Z",
+      "fetchedAt": "2026-05-12T16:11:00.280Z",
       "publishedAt": null,
       "notes": null
     },
@@ -20,7 +20,7 @@
     {
       "sourceId": "nse",
       "companyId": "tcs",
-      "checkedAt": "2026-05-12T15:16:59.344Z",
+      "checkedAt": "2026-05-12T16:11:00.121Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -30,7 +30,7 @@
     {
       "sourceId": "bse",
       "companyId": "tcs",
-      "checkedAt": "2026-05-12T15:16:59.426Z",
+      "checkedAt": "2026-05-12T16:11:00.225Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -40,7 +40,7 @@
     {
       "sourceId": "nse",
       "companyId": "infosys",
-      "checkedAt": "2026-05-12T15:16:59.449Z",
+      "checkedAt": "2026-05-12T16:11:00.253Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -50,7 +50,7 @@
     {
       "sourceId": "bse",
       "companyId": "infosys",
-      "checkedAt": "2026-05-12T15:16:59.454Z",
+      "checkedAt": "2026-05-12T16:11:00.258Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -60,7 +60,7 @@
     {
       "sourceId": "nse",
       "companyId": "hcltech",
-      "checkedAt": "2026-05-12T15:16:59.458Z",
+      "checkedAt": "2026-05-12T16:11:00.262Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -70,7 +70,7 @@
     {
       "sourceId": "bse",
       "companyId": "hcltech",
-      "checkedAt": "2026-05-12T15:16:59.462Z",
+      "checkedAt": "2026-05-12T16:11:00.266Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -80,7 +80,7 @@
     {
       "sourceId": "nse",
       "companyId": "wipro",
-      "checkedAt": "2026-05-12T15:16:59.466Z",
+      "checkedAt": "2026-05-12T16:11:00.270Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -90,7 +90,7 @@
     {
       "sourceId": "bse",
       "companyId": "wipro",
-      "checkedAt": "2026-05-12T15:16:59.469Z",
+      "checkedAt": "2026-05-12T16:11:00.274Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,

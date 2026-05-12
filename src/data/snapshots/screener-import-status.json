@@ -1,0 +1,20 @@
+{
+  "meta": {
+    "snapshotId": "screener-import-status",
+    "description": "Status of each parsed sheet from client-provided Screener exports in data/manual/screener/.",
+    "generatedAt": "2026-05-12T16:11:16.729Z",
+    "rowCount": 0,
+    "status": "empty",
+    "notes": "No Screener exports have been provided yet. Drop files into data/manual/screener/ then run `npm run ingest:screener`.",
+    "source": {
+      "sourceClass": "manual",
+      "sourceUrl": null,
+      "sourceLabel": "data/manual/screener/ — client-provided exports",
+      "fetchedAt": "2026-05-12T16:11:16.728Z",
+      "publishedAt": null,
+      "notes": "Import-backed. Never merged into the official financial snapshots."
+    },
+    "errors": []
+  },
+  "rows": []
+}

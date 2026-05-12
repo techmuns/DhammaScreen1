@@ -135,3 +135,37 @@ All Audit items from the Step 1 table remain Audit. Specifically:
 These are plumbing — they unblock everything downstream, but they do
 not by themselves produce any of the user-facing Build metrics in
 the tables above. Those still require a working extraction layer.
+
+## Data-source provenance per metric
+
+Every metric in this audit can in principle be sourced two ways:
+
+| Path                | Snapshot family                | Trust level         | Status         |
+| ------------------- | ------------------------------ | ------------------- | -------------- |
+| Official filings    | `quarterly-financials`, …      | source-backed       | Discovery wired, extraction Audit |
+| Screener export     | `screener-normalized-financials`, `screener-peer-comparison` | import-backed | Parser scaffold ready, files not yet provided |
+| Screener scraping   | (none)                         | not allowed yet     | Deferred — needs client permission |
+
+**Decision rule:** A metric cell shown on the dashboard must declare
+its provenance. Official-path cells inherit the existing Build/Audit
+status from the tables above. Screener-import cells get a separate
+visual indicator and never overwrite an official cell. Until the
+client confirms Screener access or provides exports, the import path
+stays cold (empty snapshots, no UI surface).
+
+## Manual import expectations
+
+If the client wants Screener-backed prototyping data, files should be
+placed in `data/manual/screener/` with a stable naming convention.
+Recommended: `<companyId>.xlsx` (e.g. `tcs.xlsx`, `infosys.xlsx`). The
+parser will:
+
+- Detect sheets named `Quarters`, `Profit & Loss`, `Balance Sheet`,
+  `Cash Flow`, `Ratios`, `Peer Comparison` (case-insensitive).
+- Produce one normalized row per (metric × period) cell.
+- Record `sourceFile`, `sourceSheet`, `confidence`, `importedAt` for
+  every row.
+- Use `null` for any unparseable cell. Never fabricate.
+
+If no files are present, the parser writes empty snapshots with
+`status: "empty"` and exits cleanly.
