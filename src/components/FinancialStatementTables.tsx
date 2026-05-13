@@ -209,7 +209,9 @@ function renderOfficialPl(rows: PlRow[], periodView: PeriodView) {
   );
 }
 
-// Screener P&L rows. OPM is in percentage points; render with %, raw.
+// Screener P&L row order. Mirrors the order Screener prints, with a
+// derived "Net margin" row appended (clearly labelled) since the client
+// brief calls for PAT-margin visibility.
 const SCREENER_PL_METRICS: CanonicalMetric[] = [
   "revenue",
   "operating_profit",
@@ -230,34 +232,68 @@ function renderScreenerPl(
   const note =
     provenance === "screener-fetch"
       ? `P&L from Screener fetch · ${sourceFile}`
-      : `P&L from Screener export: ${sourceFile}`;
+      : `P&L from Screener export · ${sourceFile}`;
   return (
     <>
       <TableHeader provenance={provenance} note={note} />
       <div className="table-wrap">
-        <table className="data-table">
+        <table className="data-table data-table--statement">
           <thead>
             <tr>
-              <th>Metric</th>
+              <th className="metric-col">Metric</th>
               {slices.map((slice) => (
-                <th key={slice.periodSortKey}>{slice.period}</th>
+                <th key={slice.periodSortKey} className="num">
+                  {slice.period}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
             {SCREENER_PL_METRICS.map((canonical) => (
               <tr key={canonical}>
-                <td>{metricLabel(canonical)}</td>
+                <td className="metric-col">
+                  {metricLabel(canonical)}
+                  {canonical === "opm" ? <span className="metric-unit"> (%)</span> : null}
+                </td>
                 {slices.map((slice) => (
                   <td key={slice.periodSortKey} className="num">
                     {tableValueOrDash(
                       slice.values[canonical] ?? null,
-                      canonical === "opm" ? formatPercentRaw : canonical === "eps" ? (n) => n.toFixed(2) : formatNumberCompact
+                      canonical === "opm"
+                        ? formatPercentRaw
+                        : canonical === "eps"
+                          ? (n) => n.toFixed(2)
+                          : formatNumberCompact
                     )}
                   </td>
                 ))}
               </tr>
             ))}
+            {/* Derived: Net margin = Net Profit / Sales, per-period when both exist. */}
+            <tr className="row--derived">
+              <td className="metric-col">
+                Net margin <span className="metric-derived">(derived)</span>
+              </td>
+              {slices.map((slice) => {
+                const sales = slice.values["revenue"];
+                const pat = slice.values["pat"];
+                const m =
+                  sales !== null &&
+                  sales !== undefined &&
+                  pat !== null &&
+                  pat !== undefined &&
+                  Number.isFinite(sales) &&
+                  Number.isFinite(pat) &&
+                  sales > 0
+                    ? (pat / sales) * 100
+                    : null;
+                return (
+                  <td key={slice.periodSortKey} className="num">
+                    {tableValueOrDash(m, formatPercentRaw)}
+                  </td>
+                );
+              })}
+            </tr>
           </tbody>
         </table>
       </div>
@@ -477,27 +513,32 @@ function renderScreenerStatement(
   const note =
     provenance === "screener-fetch"
       ? `${label} from Screener fetch · ${sourceFile}`
-      : `${label} from Screener export: ${sourceFile}`;
+      : `${label} from Screener export · ${sourceFile}`;
   return (
     <>
       <TableHeader provenance={provenance} note={note} />
       <div className="table-wrap">
-        <table className="data-table">
+        <table className="data-table data-table--statement">
           <thead>
             <tr>
-              <th>Item</th>
+              <th className="metric-col">Item</th>
               {slices.map((slice) => (
-                <th key={slice.periodSortKey}>{slice.period}</th>
+                <th key={slice.periodSortKey} className="num">
+                  {slice.period}
+                </th>
               ))}
             </tr>
           </thead>
           <tbody>
             {metrics.map((canonical) => (
               <tr key={canonical}>
-                <td>{metricLabel(canonical)}</td>
+                <td className="metric-col">{metricLabel(canonical)}</td>
                 {slices.map((slice) => (
                   <td key={slice.periodSortKey} className="num">
-                    {tableValueOrDash(slice.values[canonical] ?? null, formatNumberCompact)}
+                    {tableValueOrDash(
+                      slice.values[canonical] ?? null,
+                      formatNumberCompact
+                    )}
                   </td>
                 ))}
               </tr>

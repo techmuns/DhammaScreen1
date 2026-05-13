@@ -41,8 +41,10 @@ export type CanonicalMetric =
   | "inventory_days"
   | "days_payable"
   | "ccc"
+  | "working_capital_days"
   | "roce"
   | "roe"
+  | "free_cash_flow"
   // Peer comparison
   | "market_cap"
   | "current_price"
@@ -120,8 +122,16 @@ const ALIAS_TABLE: AliasEntry[] = [
   { canonical: "inventory_days", patterns: [/^inventory\s+days$/i] },
   { canonical: "days_payable", patterns: [/^days\s+payable$/i] },
   { canonical: "ccc", patterns: [/^cash\s+conversion\s+cycle$/i] },
+  {
+    canonical: "working_capital_days",
+    patterns: [/^working\s+capital\s+days$/i],
+  },
   { canonical: "roce", patterns: [/^roce\s*%?$/i] },
   { canonical: "roe", patterns: [/^roe\s*%?$/i] },
+  {
+    canonical: "free_cash_flow",
+    patterns: [/^free\s+cash\s+flow$/i, /^fcf$/i],
+  },
 
   // Peer comparison
   {
@@ -208,8 +218,10 @@ const METRIC_LABELS: Record<CanonicalMetric, string> = {
   inventory_days: "Inventory Days",
   days_payable: "Days Payable",
   ccc: "Cash Conversion Cycle",
+  working_capital_days: "Working Capital Days",
   roce: "ROCE",
   roe: "ROE",
+  free_cash_flow: "Free Cash Flow",
   market_cap: "Market Cap",
   current_price: "Current Price",
   stock_pe: "Stock P/E",

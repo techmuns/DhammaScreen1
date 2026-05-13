@@ -9,7 +9,6 @@ import {
   screenerLatestMetric,
   tableValueOrDash,
   type KpiResolution,
-  type ScreenerLatestMetric,
 } from "../data/helpers/dhammaFinancials";
 import {
   annualFinancialsSnapshot,
@@ -38,13 +37,11 @@ function buildCards(
   periodView: PeriodView
 ): CardModel[] {
   if (!companyId) return defaultEmptyCards();
-  // Re-bind to a non-null local so the closures below see the narrowed type.
   const id: string = companyId;
 
   const screenerPeriodType = periodView === "quarters" ? "quarter" : "year";
   const screenerRows = screenerNormalizedSnapshot.rows;
 
-  // Helpers that pre-bind sourceMethod so the per-card resolution stays compact.
   const latestFetched = (canonical: string, pType: "quarter" | "year") =>
     screenerLatestMetric(screenerRows, id, canonical, pType, "fetch");
   const latestImported = (canonical: string, pType: "quarter" | "year") =>
@@ -72,59 +69,35 @@ function buildCards(
     )
     .at(-1);
 
-  // Revenue
+  // Revenue / Sales
   const revenue = resolveKpi({
     official: { value: pAndL?.revenue ?? null, periodLabel: officialPeriodLabel },
     screenerFetch: latestFetched("revenue", screenerPeriodType),
     screenerImport: latestImported("revenue", screenerPeriodType),
   });
 
-  // EBITDA margin
-  const officialEbitdaMargin = margin(pAndL?.ebitda ?? null, pAndL?.revenue ?? null);
-  const ebitdaMargin = resolveKpi({
-    official: { value: officialEbitdaMargin, periodLabel: officialPeriodLabel },
+  // Operating Margin (OPM %)
+  const officialOpMargin = margin(pAndL?.ebitda ?? null, pAndL?.revenue ?? null);
+  const operatingMargin = resolveKpi({
+    official: { value: officialOpMargin, periodLabel: officialPeriodLabel },
     screenerFetch: latestFetched("opm", screenerPeriodType),
     screenerImport: latestImported("opm", screenerPeriodType),
   });
-  // OPM (Screener) is in percentage points; official derivation is a fraction.
-  const ebitdaMarginFormat =
-    ebitdaMargin.provenance === "screener-fetch" ||
-    ebitdaMargin.provenance === "screener-import"
+  // Screener OPM is already in percentage points; official derivation is a fraction.
+  const operatingMarginFormat =
+    operatingMargin.provenance === "screener-fetch" ||
+    operatingMargin.provenance === "screener-import"
       ? formatPercentRaw
       : formatPercent;
 
-  // PAT margin: derive only when Sales and Net Profit come from the same
-  // Screener period, then compute. Otherwise fall back to dash.
-  function deriveScreenerPatMargin(
-    method: "fetch" | "import"
-  ): ScreenerLatestMetric | null {
-    const sales = screenerLatestMetric(screenerRows, id, "revenue", screenerPeriodType, method);
-    const pat = screenerLatestMetric(screenerRows, id, "pat", screenerPeriodType, method);
-    if (
-      !sales ||
-      !pat ||
-      sales.value === null ||
-      pat.value === null ||
-      sales.value <= 0 ||
-      sales.periodLabel !== pat.periodLabel
-    ) {
-      return null;
-    }
-    return {
-      value: pat.value / sales.value,
-      periodLabel: pat.periodLabel,
-      sourceFile: pat.sourceFile,
-      sourceSheet: pat.sourceSheet,
-    };
-  }
-  const officialPatMargin = margin(
-    pAndL?.patAttributableToOwners ?? pAndL?.pat ?? null,
-    pAndL?.revenue ?? null
-  );
-  const patMargin = resolveKpi({
-    official: { value: officialPatMargin, periodLabel: officialPeriodLabel },
-    screenerFetch: deriveScreenerPatMargin("fetch"),
-    screenerImport: deriveScreenerPatMargin("import"),
+  // Net Profit (absolute, not margin) — straight from Screener / filings.
+  const netProfit = resolveKpi({
+    official: {
+      value: pAndL?.patAttributableToOwners ?? pAndL?.pat ?? null,
+      periodLabel: officialPeriodLabel,
+    },
+    screenerFetch: latestFetched("pat", screenerPeriodType),
+    screenerImport: latestImported("pat", screenerPeriodType),
   });
 
   // EPS
@@ -134,32 +107,92 @@ function buildCards(
     screenerImport: latestImported("eps", screenerPeriodType),
   });
 
-  // CFO — Screener publishes annually only.
+  // CFO — Screener only publishes annual CFO. Even on the quarterly toggle
+  // the fallback is the latest annual figure; label spells that out.
+  const cfoFetch = latestFetched("cfo", "year");
+  const cfoImport = latestImported("cfo", "year");
   const cfo = resolveKpi({
     official: { value: cashFlow?.cfo ?? null, periodLabel: officialPeriodLabel },
-    screenerFetch: latestFetched("cfo", "year"),
-    screenerImport: latestImported("cfo", "year"),
+    screenerFetch: cfoFetch,
+    screenerImport: cfoImport,
   });
 
-  // Net debt: official net-debt → official borrowings → Screener borrowings
-  const officialNetDebt = balance?.netDebt ?? balance?.borrowingsTotal ?? null;
-  const netDebt = resolveKpi({
-    official: { value: officialNetDebt, periodLabel: officialPeriodLabel },
-    screenerFetch: latestFetched("borrowings", "year"),
-    screenerImport: latestImported("borrowings", "year"),
+  // Borrowings — annual-only from Screener for the same reason.
+  const borrowingsFetch = latestFetched("borrowings", "year");
+  const borrowingsImport = latestImported("borrowings", "year");
+  const borrowings = resolveKpi({
+    official: {
+      value: balance?.netDebt ?? balance?.borrowingsTotal ?? null,
+      periodLabel: officialPeriodLabel,
+    },
+    screenerFetch: borrowingsFetch,
+    screenerImport: borrowingsImport,
   });
 
   return [
-    { label: "Revenue", resolution: revenue, format: formatNumberCompact, hint: hintFor(revenue, "Reported revenue") },
-    { label: "EBITDA Margin", resolution: ebitdaMargin, format: ebitdaMarginFormat, hint: hintFor(ebitdaMargin, "EBITDA / Revenue") },
-    { label: "PAT Margin", resolution: patMargin, format: formatPercent, hint: hintFor(patMargin, "PAT / Revenue") },
-    { label: "EPS", resolution: eps, format: (n) => n.toFixed(2), hint: hintFor(eps, "Basic EPS as filed") },
-    { label: "CFO", resolution: cfo, format: formatNumberCompact, hint: hintFor(cfo, "Net cash from operations") },
-    { label: "Net Debt / Borrowings", resolution: netDebt, format: formatNumberCompact, hint: hintFor(netDebt, balance?.netDebt != null ? "Net debt" : "Total borrowings") },
+    {
+      label: "Revenue / Sales",
+      resolution: revenue,
+      format: formatNumberCompact,
+      hint: hintFor(revenue, "Reported revenue", periodView),
+    },
+    {
+      label: "Operating Margin",
+      resolution: operatingMargin,
+      format: operatingMarginFormat,
+      hint: hintFor(
+        operatingMargin,
+        operatingMargin.provenance === "screener-fetch" ||
+          operatingMargin.provenance === "screener-import"
+          ? "Screener OPM %"
+          : "Derived: EBITDA / Revenue",
+        periodView
+      ),
+    },
+    {
+      label: "Net Profit",
+      resolution: netProfit,
+      format: formatNumberCompact,
+      hint: hintFor(netProfit, "Net profit attributable to owners", periodView),
+    },
+    {
+      label: "EPS",
+      resolution: eps,
+      format: (n) => n.toFixed(2),
+      hint: hintFor(eps, "Basic EPS", periodView),
+    },
+    {
+      label: "CFO",
+      resolution: cfo,
+      format: formatNumberCompact,
+      hint:
+        cfo.provenance === "screener-fetch" ||
+        cfo.provenance === "screener-import"
+          ? `Annual cash from operations · ${cfo.periodLabel ?? "—"}`
+          : hintFor(cfo, "Net cash from operations", periodView),
+    },
+    {
+      label: "Borrowings",
+      resolution: borrowings,
+      format: formatNumberCompact,
+      hint:
+        borrowings.provenance === "screener-fetch" ||
+        borrowings.provenance === "screener-import"
+          ? `Annual borrowings · ${borrowings.periodLabel ?? "—"}`
+          : hintFor(
+              borrowings,
+              balance?.netDebt != null ? "Net debt" : "Total borrowings",
+              periodView
+            ),
+    },
   ];
 }
 
-function hintFor(resolution: KpiResolution, baseHint: string): string {
+function hintFor(
+  resolution: KpiResolution,
+  baseHint: string,
+  _periodView: PeriodView
+): string {
   if (resolution.value === null) return "Awaiting extraction or import";
   const period = resolution.periodLabel;
   return period ? `${baseHint} · ${period}` : baseHint;
@@ -167,12 +200,12 @@ function hintFor(resolution: KpiResolution, baseHint: string): string {
 
 function defaultEmptyCards(): CardModel[] {
   const labels = [
-    "Revenue",
-    "EBITDA Margin",
-    "PAT Margin",
+    "Revenue / Sales",
+    "Operating Margin",
+    "Net Profit",
     "EPS",
     "CFO",
-    "Net Debt / Borrowings",
+    "Borrowings",
   ];
   return labels.map((label) => ({
     label,

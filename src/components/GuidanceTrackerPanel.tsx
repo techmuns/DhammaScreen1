@@ -30,17 +30,17 @@ export function GuidanceTrackerPanel({
         <SourceBadge provenance="audit" />
       </div>
       <div className="guidance-banner">
-        <p className="guidance-banner__title">Audit-status feature</p>
+        <p className="guidance-banner__title">Audit · not yet live</p>
         <p className="guidance-banner__body">
-          The lie-detector is not live yet. It requires (i) prior-quarter
-          management commentary extracted from transcripts or investor
-          presentations, (ii) the current quarter's actual financials, and
-          (iii) a stable source URL for each commentary item.
+          This panel compares what management said in prior quarters against
+          what the company actually reported. It will turn on once we have
+          all three pieces below per company. Until then, nothing is shown
+          — no fabricated commentary, no fabricated match scores.
         </p>
         <ul className="guidance-banner__needs">
-          <li>Prior-quarter management commentary or investor presentation</li>
-          <li>Latest reported actual financial performance</li>
-          <li>Source transcript or presentation URL</li>
+          <li>Prior-quarter management commentary (from concall transcripts or investor presentations)</li>
+          <li>Latest reported actual financial performance for the metric being compared</li>
+          <li>A stable source URL for each commentary item so the team can verify</li>
         </ul>
       </div>
       <div className="table-wrap">

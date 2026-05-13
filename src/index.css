@@ -350,7 +350,51 @@ code {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 16px;
+  padding: 16px 16px 18px;
+}
+
+.provenance-group {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+}
+
+.provenance-group:first-of-type {
+  margin-top: 6px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.provenance-group__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.provenance-group__title {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.provenance-group__desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.provenance-name {
+  display: block;
+  font-weight: 500;
+}
+
+.provenance-id {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
 
 .statements__tabs {
@@ -406,7 +450,7 @@ code {
 .data-table th,
 .data-table td {
   text-align: left;
-  padding: 8px 10px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
@@ -417,6 +461,7 @@ code {
   font-size: 11.5px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  background: var(--surface);
 }
 
 .data-table td.num,
@@ -427,7 +472,7 @@ code {
 
 .data-table--compact th,
 .data-table--compact td {
-  padding: 6px 8px;
+  padding: 6px 10px;
   font-size: 12.5px;
 }
 
@@ -441,6 +486,59 @@ code {
 
 .data-table--peer .row--focus td {
   font-weight: 600;
+}
+
+/* Wide statement tables: keep the metric column visible while the period
+   columns scroll horizontally. Numeric columns get a right-aligned look
+   and a slightly tighter row height so 5 quarters / 5 years fit nicely. */
+.data-table--statement th,
+.data-table--statement td {
+  padding: 7px 14px;
+}
+
+.data-table--statement .metric-col {
+  position: sticky;
+  left: 0;
+  background: var(--surface);
+  z-index: 1;
+  white-space: nowrap;
+  min-width: 160px;
+  border-right: 1px solid var(--border);
+}
+
+.data-table--statement tbody tr:nth-child(even) .metric-col {
+  background: #fafafa;
+}
+
+.data-table--statement tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.data-table--statement thead .metric-col {
+  background: var(--surface);
+}
+
+.metric-unit {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 4px;
+  font-weight: normal;
+}
+
+.metric-derived {
+  font-size: 11px;
+  color: var(--tone-warn);
+  margin-left: 4px;
+  font-weight: normal;
+}
+
+.row--derived {
+  background: #fffbeb;
+}
+
+.row--derived td.metric-col,
+.row--derived:nth-child(even) td.metric-col {
+  background: #fffbeb;
 }
 
 /* ---------- Status tags ---------- */

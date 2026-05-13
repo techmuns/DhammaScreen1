@@ -105,11 +105,11 @@ export function PeerComparisonTable({ companyId }: PeerComparisonTableProps) {
         <SourceBadge provenance="pending" />
       </div>
       <EmptyState
-        title="No peer comparison data available yet"
-        message="Add official filings or Screener exports to populate this table."
+        title="Peer comparison not available from current cached Screener fetch"
+        message="Screener renders its peer table client-side, so the static HTML fetch sees no rows. A dedicated peer-page parser is pending."
         hint={
           officialPeers.length > 0
-            ? `Peer group: ${officialPeers.map((r) => r.displayName).join(", ")}`
+            ? `Peer group configured: ${officialPeers.map((r) => r.displayName).join(", ")}. Per-company financials still populate the rest of the dashboard.`
             : "No peers configured."
         }
       />
