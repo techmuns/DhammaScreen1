@@ -350,3 +350,81 @@ export function screenerImportCoverage(
 
 // Re-exports used by helper consumers; keeps the public surface explicit.
 export type { Comparable };
+
+// ---------------------------------------------------------------------------
+// UI render helpers.
+//
+// These exist so components never re-implement formatting or null-handling.
+// All metric formatting in the UI must go through one of these functions.
+// ---------------------------------------------------------------------------
+
+export type DataProvenance =
+  | "official-filing"
+  | "screener-import"
+  | "audit"
+  | "pending";
+
+export interface SnapshotShape {
+  meta: { status: string; rowCount: number; generatedAt: string | null };
+}
+
+export function snapshotStatus(snapshot: SnapshotShape): string {
+  return snapshot.meta.status;
+}
+
+export function snapshotRowCount(snapshot: SnapshotShape): number {
+  return snapshot.meta.rowCount;
+}
+
+export function tableValueOrDash(
+  value: number | null | undefined,
+  format?: (n: number) => string
+): string {
+  if (!isFiniteNumber(value)) return MISSING_DASH;
+  return format ? format(value) : String(value);
+}
+
+export function formatNumberCompact(n: number): string {
+  return n.toLocaleString("en-IN", { maximumFractionDigits: 2 });
+}
+
+export function formatPercent(n: number, decimals = 1): string {
+  // Inputs are unit-fractions (0.21 → "21.0%"). Use formatPercentRaw for
+  // values that are already expressed in percentage points.
+  return `${(n * 100).toFixed(decimals)}%`;
+}
+
+export function formatPercentRaw(n: number, decimals = 1): string {
+  return `${n.toFixed(decimals)}%`;
+}
+
+export function formatGenerationTimestamp(iso: string | null): string {
+  if (!iso) return MISSING_DASH;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return MISSING_DASH;
+  return d.toISOString().replace("T", " ").slice(0, 16) + " UTC";
+}
+
+export function latestGeneratedAt(
+  snapshots: ReadonlyArray<SnapshotShape>
+): string | null {
+  let latest: string | null = null;
+  for (const snap of snapshots) {
+    const ts = snap.meta.generatedAt;
+    if (ts && (!latest || ts > latest)) latest = ts;
+  }
+  return latest;
+}
+
+export function provenanceLabel(provenance: DataProvenance): string {
+  switch (provenance) {
+    case "official-filing":
+      return "Official filing";
+    case "screener-import":
+      return "Screener import";
+    case "audit":
+      return "Audit";
+    case "pending":
+      return "Pending";
+  }
+}

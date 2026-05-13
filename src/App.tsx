@@ -1,21 +1,58 @@
+import { useState } from "react";
+
+import { CompanySelector } from "./components/CompanySelector";
+import { DashboardHeader } from "./components/DashboardHeader";
+import { DataProvenancePanel } from "./components/DataProvenancePanel";
+import { DataStatusPanel } from "./components/DataStatusPanel";
+import { FinancialStatementTables } from "./components/FinancialStatementTables";
+import { GuidanceTrackerPanel } from "./components/GuidanceTrackerPanel";
+import { KpiSummaryCards } from "./components/KpiSummaryCards";
+import { PeerComparisonTable } from "./components/PeerComparisonTable";
+import { PeriodToggle, type PeriodView } from "./components/PeriodToggle";
+import { companyMasterSnapshot } from "./data/helpers/snapshotLoader";
+
 export function App() {
+  const companies = companyMasterSnapshot.rows;
+  const [companyId, setCompanyId] = useState<string | null>(
+    companies[0]?.companyId ?? null
+  );
+  const [periodView, setPeriodView] = useState<PeriodView>("quarters");
+
   return (
-    <main className="app-shell">
-      <header className="app-header">
-        <span className="app-eyebrow">Dhamma Capital</span>
-        <h1 className="app-title">Earnings Dashboard 1</h1>
-      </header>
-      <section className="app-status">
-        <p>
-          Dhamma Dashboard 1 foundation ready. Data audit, schema, helpers, and
-          ingestion scaffold created.
-        </p>
-        <p className="app-status-note">
-          UI intentionally minimal at this step. See{" "}
-          <code>docs/dhamma-dashboard-1-plan.md</code> and{" "}
-          <code>docs/dhamma-dashboard-1-metric-audit.md</code>.
-        </p>
+    <div className="dashboard-shell">
+      <DashboardHeader />
+
+      <section className="dashboard-controls" aria-label="Controls">
+        <CompanySelector
+          companies={companies}
+          value={companyId}
+          onChange={setCompanyId}
+        />
+        <PeriodToggle value={periodView} onChange={setPeriodView} />
       </section>
-    </main>
+
+      <DataStatusPanel />
+
+      <KpiSummaryCards companyId={companyId} periodView={periodView} />
+
+      <FinancialStatementTables
+        companyId={companyId}
+        periodView={periodView}
+      />
+
+      <PeerComparisonTable companyId={companyId} />
+
+      <GuidanceTrackerPanel companyId={companyId} companies={companies} />
+
+      <DataProvenancePanel />
+
+      <footer className="dashboard-footer">
+        <p>
+          Dashboard 1 · Source-first foundation. Imported (Screener) data is
+          surfaced separately and is never merged into official snapshots.
+          Missing values render as “—”, never zero.
+        </p>
+      </footer>
+    </div>
   );
 }
