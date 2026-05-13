@@ -34,13 +34,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        # `npm install` instead of `npm ci` so a freshly added devDep
-        # (e.g. playwright for the headless peer fallback) works on the
-        # first run before the lockfile gets refreshed in a follow-up PR.
-        # The commit-back step only commits src/data/snapshots/, so a
-        # transiently regenerated lockfile on the runner does not pollute
-        # the repo.
-        run: npm install --no-audit --no-fund
+        run: npm ci
 
       # Headless Chromium for the Screener peer-comparison fallback only.
       # The static financial fetch path does NOT need a browser; only
