@@ -280,6 +280,235 @@ function extractTable(
   return { headers, rows };
 }
 
+// ---------------------------------------------------------------------------
+// Peer-table extraction (separate from the generic extractTable above).
+//
+// Screener's peer table differs from the per-company statement tables:
+//   - The first cell is usually "S.No." (1., 2., …), not a metric name.
+//   - The peer-company name lives in a cell containing an <a href="/company/...">
+//     link, which can be at column index 1 (or later).
+//   - The peer table is normally NOT in the main company page's static HTML —
+//     it's injected by JS into `<div id="peers-table-placeholder">`. We
+//     therefore have to fall back to a Screener-internal endpoint to fetch
+//     the actual <table> HTML.
+// ---------------------------------------------------------------------------
+
+interface PeerParsedTable {
+  headers: string[];
+  rows: Array<{ name: string; cells: Record<string, string> }>;
+}
+
+function extractPeerTableFromSection(
+  $: cheerio.CheerioAPI,
+  section: cheerio.Cheerio<never>
+): PeerParsedTable | null {
+  // section can either be a <table> directly or a container that holds one.
+  const table = section.is("table") ? section : section.find("table").first();
+  if (table.length === 0) return null;
+
+  const headers = table
+    .find("thead th")
+    .map((_i, el) => $(el).text().trim().replace(/\s+/g, " "))
+    .get();
+  if (headers.length === 0) return null;
+
+  const rows: PeerParsedTable["rows"] = [];
+  table.find("tbody tr").each((_i, tr) => {
+    const cellEls = $(tr).find("td");
+    if (cellEls.length === 0) return;
+
+    // Find the cell whose <a href="/company/..."> link names the peer.
+    let nameIdx = -1;
+    let name = "";
+    for (let i = 0; i < cellEls.length; i++) {
+      const link = $(cellEls[i]).find("a[href*='/company/']").first();
+      if (link.length > 0) {
+        name = link.text().trim();
+        nameIdx = i;
+        break;
+      }
+    }
+    // Fallback: assume column 1 (after S.No.) is the name when no link is
+    // present (e.g. a JS-rendered fragment that has been re-serialized).
+    if (nameIdx === -1 && cellEls.length >= 2) {
+      nameIdx = 1;
+      name = $(cellEls[1]).text().trim();
+    }
+    if (!name) return;
+
+    const cells: Record<string, string> = {};
+    for (let i = 0; i < cellEls.length; i++) {
+      if (i === nameIdx) continue;
+      const header = headers[i];
+      if (!header) continue;
+      const trimmed = $(cellEls[i]).text().trim().replace(/\s+/g, " ");
+      if (trimmed) cells[header] = trimmed;
+    }
+    rows.push({ name, cells });
+  });
+
+  return rows.length === 0 ? null : { headers, rows };
+}
+
+function tryExtractPeerTable(
+  $: cheerio.CheerioAPI,
+  selectors: string[]
+): PeerParsedTable | null {
+  for (const sel of selectors) {
+    const section = $(sel) as cheerio.Cheerio<never>;
+    if (section.length === 0) continue;
+    const result = extractPeerTableFromSection($, section);
+    if (result) return result;
+  }
+  return null;
+}
+
+// Try a few well-known places where Screener might publish its numeric
+// warehouse company id (used by its peer endpoint). The slug (e.g. "TCS")
+// is the human-readable URL key; the warehouse id is the integer
+// primary key.
+function extractWarehouseId(
+  $: cheerio.CheerioAPI,
+  html: string
+): string | null {
+  const fromPlaceholder = $("#peers-table-placeholder").attr("data-warehouse-id");
+  if (fromPlaceholder && /^\d+$/.test(fromPlaceholder)) return fromPlaceholder;
+  const fromAny = $("[data-warehouse-id]").first().attr("data-warehouse-id");
+  if (fromAny && /^\d+$/.test(fromAny)) return fromAny;
+  const fromPath = html.match(/\/company\/(\d{4,})\//);
+  if (fromPath) return fromPath[1];
+  return null;
+}
+
+interface PeerSectionOutcome {
+  rows: ScreenerPeerComparisonRow[];
+  sourceUrlUsed: string | null;
+  strategy: "inline" | "warehouse-api" | "peers-fragment" | null;
+  notes: string | null;
+}
+
+async function fetchPeerSection(args: {
+  company: CompanyMaster;
+  mainPageHtml: string;
+  main$: cheerio.CheerioAPI;
+  mainPageUrl: string;
+  fetchedAt: string;
+  options: CliOptions;
+}): Promise<PeerSectionOutcome> {
+  const {
+    company,
+    mainPageHtml,
+    main$,
+    mainPageUrl,
+    fetchedAt,
+    options,
+  } = args;
+
+  // Strategy A: peer table is sometimes server-rendered on the main page.
+  const inline = tryExtractPeerTable(main$, [
+    "#peers",
+    "#peers-table-placeholder",
+    "section.peers",
+  ]);
+  if (inline) {
+    return {
+      rows: peerTableToRows(company, inline, mainPageUrl, fetchedAt),
+      sourceUrlUsed: mainPageUrl,
+      strategy: "inline",
+      notes: null,
+    };
+  }
+
+  // Strategy B: warehouse-id-keyed peer endpoint.
+  const warehouseId = extractWarehouseId(main$, mainPageHtml);
+  if (warehouseId) {
+    for (const apiUrl of [
+      `https://www.screener.in/api/company/${warehouseId}/peers/`,
+      `https://www.screener.in/company/${warehouseId}/peers/`,
+    ]) {
+      try {
+        const apiHtml = await fetchHtml(apiUrl, options.timeoutMs);
+        const $api = cheerio.load(apiHtml);
+        const table = tryExtractPeerTable($api, ["body", "table", "#peers"]);
+        if (table) {
+          return {
+            rows: peerTableToRows(company, table, apiUrl, fetchedAt),
+            sourceUrlUsed: apiUrl,
+            strategy: "warehouse-api",
+            notes: null,
+          };
+        }
+      } catch {
+        // try next URL
+      }
+    }
+  }
+
+  // Strategy C: /company/<slug>/peers/ fragment endpoint.
+  const slugUrl = mainPageUrl.replace(/\/$/, "") + "/peers/";
+  try {
+    const slugHtml = await fetchHtml(slugUrl, options.timeoutMs);
+    const $slug = cheerio.load(slugHtml);
+    const table = tryExtractPeerTable($slug, ["#peers", "body", "table"]);
+    if (table) {
+      return {
+        rows: peerTableToRows(company, table, slugUrl, fetchedAt),
+        sourceUrlUsed: slugUrl,
+        strategy: "peers-fragment",
+        notes: null,
+      };
+    }
+  } catch {
+    // fall through
+  }
+
+  return {
+    rows: [],
+    sourceUrlUsed: null,
+    strategy: null,
+    notes:
+      "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login.",
+  };
+}
+
+function peerTableToRows(
+  company: CompanyMaster,
+  table: PeerParsedTable,
+  sourceUrl: string,
+  fetchedAt: string
+): ScreenerPeerComparisonRow[] {
+  const out: ScreenerPeerComparisonRow[] = [];
+  for (const peer of table.rows) {
+    for (const [header, cellValue] of Object.entries(peer.cells)) {
+      const canonical = canonicalizeScreenerMetric(header);
+      const { value, unit } = parseScreenerNumber(cellValue);
+      out.push({
+        companyId: company.companyId,
+        companyName: company.displayName,
+        peerCompanyName: peer.name,
+        sourceMethod: "fetch",
+        sourceFile: `screener-fetch:${company.companyId}`,
+        sourceSheet: "peers",
+        sourceUrl,
+        sheetType: "peer_comparison",
+        period: null,
+        periodSortKey: null,
+        periodType: "unknown",
+        metricName: header,
+        metricCanonical: canonical,
+        metricValue: value,
+        unit,
+        currency: null,
+        sourceLabel: `Screener fetch · ${sourceUrl}`,
+        importedAt: fetchedAt,
+        confidence: value === null ? "low" : "high",
+        notes: null,
+      });
+    }
+  }
+  return out;
+}
+
 // Same heuristic as the manual-import parser; kept duplicated rather than
 // shared because the import script's parser deals with .xlsx specifics.
 function parseScreenerNumber(raw: string): {
@@ -483,6 +712,7 @@ async function fetchCompany(
   let latestPeriod: string | null = null;
 
   for (const section of sectionsToRun) {
+    if (section.id === "peers") continue; // dedicated path below
     const table = extractTable($, section.id);
     if (!table) continue;
     const built = buildRows({
@@ -503,9 +733,49 @@ async function fetchCompany(
     }
   }
 
+  // Peers section — multi-strategy fetch (inline → warehouse API → /peers/).
+  let peerStrategy: PeerSectionOutcome["strategy"] = null;
+  let peerNote: string | null = null;
+  if (sectionsToRun.some((s) => s.id === "peers")) {
+    const peerOutcome = await fetchPeerSection({
+      company,
+      mainPageHtml: html,
+      main$: $,
+      mainPageUrl: url,
+      fetchedAt,
+      options,
+    });
+    if (peerOutcome.rows.length > 0) {
+      sectionsFetched.push("peers");
+      allPeerRows.push(...peerOutcome.rows);
+      peerStrategy = peerOutcome.strategy;
+    } else {
+      peerNote = peerOutcome.notes;
+    }
+  }
+
   const totalRows = allRows.length + allPeerRows.length;
+  const missingSections = sectionsToRun
+    .filter((s) => !sectionsFetched.includes(s.sectionKey))
+    .map((s) => s.sectionKey);
   const finalStatus: ScreenerFetchStatus =
-    totalRows === 0 ? "error" : sectionsFetched.length < sectionsToRun.length ? "partial" : "ok";
+    totalRows === 0
+      ? "error"
+      : missingSections.length === 0
+        ? "ok"
+        : "partial";
+
+  // Compose a more specific note when only peers is missing.
+  let statusNotes: string | null = null;
+  if (finalStatus === "partial") {
+    if (missingSections.length === 1 && missingSections[0] === "peers") {
+      statusNotes = peerNote ?? "Peer table not extractable from Screener.";
+    } else {
+      statusNotes = `Missing sections: ${missingSections.join(", ")}`;
+    }
+  } else if (finalStatus === "ok" && peerStrategy) {
+    statusNotes = `Peer data via ${peerStrategy}.`;
+  }
 
   return {
     status: {
@@ -522,13 +792,7 @@ async function fetchCompany(
         finalStatus === "error"
           ? "No expected tables found in page HTML — Screener structure may have changed."
           : null,
-      notes:
-        finalStatus === "partial"
-          ? `Missing sections: ${sectionsToRun
-              .filter((s) => !sectionsFetched.includes(s.sectionKey))
-              .map((s) => s.sectionKey)
-              .join(", ")}`
-          : null,
+      notes: statusNotes,
     },
     rows: allRows,
     peerRows: allPeerRows,

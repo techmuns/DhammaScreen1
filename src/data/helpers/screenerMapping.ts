@@ -64,7 +64,14 @@ const ALIAS_TABLE: AliasEntry[] = [
   { canonical: "opm", patterns: [/^opm\s*%?$/i, /^operating\s+margin\s*%?$/i] },
   {
     canonical: "revenue",
-    patterns: [/^sales$/i, /^revenue(?:\s+from\s+operations)?$/i, /^net\s+sales$/i],
+    patterns: [
+      /^sales$/i,
+      /^revenue(?:\s+from\s+operations)?$/i,
+      /^net\s+sales$/i,
+      // Peer table columns: "Sales Qtr Rs.Cr.", "Sales Last Year Rs.Cr."
+      /^sales\s+qtr(?:\s+rs\.?\s*cr\.?)?$/i,
+      /^sales\s+last\s+year(?:\s+rs\.?\s*cr\.?)?$/i,
+    ],
   },
   { canonical: "other_income", patterns: [/^other\s+income$/i] },
   { canonical: "interest", patterns: [/^interest$/i, /^finance\s+cost$/i] },
@@ -77,6 +84,9 @@ const ALIAS_TABLE: AliasEntry[] = [
       /^profit\s+for\s+the\s+period$/i,
       /^profit$/i,
       /^pat$/i,
+      // Peer table columns: "NP Qtr Rs.Cr.", "Net Profit Qtr Rs.Cr."
+      /^np\s+qtr(?:\s+rs\.?\s*cr\.?)?$/i,
+      /^net\s+profit\s+qtr(?:\s+rs\.?\s*cr\.?)?$/i,
     ],
   },
   { canonical: "eps", patterns: [/^eps(?:\s+in\s+rs\.?)?$/i] },
