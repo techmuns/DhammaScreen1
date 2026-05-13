@@ -181,3 +181,64 @@ parser will:
 
 If no files are present, the parser writes empty snapshots with
 `status: "empty"` and exits cleanly.
+
+## IT peer universe from Screener PDFs
+
+The peer-benchmark group used by every KPI card on Dashboard 1 is
+`it-services-broad`. It is sourced from the Screener IT sector listing
+the client shared and codified in
+`scripts/config/dhamma-companies.ts`.
+
+### Active fetch universe (20 companies)
+
+Listed in `COMPANIES[]`, all tagged
+`peerGroupId: "it-services-broad"` and `fetchEnabled: true`. The
+fetcher hits Screener once per active company per scheduled run and
+writes rows tagged `sourceMethod: "fetch"`.
+
+- **Verified pilot peers (4):** TCS, INFY, HCLTECH, WIPRO.
+- **Newly added (16):** TECHM, LTIM, OFSS, PERSISTENT, COFORGE,
+  MPHASIS, LTTS, HEXT, TATATECH, TATAELXSI, KPITTECH, ZENSARTECH,
+  INTELLECT, CYIENT, BSOFT, SONATSOFTW.
+
+Slugs for the new 16 are inferred from the NSE symbol (lower-cased) —
+the same heuristic the existing fetcher uses. The first GitHub Actions
+fetch after this commit will confirm or surface 404s for each slug.
+Any miss is patched via the `sourceUrlOverride` field on the company
+config row; no parser changes required.
+
+### Inactive future candidates (15 companies)
+
+Stored in a separate metadata list `INACTIVE_IT_CANDIDATES[]`. These
+are page-2 names from the Screener IT sector listing that we are
+deliberately leaving outside today's fetch universe:
+
+`NPST`, `PROTEAN`, `CEINSYS`, `NUCLEUS`, `SAKSOFT`, `DLINKINDIA`,
+`ACCELYA`, `INFOBEAN`, `RAMCOSYS`, `EXPLEOSOL`, `QUICKHEAL`, `NINtec`,
+`KSOLVES`, `SUBEXLTD`, `ONWARDTEC`.
+
+They are not members of `COMPANIES[]`, are not in any peer group,
+never reach the fetcher, and never appear in a snapshot. They exist
+only as a typed record of what we are intentionally not tracking yet.
+
+### Why limit the universe
+
+The cap is a deliberate cost/usefulness trade-off:
+
+- KPI peer-benchmark cards render a strip with ≤20 names —
+  comparable enough to be useful, short enough to scan.
+- The SPA's static-asset JSON stays inside the Cloudflare Workers
+  size limits even at full quarter + annual history per company.
+- Each scheduled GitHub Action fetch completes in one run; no partial
+  merge bookkeeping.
+
+Promoting from inactive to active is a one-line edit in
+`dhamma-companies.ts` plus a docs update.
+
+### Source labelling stays unchanged
+
+Every row from the Screener fetcher — for any of the 20 active
+companies — is written with `sourceMethod: "fetch"` and rendered on
+the dashboard with the **Screener fetch** badge. The manual-import
+fallback (`sourceMethod: "import"`) and the official-filing path are
+both untouched by this expansion.

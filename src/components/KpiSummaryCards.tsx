@@ -167,7 +167,7 @@ export function KpiSummaryCards({
         <div className="kpi-benchmarks__head">
           <h2 className="section-title">KPI peer benchmarks</h2>
           <span className="section-subtitle">
-            Select a company to compare against its peer group.
+            Select a company to compare against the tracked IT peer group.
           </span>
         </div>
       </section>
@@ -179,7 +179,7 @@ export function KpiSummaryCards({
       <div className="kpi-benchmarks__head">
         <h2 className="section-title">KPI peer benchmarks</h2>
         <span className="section-subtitle">
-          Selected company vs. tracked peer group. Source: cached Screener fetch.
+          Selected company vs. tracked IT peer group. Source: cached Screener fetch.
         </span>
       </div>
       <div className="kpi-benchmarks__grid">
