@@ -1,3 +1,14 @@
+// NOTE: This standalone peer-comparison table is currently NOT rendered
+// anywhere in the app. As of Step 10 the client's KPI brief is better
+// served by per-KPI peer benchmarks inside KpiSummaryCards. The file is
+// kept in the repo for two reasons:
+//   1. The Screener "Peers" sheet ingestion path still writes rows into
+//      screener-peer-comparison.json (when Screener exposes them), and
+//      this component is the canonical way to surface those rows if we
+//      decide to bring the standalone table back later.
+//   2. The official-filings peer-comparison logic here is unique to this
+//      component and would have to be re-derived elsewhere.
+// Re-add to src/App.tsx if the client requests a standalone view.
 import {
   formatNumberCompact,
   formatPercent,

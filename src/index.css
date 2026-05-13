@@ -220,47 +220,187 @@ code {
   color: var(--text-secondary);
 }
 
-/* ---------- KPI cards ---------- */
+/* ---------- KPI peer benchmark cards ---------- */
 
-.kpi-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-}
-
-.kpi-card {
+.kpi-benchmarks {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  padding: 16px 16px 18px;
 }
 
-.kpi-card__header {
+.kpi-benchmarks__head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.kpi-benchmarks__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.benchmark-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.benchmark-card__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
 }
 
-.kpi-card__label {
-  font-size: 12px;
+.benchmark-card__label {
+  font-size: 11.5px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-secondary);
+  font-weight: 500;
 }
 
-.kpi-card__value {
+.benchmark-card__primary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.benchmark-card__value-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.benchmark-card__value {
   font-size: 22px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
-.kpi-card__hint {
+.benchmark-card__period {
   font-size: 11px;
   color: var(--text-muted);
+}
+
+.benchmark-card__rank {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.benchmark-card__rank-number {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.benchmark-card__rank-of {
+  font-size: 12px;
+}
+
+.benchmark-card__secondary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+
+.benchmark-card__peer-avg {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.benchmark-card__peer-avg strong {
+  color: var(--text);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  margin-left: 4px;
+}
+
+.benchmark-card__peers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.benchmark-card__peer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--text-secondary);
+}
+
+.benchmark-card__peer--self {
+  background: #f8fafc;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.benchmark-card__peer-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.benchmark-card__hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Position chip — small pill describing self vs peer-average */
+.position-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.position-chip--above {
+  color: var(--tone-ok);
+  background: var(--tone-ok-bg);
+  border-color: #a7f3d0;
+}
+
+.position-chip--below {
+  color: var(--tone-bad);
+  background: var(--tone-bad-bg);
+  border-color: #fecaca;
+}
+
+.position-chip--in-line {
+  color: var(--text-secondary);
+  background: var(--tone-muted-bg);
+  border-color: var(--border);
+}
+
+.position-chip--pending {
+  color: var(--text-muted);
+  background: var(--tone-muted-bg);
+  border-color: var(--border);
 }
 
 /* ---------- Source badges ---------- */
