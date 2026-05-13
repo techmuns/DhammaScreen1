@@ -34,7 +34,22 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        # `npm install` instead of `npm ci` so a freshly added devDep
+        # (e.g. playwright for the headless peer fallback) works on the
+        # first run before the lockfile gets refreshed in a follow-up PR.
+        # The commit-back step only commits src/data/snapshots/, so a
+        # transiently regenerated lockfile on the runner does not pollute
+        # the repo.
+        run: npm install --no-audit --no-fund
+
+      # Headless Chromium for the Screener peer-comparison fallback only.
+      # The static financial fetch path does NOT need a browser; only
+      # Strategy D (peer-mode=auto/headless) reaches for Chromium when
+      # static strategies return no rows. Failure here would block the
+      # peer fetch but not the financial fetch, so the step is fault-tolerant.
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+        continue-on-error: true
 
       - name: Ingest snapshots
         run: npm run ingest:dhamma
@@ -42,9 +57,10 @@ jobs:
       # Optional: automated Screener fetch. Writes status rows for each
       # company; if Screener blocks the runner the script records that
       # honestly and exits 0 — the workflow does NOT fail just because
-      # Screener is unreachable.
+      # Screener is unreachable. --peer-mode auto tries static strategies
+      # first, then falls back to headless Chromium for the peer table.
       - name: Ingest Screener fetch (optional)
-        run: npm run ingest:screener:fetch
+        run: npm run ingest:screener:fetch -- --peer-mode auto
 
       # Optional: parses client-provided Screener exports from
       # data/manual/screener/. Passes cleanly (empty snapshots) when no

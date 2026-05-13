@@ -55,6 +55,8 @@ const BROWSER_HEADERS: Record<string, string> = {
   "Accept-Language": "en-US,en;q=0.9",
 };
 
+type PeerMode = "static" | "headless" | "auto";
+
 interface CliOptions {
   companyIds: string[] | null;
   maxCompanies: number | null;
@@ -62,6 +64,7 @@ interface CliOptions {
   dryRun: boolean;
   timeoutMs: number;
   delayMs: number;
+  peerMode: PeerMode;
 }
 
 function parseCli(argv: string[]): CliOptions {
@@ -72,6 +75,7 @@ function parseCli(argv: string[]): CliOptions {
     dryRun: false,
     timeoutMs: 20_000,
     delayMs: 2_500,
+    peerMode: "auto",
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -95,6 +99,11 @@ function parseCli(argv: string[]): CliOptions {
     } else if (arg === "--delay-ms" && next) {
       const parsed = Number.parseInt(next, 10);
       if (Number.isFinite(parsed) && parsed >= 0) opts.delayMs = parsed;
+      i++;
+    } else if (arg === "--peer-mode" && next) {
+      if (next === "static" || next === "headless" || next === "auto") {
+        opts.peerMode = next;
+      }
       i++;
     }
   }
@@ -383,18 +392,23 @@ function extractWarehouseId(
 interface PeerSectionOutcome {
   rows: ScreenerPeerComparisonRow[];
   sourceUrlUsed: string | null;
-  strategy: "inline" | "warehouse-api" | "peers-fragment" | null;
+  strategy: "inline" | "warehouse-api" | "peers-fragment" | "headless" | null;
   notes: string | null;
 }
 
-async function fetchPeerSection(args: {
+interface PeerSectionArgs {
   company: CompanyMaster;
   mainPageHtml: string;
   main$: cheerio.CheerioAPI;
   mainPageUrl: string;
   fetchedAt: string;
   options: CliOptions;
-}): Promise<PeerSectionOutcome> {
+}
+
+// Strategies A + B + C: static HTTP, no browser. Cheap, runs first.
+async function fetchPeerSectionStatic(
+  args: PeerSectionArgs
+): Promise<PeerSectionOutcome> {
   const {
     company,
     mainPageHtml,
@@ -467,8 +481,153 @@ async function fetchPeerSection(args: {
     sourceUrlUsed: null,
     strategy: null,
     notes:
-      "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login.",
+      "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered.",
   };
+}
+
+// Strategy D: headless Chromium. Used only when static path returns no rows
+// and peerMode allows it. Playwright is imported lazily so the cold path
+// (peerMode=static, or Playwright not installed) never touches the dep.
+//
+// Respectful rules enforced here:
+//   - No CAPTCHA bypass, no login, no credentials.
+//   - One page per company, bounded by --timeout-ms.
+//   - Browser closed in `finally`; the script exits cleanly even on crash.
+//   - If Playwright is missing OR Chromium is missing OR the page never
+//     renders a peer table, we record the failure reason and return.
+async function fetchPeerSectionHeadless(
+  args: PeerSectionArgs
+): Promise<PeerSectionOutcome> {
+  const { company, mainPageUrl, fetchedAt, options } = args;
+
+  let pw: typeof import("playwright") | null = null;
+  try {
+    pw = await import("playwright");
+  } catch (err) {
+    return {
+      rows: [],
+      sourceUrlUsed: null,
+      strategy: null,
+      notes:
+        "Headless unavailable: Playwright import failed (" +
+        (err instanceof Error ? err.message : String(err)) +
+        "). Run `npm install` to add it.",
+    };
+  }
+
+  let browser: Awaited<
+    ReturnType<typeof import("playwright")["chromium"]["launch"]>
+  > | null = null;
+  try {
+    browser = await pw.chromium.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-dev-shm-usage"],
+    });
+  } catch (err) {
+    return {
+      rows: [],
+      sourceUrlUsed: null,
+      strategy: null,
+      notes:
+        "Headless unavailable: Chromium launch failed (" +
+        (err instanceof Error ? err.message : String(err)) +
+        "). Run `npx playwright install --with-deps chromium` once.",
+    };
+  }
+
+  try {
+    const context = await browser.newContext({
+      userAgent: BROWSER_HEADERS["User-Agent"],
+      viewport: { width: 1280, height: 800 },
+      locale: "en-US",
+    });
+    const page = await context.newPage();
+
+    try {
+      await page.goto(mainPageUrl, {
+        waitUntil: "networkidle",
+        timeout: options.timeoutMs,
+      });
+    } catch (err) {
+      return {
+        rows: [],
+        sourceUrlUsed: null,
+        strategy: null,
+        notes:
+          "Headless fetch did not reach " +
+          mainPageUrl +
+          " (" +
+          (err instanceof Error ? err.message : String(err)) +
+          "). May be CAPTCHA, rate limit, or network block.",
+      };
+    }
+
+    // Bounded wait for the peer table to render. 10s is enough; the goto
+    // already waited for network-idle, so the table is usually present
+    // by now if it's coming at all.
+    await page
+      .waitForSelector(
+        "#peers table tbody tr, #peers-table-placeholder table tbody tr",
+        { timeout: 10_000 }
+      )
+      .catch(() => {
+        /* parse anyway; the table may have a different anchor */
+      });
+
+    const html = await page.content();
+    const $ = cheerio.load(html);
+    const table = tryExtractPeerTable($, [
+      "#peers",
+      "#peers-table-placeholder",
+      "section.peers",
+    ]);
+
+    if (!table) {
+      return {
+        rows: [],
+        sourceUrlUsed: null,
+        strategy: null,
+        notes:
+          "Headless: page loaded but no peer table rendered within timeout. CAPTCHA / login wall / structure change.",
+      };
+    }
+
+    return {
+      rows: peerTableToRows(company, table, mainPageUrl, fetchedAt),
+      sourceUrlUsed: mainPageUrl,
+      strategy: "headless",
+      notes: null,
+    };
+  } catch (err) {
+    return {
+      rows: [],
+      sourceUrlUsed: null,
+      strategy: null,
+      notes:
+        "Headless fetch crashed: " +
+        (err instanceof Error ? err.message : String(err)),
+    };
+  } finally {
+    await browser.close().catch(() => {
+      /* best-effort */
+    });
+  }
+}
+
+// Orchestrator: route by --peer-mode.
+//   static   → A / B / C only
+//   headless → D only (skip A/B/C)
+//   auto     → A / B / C, then D on failure (default)
+async function fetchPeerSection(
+  args: PeerSectionArgs
+): Promise<PeerSectionOutcome> {
+  const mode = args.options.peerMode;
+  if (mode !== "headless") {
+    const staticResult = await fetchPeerSectionStatic(args);
+    if (staticResult.rows.length > 0) return staticResult;
+    if (mode === "static") return staticResult;
+  }
+  return fetchPeerSectionHeadless(args);
 }
 
 function peerTableToRows(
@@ -733,7 +892,7 @@ async function fetchCompany(
     }
   }
 
-  // Peers section — multi-strategy fetch (inline → warehouse API → /peers/).
+  // Peers section — multi-strategy fetch (inline → warehouse API → /peers/ → headless).
   let peerStrategy: PeerSectionOutcome["strategy"] = null;
   let peerNote: string | null = null;
   if (sectionsToRun.some((s) => s.id === "peers")) {
