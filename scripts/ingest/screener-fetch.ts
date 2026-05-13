@@ -1,7 +1,7 @@
 // Automated Screener fetcher for Dhamma Dashboard 1.
 //
 // Run:        npm run ingest:screener:fetch
-// Sources:    https://www.screener.in/company/<slug>/
+// Sources:    https://www.screener.in/company/<slug>/consolidated/
 // Writes:
 //   - src/data/snapshots/screener-fetch-status.json (per-company status)
 //   - src/data/snapshots/screener-normalized-financials.json (shared with manual import; tagged sourceMethod="fetch")
@@ -18,6 +18,17 @@
 //   - On HTTP error / parse error / Screener structure change, write a
 //     status row with the failure reason and move on. Never crash, never
 //     fake values, never fall back to fabricated rows.
+//
+// Reporting-basis policy (client mandate, Step 12):
+//   - Every financial row written by this fetcher MUST have
+//     `reportingBasis === "consolidated"`. We always fetch the explicit
+//     `/consolidated/` URL on Screener and verify the page contains the
+//     expected financial sections before emitting rows. There is no
+//     silent fallback to a default / standalone page; if consolidated
+//     fails, the company is marked `error` and no rows are written.
+//   - On merge, any pre-existing fetch row whose `reportingBasis` is not
+//     `"consolidated"` is dropped (regardless of attempted-company set),
+//     so a single successful run cleanses old standalone data system-wide.
 
 import { existsSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -54,6 +65,26 @@ const BROWSER_HEADERS: Record<string, string> = {
   Accept: "text/html,application/xhtml+xml,application/xml;q=0.9",
   "Accept-Language": "en-US,en;q=0.9",
 };
+
+// Reporting basis is locked to "consolidated" for Dashboard 1. The fetcher
+// never hits Screener's default page — it always appends this suffix to the
+// slug-based URL so we get the consolidated figures explicitly.
+const CONSOLIDATED_PATH_SUFFIX = "consolidated/";
+const REPORTING_BASIS_CONSOLIDATED = "consolidated" as const;
+const SOURCE_LABEL_CONSOLIDATED_PREFIX = "Screener fetch · Consolidated";
+
+// Sections we require to be present on the consolidated page for a fetch to
+// be considered valid. If neither shows up after parsing, we treat the page
+// as "no consolidated tables" — typically a non-consolidated-eligible
+// company or a Screener structure change — and refuse to emit rows.
+const REQUIRED_CONSOLIDATED_SECTIONS: ReadonlyArray<string> = [
+  "quarters",
+  "profit-loss",
+];
+
+function buildConsolidatedUrl(slug: string): string {
+  return `https://www.screener.in/company/${slug}/${CONSOLIDATED_PATH_SUFFIX}`;
+}
 
 type PeerMode = "static" | "headless" | "auto";
 
@@ -646,6 +677,7 @@ function peerTableToRows(
         companyName: company.displayName,
         peerCompanyName: peer.name,
         sourceMethod: "fetch",
+        reportingBasis: REPORTING_BASIS_CONSOLIDATED,
         sourceFile: `screener-fetch:${company.companyId}`,
         sourceSheet: "peers",
         sourceUrl,
@@ -658,7 +690,7 @@ function peerTableToRows(
         metricValue: value,
         unit,
         currency: null,
-        sourceLabel: `Screener fetch · ${sourceUrl}`,
+        sourceLabel: `${SOURCE_LABEL_CONSOLIDATED_PREFIX} · ${sourceUrl}`,
         importedAt: fetchedAt,
         confidence: value === null ? "low" : "high",
         notes: null,
@@ -710,7 +742,7 @@ function buildRows(args: BuildArgs): BuildResult {
   const { company, section, table, fetchedAt, sourceUrl } = args;
   const periods = table.headers.slice(1).map((s) => s.trim());
 
-  const sourceLabel = `Screener fetch · ${sourceUrl}`;
+  const sourceLabel = `${SOURCE_LABEL_CONSOLIDATED_PREFIX} · ${sourceUrl}`;
   const sourceFile = `screener-fetch:${company.companyId}`;
   const sourceSheet = section.sectionKey;
 
@@ -728,6 +760,7 @@ function buildRows(args: BuildArgs): BuildResult {
           companyName: company.displayName,
           peerCompanyName: peerName,
           sourceMethod: "fetch",
+          reportingBasis: REPORTING_BASIS_CONSOLIDATED,
           sourceFile,
           sourceSheet,
           sourceUrl,
@@ -763,6 +796,7 @@ function buildRows(args: BuildArgs): BuildResult {
         companyId: company.companyId,
         companyName: company.displayName,
         sourceMethod: "fetch",
+        reportingBasis: REPORTING_BASIS_CONSOLIDATED,
         sourceFile,
         sourceSheet,
         sourceUrl,
@@ -811,9 +845,10 @@ async function fetchCompany(
     };
   }
 
-  const url =
-    company.screenerUrl ??
-    `https://www.screener.in/company/${company.screenerSlug}/`;
+  // Hard rule: every fetch hits the explicit /consolidated/ page. We never
+  // fall through to the company's default page even if `company.screenerUrl`
+  // points there — that's metadata for "open on Screener" links only.
+  const url = buildConsolidatedUrl(company.screenerSlug);
 
   if (options.dryRun) {
     return {
@@ -846,20 +881,58 @@ async function fetchCompany(
         rowsWritten: 0,
         latestPeriod: null,
         errorMessage: message,
-        notes: null,
+        notes: `Consolidated fetch failed (${url}). Not falling back to standalone.`,
       },
       rows: [],
       peerRows: [],
       error: {
         sourceId: "screener",
         companyId: company.companyId,
-        message: `${company.companyId}: ${message}`,
+        message: `${company.companyId}: consolidated fetch failed — ${message}`,
         occurredAt: fetchedAt,
       },
     };
   }
 
   const $ = cheerio.load(html);
+
+  // Verify the consolidated page actually carries the expected financial
+  // sections before we accept any rows from it. A 200 OK with a redirect-to-
+  // standalone, an empty page, or a structure change all manifest here.
+  const missingRequired = REQUIRED_CONSOLIDATED_SECTIONS.filter((sectionId) => {
+    const t = extractTable($, sectionId);
+    return !t || t.rows.length === 0;
+  });
+  if (missingRequired.length === REQUIRED_CONSOLIDATED_SECTIONS.length) {
+    const note =
+      `Consolidated page ${url} returned no financial tables ` +
+      `(checked: ${REQUIRED_CONSOLIDATED_SECTIONS.join(", ")}). ` +
+      `Treating as error; not falling back to standalone.`;
+    return {
+      status: {
+        companyId: company.companyId,
+        companyName: company.displayName,
+        screenerSlug: company.screenerSlug,
+        screenerUrl: url,
+        fetchedAt,
+        status: "error",
+        sectionsFetched: [],
+        rowsWritten: 0,
+        latestPeriod: null,
+        errorMessage:
+          "Consolidated page returned no recognised financial sections.",
+        notes: note,
+      },
+      rows: [],
+      peerRows: [],
+      error: {
+        sourceId: "screener",
+        companyId: company.companyId,
+        message: `${company.companyId}: consolidated page returned no recognised sections`,
+        occurredAt: fetchedAt,
+      },
+    };
+  }
 
   const sectionsToRun = options.sections
     ? SECTIONS.filter((s) => options.sections!.includes(s.sectionKey))
@@ -1028,26 +1101,43 @@ async function main(): Promise<void> {
   // Merge: preserve `sourceMethod === "import"` rows; replace `"fetch"` rows.
   const sharedSource: SourceMeta = {
     sourceClass: "manual",
-    sourceUrl: "https://www.screener.in/company/",
-    sourceLabel: "Screener fetch + manual import (shared snapshot)",
+    sourceUrl: "https://www.screener.in/company/<slug>/consolidated/",
+    sourceLabel:
+      "Screener fetch (Consolidated) + manual import (shared snapshot)",
     fetchedAt: new Date().toISOString(),
     publishedAt: null,
     notes:
-      "Rows tagged sourceMethod='fetch' are managed by screener-fetch.ts; rows tagged 'import' are managed by screener-export.ts.",
+      "Rows tagged sourceMethod='fetch' are written by screener-fetch.ts " +
+      "and always carry reportingBasis='consolidated'. Rows tagged 'import' " +
+      "are managed by screener-export.ts and are filtered out of dashboard " +
+      "views unless they also carry reportingBasis='consolidated'.",
   };
 
-  // Only touch fetch rows for companies attempted this run. Rows for other
-  // companies — whether method=fetch or method=import — pass through
-  // untouched. This means `--company tcs` (even if blocked) leaves
-  // Infosys / HCLTech / Wipro rows alone.
+  // Merge rules for screener-normalized-financials.json (Step 12 policy):
+  //   - Import rows (sourceMethod === "import") are owned by the manual
+  //     export script; we always pass them through untouched.
+  //   - Fetch rows without `reportingBasis === "consolidated"` are stale
+  //     standalone-era data and MUST be dropped on the next successful
+  //     consolidated run, regardless of whether their company was
+  //     attempted this run. This is the cleanse step that removes the
+  //     pre-Step-12 dataset.
+  //   - Fetch rows that ARE already consolidated and belong to a company
+  //     not attempted this run are preserved (so `--company tcs` can run
+  //     in isolation without wiping a previously-fetched consolidated
+  //     Infosys / HCLTech / etc).
+  //   - Fetch rows for companies attempted this run are fully replaced by
+  //     `allFetchRows` (which are guaranteed consolidated by buildRows).
   const attemptedCompanyIds = new Set(companies.map((c) => c.companyId));
   const existingFinancials =
     (await readSnapshot<ScreenerCompanyFinancialRow>(
       "screener-normalized-financials.json"
     )) ?? null;
   const preservedFinancials = (existingFinancials?.rows ?? []).filter(
-    (row) =>
-      row.sourceMethod !== "fetch" || !attemptedCompanyIds.has(row.companyId)
+    (row) => {
+      if (row.sourceMethod !== "fetch") return true; // import path untouched
+      if (row.reportingBasis !== REPORTING_BASIS_CONSOLIDATED) return false; // drop standalone-era
+      return !attemptedCompanyIds.has(row.companyId); // preserve other companies' consolidated rows
+    }
   );
   const mergedFinancials = [...preservedFinancials, ...allFetchRows];
 
@@ -1072,10 +1162,14 @@ async function main(): Promise<void> {
     (await readSnapshot<ScreenerPeerComparisonRow>(
       "screener-peer-comparison.json"
     )) ?? null;
-  // Same per-company preservation rule as the financials merge above.
+  // Same merge policy as the financials snapshot — including the drop of
+  // any pre-Step-12 standalone-era fetch rows.
   const preservedPeer = (existingPeer?.rows ?? []).filter(
-    (row) =>
-      row.sourceMethod !== "fetch" || !attemptedCompanyIds.has(row.companyId)
+    (row) => {
+      if (row.sourceMethod !== "fetch") return true;
+      if (row.reportingBasis !== REPORTING_BASIS_CONSOLIDATED) return false;
+      return !attemptedCompanyIds.has(row.companyId);
+    }
   );
   const mergedPeer = [...preservedPeer, ...allFetchPeerRows];
 
@@ -1105,12 +1199,13 @@ async function main(): Promise<void> {
         rowCount: statusRows.length,
         source: {
           sourceClass: "manual",
-          sourceUrl: "https://www.screener.in/company/",
-          sourceLabel: "Screener automated fetch",
+          sourceUrl: "https://www.screener.in/company/<slug>/consolidated/",
+          sourceLabel: "Screener automated fetch (Consolidated)",
           fetchedAt: new Date().toISOString(),
           publishedAt: null,
           notes:
-            "Cached. Dashboard reads these rows; the UI never live-fetches.",
+            "Cached. Dashboard reads these rows; the UI never live-fetches. " +
+            "Reporting basis is always consolidated; standalone fetches are not performed.",
         },
         notesWhenEmpty:
           "No companies attempted. Check --company filter or config.",

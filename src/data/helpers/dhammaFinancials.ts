@@ -364,7 +364,37 @@ export type DataProvenance =
 //
 // These let the UI pick "official-filing first, Screener-import second,
 // dash otherwise" without writing the rule in every component.
+//
+// Reporting-basis policy (Step 12): Dashboard 1 uses CONSOLIDATED rows only.
+// Every helper below filters on `reportingBasis === "consolidated"` before
+// returning data; standalone-era rows (reportingBasis === "standalone"), and
+// pre-Step-12 rows (reportingBasis === null / missing) are treated as if they
+// did not exist. UI components must NOT bypass these helpers.
 // ---------------------------------------------------------------------------
+
+export const REPORTING_BASIS_CONSOLIDATED = "consolidated" as const;
+
+export function isConsolidatedScreenerRow(
+  row: Pick<ScreenerCompanyFinancialRow, "reportingBasis">
+): boolean {
+  return row.reportingBasis === REPORTING_BASIS_CONSOLIDATED;
+}
+
+// Number of consolidated Screener rows available for a given company (or
+// all companies if omitted). Used by DataStatusPanel + KPI cards to decide
+// whether to render data or a "consolidated rows missing" warning.
+export function consolidatedScreenerRowCount(
+  rows: readonly ScreenerCompanyFinancialRow[],
+  companyId?: string
+): number {
+  let n = 0;
+  for (const row of rows) {
+    if (!isConsolidatedScreenerRow(row)) continue;
+    if (companyId && row.companyId !== companyId) continue;
+    n++;
+  }
+  return n;
+}
 
 export interface ScreenerLatestMetric {
   value: number | null;
@@ -382,6 +412,9 @@ export function screenerLatestMetric(
 ): ScreenerLatestMetric | null {
   const filtered = rows.filter(
     (row) =>
+      // Consolidated-only policy (Step 12): a row without
+      // reportingBasis === "consolidated" never reaches the dashboard.
+      isConsolidatedScreenerRow(row) &&
       row.companyId === companyId &&
       row.metricCanonical === canonical &&
       (periodType ? row.periodType === periodType : true) &&
@@ -422,6 +455,8 @@ export function screenerStatementRows(
   const byKey = new Map<string, ScreenerPeriodSlice>();
   for (const row of rows) {
     if (
+      // Consolidated-only policy (Step 12).
+      !isConsolidatedScreenerRow(row) ||
       row.companyId !== companyId ||
       row.sheetType !== sheetType ||
       (sourceMethod && row.sourceMethod !== sourceMethod) ||
@@ -464,6 +499,7 @@ export function screenerPeerRows(
     peerCompanyName: string;
     sourceFile: string;
     sourceMethod: "fetch" | "import";
+    reportingBasis: "consolidated" | "standalone" | null;
     metricCanonical: string | null;
     metricValue: number | null;
   }[],
@@ -473,6 +509,8 @@ export function screenerPeerRows(
   for (const row of rows) {
     if (!row.metricCanonical) continue;
     if (sourceMethod && row.sourceMethod !== sourceMethod) continue;
+    // Consolidated-only policy (Step 12).
+    if (row.reportingBasis !== REPORTING_BASIS_CONSOLIDATED) continue;
     const key = row.peerCompanyName.trim();
     if (!key) continue;
     let peer = byPeer.get(key);
@@ -589,6 +627,8 @@ export function latestScreenerValue(
   const filtered = rows
     .filter(
       (r) =>
+        // Consolidated-only policy (Step 12).
+        isConsolidatedScreenerRow(r) &&
         r.companyId === companyId &&
         r.metricCanonical === canonical &&
         r.periodType === periodType &&
@@ -621,6 +661,8 @@ export function latestYoYGrowth(
   const filtered = rows
     .filter(
       (r) =>
+        // Consolidated-only policy (Step 12).
+        isConsolidatedScreenerRow(r) &&
         r.companyId === companyId &&
         r.metricCanonical === canonical &&
         r.periodType === periodType &&
@@ -832,7 +874,10 @@ export function provenanceLabel(provenance: DataProvenance): string {
     case "official-filing":
       return "Official filing";
     case "screener-fetch":
-      return "Screener fetch";
+      // Dashboard 1 only consumes consolidated Screener data; the badge
+      // makes that explicit so a reviewer can never mistake a row for
+      // standalone.
+      return "Screener fetch · Consolidated";
     case "screener-import":
       return "Screener import";
     case "audit":

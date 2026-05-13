@@ -135,8 +135,8 @@ function ProfitLossTable({ companyId, periodView }: BaseTableProps) {
       message="Discovery is wired but filing extraction has not produced rows for this company yet."
       hint={
         periodView === "quarters"
-          ? "Quarterly P&L will populate once NSE/BSE filings are parsed, the automated Screener fetch picks up the company, or a manual export is dropped into data/manual/screener/."
-          : "Annual P&L will populate from Q4 / annual report extraction, automated Screener fetch, or a manual Screener export."
+          ? "Quarterly P&L will populate once NSE/BSE filings are parsed or the automated Screener fetch returns consolidated rows for this company. Non-consolidated rows are excluded by policy."
+          : "Annual P&L will populate from Q4 / annual report extraction or from the consolidated Screener fetch. Non-consolidated rows are excluded by policy."
       }
     />
   );
@@ -229,10 +229,12 @@ function renderScreenerPl(
   provenance: "screener-fetch" | "screener-import"
 ) {
   const sourceFile = slices[0]?.sourceFile ?? "";
+  // Step 12 policy: helpers only return rows where reportingBasis ===
+  // "consolidated", so the badge can safely state Consolidated here.
   const note =
     provenance === "screener-fetch"
-      ? `P&L from Screener fetch · ${sourceFile}`
-      : `P&L from Screener export · ${sourceFile}`;
+      ? `P&L from Screener fetch · Consolidated · ${sourceFile}`
+      : `P&L from Screener export · Consolidated · ${sourceFile}`;
   return (
     <>
       <TableHeader provenance={provenance} note={note} />
@@ -510,10 +512,12 @@ function renderScreenerStatement(
   provenance: "screener-fetch" | "screener-import"
 ) {
   const sourceFile = slices[0]?.sourceFile ?? "";
+  // Step 12 policy: helpers only return rows where reportingBasis ===
+  // "consolidated", so the badge can safely state Consolidated here.
   const note =
     provenance === "screener-fetch"
-      ? `${label} from Screener fetch · ${sourceFile}`
-      : `${label} from Screener export · ${sourceFile}`;
+      ? `${label} from Screener fetch · Consolidated · ${sourceFile}`
+      : `${label} from Screener export · Consolidated · ${sourceFile}`;
   return (
     <>
       <TableHeader provenance={provenance} note={note} />

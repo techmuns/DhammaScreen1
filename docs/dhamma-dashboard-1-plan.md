@@ -366,3 +366,60 @@ pilot peer or one of the newly added 16 — is written to
 **Screener fetch** badge. The manual-import path (`sourceMethod:
 "import"`) remains available as the analyst fallback for any company
 the fetcher cannot reach.
+
+## Reporting basis policy
+
+Dashboard 1 reports **consolidated financials only**. The client requirement
+is absolute: standalone figures are never shown, never KPI-benchmarked, and
+never mixed with consolidated rows.
+
+### Rules
+
+1. **Dashboard uses consolidated data only.** Every value in a KPI card,
+   peer-benchmark strip, or financial statement table is sourced from a row
+   tagged `reportingBasis: "consolidated"`. Helpers in
+   `src/data/helpers/dhammaFinancials.ts` enforce this filter at the
+   single point that converts snapshot rows into render-ready slices.
+
+2. **Standalone data is not used for KPI benchmarking.** Pre-Step-12 rows,
+   any row with `reportingBasis: "standalone"`, and any row with a
+   `null` / missing basis are excluded from every dashboard view.
+
+3. **Screener fetch must hit explicit consolidated pages.** The fetcher
+   builds its target URL as:
+
+       https://www.screener.in/company/<slug>/consolidated/
+
+   It does **not** fall back to `https://www.screener.in/company/<slug>/`
+   (the default page, which is standalone for most non-finance issuers).
+   If the consolidated page fails (HTTP error, no recognised sections,
+   redirect to a page without financial tables) the company is marked
+   `error` for that run and **no rows are written**.
+
+4. **Non-consolidated data is excluded or marked invalid.** On every
+   successful run, the merge step drops any pre-existing fetch row whose
+   `reportingBasis !== "consolidated"`, regardless of company. The
+   manual-import path is preserved but its rows currently carry
+   `reportingBasis: null` and are therefore excluded from dashboard use
+   until an analyst can confirm their basis and relabel them.
+
+### Why
+
+Indian listed groups frequently have a parent-company P&L that excludes
+subsidiaries — for IT services in particular (Tata Elxsi, Tata Technologies,
+LTTS) the standalone vs consolidated revenue and margin gap is large.
+Showing the wrong one would silently misprice every peer card.
+
+### Operational notes
+
+- The Screener fetcher writes `screener-normalized-financials.json` with
+  one shared snapshot for fetch + import; rows are distinguished by
+  `sourceMethod` and gated by `reportingBasis`. Status is tracked in
+  `screener-fetch-status.json`.
+- The UI shows a per-company warning in the KPI section when no
+  consolidated rows are available, instructing the analyst to run the
+  consolidated fetch workflow.
+- The Data Status panel labels the Screener fetch row as
+  **"Screener fetch · Consolidated"** and surfaces a `non-consolidated`
+  status string + warning tone whenever standalone-era rows are present
+  but consolidated rows are not.

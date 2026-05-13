@@ -1,3 +1,4 @@
+import { isConsolidatedScreenerRow } from "../data/helpers/dhammaFinancials";
 import {
   filingManifestSnapshot,
   guidanceCommentarySnapshot,
@@ -16,22 +17,33 @@ interface PathStatus {
   detail: string;
 }
 
-function countRowsByMethod(method: "fetch" | "import"): { rows: number; files: number } {
+// Counts rows that the dashboard will actually render: same
+// sourceMethod filter as before, but also gated on the Step 12
+// consolidated-only policy. The "all rows" count is kept too so the
+// panel can flag when non-consolidated rows are present.
+interface MethodRowCount {
+  consolidatedRows: number;
+  allRows: number;
+  files: number;
+}
+
+function countRowsByMethod(method: "fetch" | "import"): MethodRowCount {
   const files = new Set<string>();
-  let rows = 0;
+  let consolidatedRows = 0;
+  let allRows = 0;
   for (const row of screenerNormalizedSnapshot.rows) {
-    if (row.sourceMethod === method) {
-      rows++;
-      files.add(row.sourceFile);
-    }
+    if (row.sourceMethod !== method) continue;
+    allRows++;
+    files.add(row.sourceFile);
+    if (isConsolidatedScreenerRow(row)) consolidatedRows++;
   }
   for (const row of screenerPeerSnapshot.rows) {
-    if (row.sourceMethod === method) {
-      rows++;
-      files.add(row.sourceFile);
-    }
+    if (row.sourceMethod !== method) continue;
+    allRows++;
+    files.add(row.sourceFile);
+    if (isConsolidatedScreenerRow(row)) consolidatedRows++;
   }
-  return { rows, files: files.size };
+  return { consolidatedRows, allRows, files: files.size };
 }
 
 function paths(): PathStatus[] {
@@ -51,26 +63,48 @@ function paths(): PathStatus[] {
         : "neutral";
 
   // Fetch tone is driven by the per-company status rows; any "ok"/"partial"
-  // wins; otherwise tone follows whether everyone was blocked.
+  // wins; otherwise tone follows whether everyone was blocked. Additionally,
+  // if every fetched row is non-consolidated (Step 12 cutover state), tone
+  // drops to "warn" because nothing renders on the dashboard.
   const fetchRows = fetchStatus.rows;
-  const fetchOk = fetchRows.some((r) => r.status === "ok" || r.status === "partial");
-  const fetchBlocked = fetchRows.length > 0 && fetchRows.every(
-    (r) => r.status === "blocked" || r.status === "error"
+  const anyFetchSucceeded = fetchRows.some(
+    (r) => r.status === "ok" || r.status === "partial"
   );
-  const fetchTone: Tone = fetchOk ? "ok" : fetchBlocked ? "warn" : "neutral";
-  const fetchLabel = fetchOk
+  const allFetchBlocked =
+    fetchRows.length > 0 &&
+    fetchRows.every((r) => r.status === "blocked" || r.status === "error");
+  const hasConsolidatedFetch = fetchCounts.consolidatedRows > 0;
+  const hasStaleStandalone =
+    fetchCounts.allRows > 0 && fetchCounts.consolidatedRows === 0;
+  const fetchTone: Tone = hasConsolidatedFetch
     ? "ok"
-    : fetchBlocked
-      ? "blocked"
-      : fetchStatus.meta.status;
+    : allFetchBlocked || hasStaleStandalone
+      ? "warn"
+      : anyFetchSucceeded
+        ? "warn"
+        : "neutral";
+  const fetchLabel = hasConsolidatedFetch
+    ? "consolidated"
+    : hasStaleStandalone
+      ? "non-consolidated"
+      : allFetchBlocked
+        ? "blocked"
+        : anyFetchSucceeded
+          ? "partial"
+          : fetchStatus.meta.status;
 
-  const importTone: Tone = importCounts.rows > 0 ? "ok" : "neutral";
+  const importTone: Tone =
+    importCounts.consolidatedRows > 0
+      ? "ok"
+      : importCounts.allRows > 0
+        ? "warn"
+        : "neutral";
   const importLabel =
-    importCounts.rows > 0
-      ? importStatus.status === "partial"
-        ? "partial"
-        : "ok"
-      : importStatus.status;
+    importCounts.consolidatedRows > 0
+      ? "ok"
+      : importCounts.allRows > 0
+        ? "non-consolidated"
+        : importStatus.status;
 
   return [
     {
@@ -87,12 +121,13 @@ function paths(): PathStatus[] {
               : "No filings discovered yet",
     },
     {
-      label: "Screener fetch",
+      label: "Screener fetch · Consolidated",
       status: fetchLabel,
       tone: fetchTone,
-      detail:
-        fetchCounts.rows > 0
-          ? `${fetchCounts.rows} rows · ${fetchRows.length} companies attempted`
+      detail: hasConsolidatedFetch
+        ? `${fetchCounts.consolidatedRows} consolidated rows · ${fetchRows.length} companies attempted`
+        : hasStaleStandalone
+          ? `${fetchCounts.allRows} non-consolidated rows excluded — run consolidated fetch`
           : fetchRows.length === 0
             ? "Not run yet"
             : "All companies blocked or empty",
@@ -102,9 +137,11 @@ function paths(): PathStatus[] {
       status: importLabel,
       tone: importTone,
       detail:
-        importCounts.rows > 0
-          ? `${importCounts.rows} rows · ${importCounts.files} file${importCounts.files === 1 ? "" : "s"}`
-          : "No client exports yet",
+        importCounts.consolidatedRows > 0
+          ? `${importCounts.consolidatedRows} consolidated rows · ${importCounts.files} file${importCounts.files === 1 ? "" : "s"}`
+          : importCounts.allRows > 0
+            ? `${importCounts.allRows} imported rows excluded (basis not labelled consolidated)`
+            : "No client exports yet",
     },
     {
       label: "Guidance commentary",
