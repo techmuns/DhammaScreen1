@@ -543,6 +543,228 @@ export function dataSourceForMetric(args: {
   return "pending";
 }
 
+// ---------------------------------------------------------------------------
+// KPI peer benchmarking.
+//
+// Peer comparison is folded INTO the KPI cards rather than rendered as a
+// standalone table. For each KPI, we line up the selected company against
+// every other company in the same peerGroupId, compute a peer average and
+// a rank, and tag the position (above / below / in-line / pending).
+// ---------------------------------------------------------------------------
+
+export function peerGroupForCompany(
+  companies: ReadonlyArray<CompanyMaster>,
+  companyId: string
+): string | null {
+  const c = companies.find((c) => c.companyId === companyId);
+  return c?.peerGroupId ?? null;
+}
+
+// Returns the companyIds in the same peer group as the input, including
+// the input itself. Falls back to `[companyId]` if no peer group exists.
+export function companiesInPeerGroup(
+  companies: ReadonlyArray<CompanyMaster>,
+  companyId: string
+): string[] {
+  const peerGroupId = peerGroupForCompany(companies, companyId);
+  if (!peerGroupId) return [companyId];
+  return companies
+    .filter((c) => c.peerGroupId === peerGroupId)
+    .map((c) => c.companyId);
+}
+
+interface MetricLookupResult {
+  value: number | null;
+  period: string | null;
+  sourceMethod: "fetch" | "import" | null;
+}
+
+// Latest value for (company × metric × periodType) from the Screener rows.
+export function latestScreenerValue(
+  rows: ReadonlyArray<ScreenerCompanyFinancialRow>,
+  companyId: string,
+  canonical: string,
+  periodType: "year" | "quarter"
+): MetricLookupResult {
+  const filtered = rows
+    .filter(
+      (r) =>
+        r.companyId === companyId &&
+        r.metricCanonical === canonical &&
+        r.periodType === periodType &&
+        r.periodSortKey !== null
+    )
+    .sort((a, b) =>
+      (a.periodSortKey ?? "").localeCompare(b.periodSortKey ?? "")
+    );
+  if (filtered.length === 0) {
+    return { value: null, period: null, sourceMethod: null };
+  }
+  const latest = filtered[filtered.length - 1];
+  return {
+    value: isFiniteNumber(latest.metricValue) ? latest.metricValue : null,
+    period: latest.period,
+    sourceMethod: latest.sourceMethod,
+  };
+}
+
+// Year-on-year growth in percentage points. For periodType=year, compares
+// the latest annual value to the prior annual value. For periodType=quarter,
+// compares the latest quarter to the same quarter four periods back.
+// Returns null when either endpoint is missing or the prior value is zero.
+export function latestYoYGrowth(
+  rows: ReadonlyArray<ScreenerCompanyFinancialRow>,
+  companyId: string,
+  canonical: string,
+  periodType: "year" | "quarter"
+): { value: number | null; period: string | null } {
+  const filtered = rows
+    .filter(
+      (r) =>
+        r.companyId === companyId &&
+        r.metricCanonical === canonical &&
+        r.periodType === periodType &&
+        r.periodSortKey !== null &&
+        isFiniteNumber(r.metricValue)
+    )
+    .sort((a, b) =>
+      (a.periodSortKey ?? "").localeCompare(b.periodSortKey ?? "")
+    );
+  if (filtered.length < 2) return { value: null, period: null };
+  const latest = filtered[filtered.length - 1];
+  const lookback = periodType === "quarter" ? 4 : 1;
+  const priorIdx = filtered.length - 1 - lookback;
+  if (priorIdx < 0) return { value: null, period: latest.period };
+  const prior = filtered[priorIdx];
+  if (!isFiniteNumber(prior.metricValue) || prior.metricValue === 0) {
+    return { value: null, period: latest.period };
+  }
+  const growth =
+    ((latest.metricValue as number) - prior.metricValue) /
+    Math.abs(prior.metricValue);
+  // Return as percentage points (e.g. 0.124 → 12.4)
+  return { value: growth * 100, period: latest.period };
+}
+
+export type PeerBenchmarkPosition =
+  | "above"
+  | "below"
+  | "in-line"
+  | "pending";
+
+export interface PeerBenchmarkPeerEntry {
+  companyId: string;
+  displayName: string;
+  value: number | null;
+  period: string | null;
+  isSelf: boolean;
+}
+
+export interface PeerBenchmark {
+  selfCompanyId: string;
+  selfValue: number | null;
+  selfPeriod: string | null;
+  peerEntries: PeerBenchmarkPeerEntry[];
+  peerAverage: number | null;
+  rank: number | null;
+  rankOf: number;
+  position: PeerBenchmarkPosition;
+}
+
+// Builds a peer benchmark for one (company × metric) cell.
+//   kind="value"     → latestScreenerValue per peer
+//   kind="growth-yoy"→ latestYoYGrowth   per peer
+// Peer average = arithmetic mean over peers with a finite value (self
+// included). Rank = 1 means highest; "—" when self has no value.
+// `inLineTolerance` is a relative fraction (default 5%) used to bucket
+// the position label as above / below / in-line.
+export function buildPeerBenchmark(args: {
+  companies: ReadonlyArray<CompanyMaster>;
+  screenerRows: ReadonlyArray<ScreenerCompanyFinancialRow>;
+  companyId: string;
+  canonical: string;
+  kind: "value" | "growth-yoy";
+  periodType: "year" | "quarter";
+  inLineTolerance?: number;
+}): PeerBenchmark {
+  const peerIds = companiesInPeerGroup(args.companies, args.companyId);
+  const peerEntries: PeerBenchmarkPeerEntry[] = peerIds.map((pid) => {
+    const co = args.companies.find((c) => c.companyId === pid);
+    const displayName = co?.displayName ?? pid;
+    const lookup =
+      args.kind === "growth-yoy"
+        ? latestYoYGrowth(args.screenerRows, pid, args.canonical, args.periodType)
+        : latestScreenerValue(
+            args.screenerRows,
+            pid,
+            args.canonical,
+            args.periodType
+          );
+    return {
+      companyId: pid,
+      displayName,
+      value: lookup.value,
+      period: lookup.period,
+      isSelf: pid === args.companyId,
+    };
+  });
+
+  const finiteValues = peerEntries
+    .filter((e) => isFiniteNumber(e.value))
+    .map((e) => e.value as number);
+  const peerAverage =
+    finiteValues.length > 0
+      ? finiteValues.reduce((a, b) => a + b, 0) / finiteValues.length
+      : null;
+
+  const ranked = [...peerEntries]
+    .filter((e) => isFiniteNumber(e.value))
+    .sort((a, b) => (b.value as number) - (a.value as number));
+  const rankIdx = ranked.findIndex((e) => e.companyId === args.companyId);
+  const rank = rankIdx >= 0 ? rankIdx + 1 : null;
+
+  const selfEntry = peerEntries.find((e) => e.companyId === args.companyId);
+  const selfValue = selfEntry?.value ?? null;
+  const selfPeriod = selfEntry?.period ?? null;
+
+  const tolerance = args.inLineTolerance ?? 0.05;
+  let position: PeerBenchmarkPosition = "pending";
+  if (isFiniteNumber(selfValue) && isFiniteNumber(peerAverage)) {
+    if (peerAverage === 0) {
+      position = "in-line";
+    } else {
+      const ratio = (selfValue - peerAverage) / Math.abs(peerAverage);
+      if (Math.abs(ratio) <= tolerance) position = "in-line";
+      else if (ratio > 0) position = "above";
+      else position = "below";
+    }
+  }
+
+  return {
+    selfCompanyId: args.companyId,
+    selfValue,
+    selfPeriod,
+    peerEntries,
+    peerAverage,
+    rank,
+    rankOf: ranked.length,
+    position,
+  };
+}
+
+export function positionLabel(position: PeerBenchmarkPosition): string {
+  switch (position) {
+    case "above":
+      return "Above peer average";
+    case "below":
+      return "Below peer average";
+    case "in-line":
+      return "In line with peers";
+    case "pending":
+      return "Data pending";
+  }
+}
+
 // Re-exports used by helper consumers; keeps the public surface explicit.
 export type { Comparable };
 
