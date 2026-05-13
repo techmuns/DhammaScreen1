@@ -102,6 +102,12 @@ export interface CompanyMaster {
   reportingBasisDefault: ReportingBasis;
   irPageUrl: string | null;
   status: CompanyStatus;
+  // Screener automated-fetch settings. `null` slug → skip fetch for this company.
+  screenerSlug: string | null;
+  screenerUrl: string | null;
+  fetchEnabled: boolean;
+  fetchPriority: number;
+  sourceNotes: string | null;
   notes: string | null;
 }
 
@@ -335,6 +341,11 @@ export type ScreenerImportConfidence = "high" | "medium" | "low";
 
 export type ScreenerPeriodType = "quarter" | "year" | "unknown";
 
+// Tells the dashboard whether a Screener row was hand-imported by an
+// analyst or auto-fetched from Screener.in. Lives on every shared row so
+// the import and fetch ingestion scripts can co-exist without overwriting.
+export type ScreenerSourceMethod = "fetch" | "import";
+
 export interface ScreenerImportMeta {
   importId: string;
   sourceFile: string;
@@ -349,8 +360,10 @@ export interface ScreenerImportMeta {
 export interface ScreenerCompanyFinancialRow {
   companyId: string;
   companyName: string;
+  sourceMethod: ScreenerSourceMethod;
   sourceFile: string;
   sourceSheet: string | null;
+  sourceUrl: string | null;
   sheetType: ScreenerSheetType;
   period: string | null;
   periodSortKey: string | null;
@@ -393,4 +406,29 @@ export interface ScreenerImportStatusRow {
   importedAt: string;
   notes: string | null;
   errorMessage: string | null;
+}
+
+// Per-company status from the automated Screener fetcher.
+// Lives in its own snapshot (`screener-fetch-status.json`) so the
+// dashboard can show fetch health independently from manual-import health.
+
+export type ScreenerFetchStatus =
+  | "ok"
+  | "partial"
+  | "blocked"
+  | "error"
+  | "skipped";
+
+export interface ScreenerFetchStatusRow {
+  companyId: string;
+  companyName: string;
+  screenerSlug: string | null;
+  screenerUrl: string | null;
+  fetchedAt: string | null;
+  status: ScreenerFetchStatus;
+  sectionsFetched: string[];
+  rowsWritten: number;
+  latestPeriod: string | null;
+  errorMessage: string | null;
+  notes: string | null;
 }

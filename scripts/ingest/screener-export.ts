@@ -95,6 +95,22 @@ async function writeSnapshot<TRow>(
   await writeFile(filePath, JSON.stringify(snapshot, null, 2) + "\n", "utf8");
 }
 
+// Read an existing snapshot so we can preserve rows owned by the other
+// ingestion script (e.g. screener-fetch.ts). Returns null if the file is
+// missing or unreadable.
+async function readSnapshot<TRow>(
+  filename: string
+): Promise<Snapshot<TRow> | null> {
+  const filePath = resolve(SNAPSHOT_DIR, filename);
+  if (!existsSync(filePath)) return null;
+  try {
+    const raw = await readFile(filePath, "utf8");
+    return JSON.parse(raw) as Snapshot<TRow>;
+  } catch {
+    return null;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Cell / sheet classification
 // ---------------------------------------------------------------------------
@@ -326,8 +342,10 @@ function normalizeSheet(args: {
           companyId,
           companyName,
           peerCompanyName: peerName,
+          sourceMethod: "import",
           sourceFile,
           sourceSheet: sheet.sheetName,
+          sourceUrl: null,
           sheetType,
           period: null,
           periodSortKey: null,
@@ -366,8 +384,10 @@ function normalizeSheet(args: {
       rows.push({
         companyId,
         companyName,
+        sourceMethod: "import",
         sourceFile,
         sourceSheet: sheet.sheetName,
+        sourceUrl: null,
         sheetType,
         period: parsedPeriod?.display ?? period,
         periodSortKey: parsedPeriod?.sortKey ?? null,
@@ -402,6 +422,26 @@ function classifyConfidence(
 }
 
 // ---------------------------------------------------------------------------
+// Cross-method preservation
+// ---------------------------------------------------------------------------
+
+async function loadPreservedFinancials(): Promise<ScreenerCompanyFinancialRow[]> {
+  const existing = await readSnapshot<ScreenerCompanyFinancialRow>(
+    "screener-normalized-financials.json"
+  );
+  if (!existing) return [];
+  return existing.rows.filter((row) => row.sourceMethod !== "import");
+}
+
+async function loadPreservedPeer(): Promise<ScreenerPeerComparisonRow[]> {
+  const existing = await readSnapshot<ScreenerPeerComparisonRow>(
+    "screener-peer-comparison.json"
+  );
+  if (!existing) return [];
+  return existing.rows.filter((row) => row.sourceMethod !== "import");
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -427,7 +467,11 @@ async function main(): Promise<void> {
   };
 
   if (files.length === 0) {
-    // Cold path: write empty snapshots and exit cleanly.
+    // Cold path. Preserve any fetched rows so this ingest doesn't wipe the
+    // fetch path's work; only touch the import-owned subset.
+    const preservedFinancials = await loadPreservedFinancials();
+    const preservedPeer = await loadPreservedPeer();
+
     await writeSnapshot<ScreenerImportStatusRow>("screener-import-status.json", {
       meta: buildMeta({
         snapshotId: "screener-import-status",
@@ -446,13 +490,13 @@ async function main(): Promise<void> {
         meta: buildMeta({
           snapshotId: "screener-normalized-financials",
           description:
-            "Normalized rows from client-provided Screener exports — import-backed, NOT source-backed.",
-          rowCount: 0,
+            "Normalized rows from Screener (fetched or manually imported).",
+          rowCount: preservedFinancials.length,
           source: sourceMeta,
           notesWhenEmpty:
-            "No Screener exports have been provided yet. Drop files into data/manual/screener/.",
+            "No Screener data yet. Drop files into data/manual/screener/ or run `npm run ingest:screener:fetch`.",
         }),
-        rows: [],
+        rows: preservedFinancials,
       }
     );
     await writeSnapshot<ScreenerPeerComparisonRow>(
@@ -461,16 +505,18 @@ async function main(): Promise<void> {
         meta: buildMeta({
           snapshotId: "screener-peer-comparison",
           description:
-            "Peer-comparison rows extracted from Screener exports' Peer Comparison sheets.",
-          rowCount: 0,
+            "Peer-comparison rows from Screener (fetched or manually imported).",
+          rowCount: preservedPeer.length,
           source: sourceMeta,
           notesWhenEmpty:
-            "No Screener exports with a Peer Comparison sheet have been provided yet.",
+            "No Screener peer comparison data yet.",
         }),
-        rows: [],
+        rows: preservedPeer,
       }
     );
-    console.log("[screener] no files in data/manual/screener/. Wrote empty snapshots.");
+    console.log(
+      `[screener] no files in data/manual/screener/. Preserved fetched rows (financials=${preservedFinancials.length}, peer=${preservedPeer.length}).`
+    );
     return;
   }
 
@@ -546,19 +592,25 @@ async function main(): Promise<void> {
     rows: statusRows,
   });
 
+  // Merge with fetch rows so this script never overwrites the fetcher's work.
+  const preservedFinancials = await loadPreservedFinancials();
+  const mergedFinancials = [...preservedFinancials, ...allNormalized];
+  const preservedPeer = await loadPreservedPeer();
+  const mergedPeer = [...preservedPeer, ...allPeer];
+
   await writeSnapshot<ScreenerCompanyFinancialRow>(
     "screener-normalized-financials.json",
     {
       meta: buildMeta({
         snapshotId: "screener-normalized-financials",
         description:
-          "Normalized rows from client-provided Screener exports — import-backed, NOT source-backed.",
-        rowCount: allNormalized.length,
+          "Normalized rows from Screener (fetched or manually imported).",
+        rowCount: mergedFinancials.length,
         source: sourceMeta,
-        notesWhenEmpty: "No parseable financial rows in provided files.",
+        notesWhenEmpty: "No parseable financial rows yet.",
         errors,
       }),
-      rows: allNormalized,
+      rows: mergedFinancials,
     }
   );
 
@@ -568,13 +620,13 @@ async function main(): Promise<void> {
       meta: buildMeta({
         snapshotId: "screener-peer-comparison",
         description:
-          "Peer-comparison rows extracted from Screener exports' Peer Comparison sheets.",
-        rowCount: allPeer.length,
+          "Peer-comparison rows from Screener (fetched or manually imported).",
+        rowCount: mergedPeer.length,
         source: sourceMeta,
-        notesWhenEmpty: "No Peer Comparison sheets found in provided files.",
+        notesWhenEmpty: "No Peer Comparison data yet.",
         errors,
       }),
-      rows: allPeer,
+      rows: mergedPeer,
     }
   );
 

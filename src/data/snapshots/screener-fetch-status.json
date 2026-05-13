@@ -1,0 +1,98 @@
+{
+  "meta": {
+    "snapshotId": "screener-fetch-status",
+    "description": "Per-company health of the automated Screener fetcher.",
+    "generatedAt": "2026-05-13T09:43:38.668Z",
+    "rowCount": 4,
+    "status": "partial",
+    "notes": "Some companies failed (4 errors recorded).",
+    "source": {
+      "sourceClass": "manual",
+      "sourceUrl": "https://www.screener.in/company/",
+      "sourceLabel": "Screener automated fetch",
+      "fetchedAt": "2026-05-13T09:43:38.668Z",
+      "publishedAt": null,
+      "notes": "Cached. Dashboard reads these rows; the UI never live-fetches."
+    },
+    "errors": [
+      {
+        "sourceId": "screener",
+        "companyId": "tcs",
+        "message": "tcs: HTTP 403",
+        "occurredAt": "2026-05-13T09:43:25.049Z"
+      },
+      {
+        "sourceId": "screener",
+        "companyId": "infosys",
+        "message": "infosys: HTTP 403",
+        "occurredAt": "2026-05-13T09:43:29.119Z"
+      },
+      {
+        "sourceId": "screener",
+        "companyId": "hcltech",
+        "message": "hcltech: HTTP 403",
+        "occurredAt": "2026-05-13T09:43:33.134Z"
+      },
+      {
+        "sourceId": "screener",
+        "companyId": "wipro",
+        "message": "wipro: HTTP 403",
+        "occurredAt": "2026-05-13T09:43:37.151Z"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "companyId": "tcs",
+      "companyName": "TCS",
+      "screenerSlug": "TCS",
+      "screenerUrl": "https://www.screener.in/company/TCS/",
+      "fetchedAt": "2026-05-13T09:43:25.049Z",
+      "status": "blocked",
+      "sectionsFetched": [],
+      "rowsWritten": 0,
+      "latestPeriod": null,
+      "errorMessage": "HTTP 403",
+      "notes": null
+    },
+    {
+      "companyId": "infosys",
+      "companyName": "Infosys",
+      "screenerSlug": "INFY",
+      "screenerUrl": "https://www.screener.in/company/INFY/",
+      "fetchedAt": "2026-05-13T09:43:29.119Z",
+      "status": "blocked",
+      "sectionsFetched": [],
+      "rowsWritten": 0,
+      "latestPeriod": null,
+      "errorMessage": "HTTP 403",
+      "notes": null
+    },
+    {
+      "companyId": "hcltech",
+      "companyName": "HCLTech",
+      "screenerSlug": "HCLTECH",
+      "screenerUrl": "https://www.screener.in/company/HCLTECH/",
+      "fetchedAt": "2026-05-13T09:43:33.134Z",
+      "status": "blocked",
+      "sectionsFetched": [],
+      "rowsWritten": 0,
+      "latestPeriod": null,
+      "errorMessage": "HTTP 403",
+      "notes": null
+    },
+    {
+      "companyId": "wipro",
+      "companyName": "Wipro",
+      "screenerSlug": "WIPRO",
+      "screenerUrl": "https://www.screener.in/company/WIPRO/",
+      "fetchedAt": "2026-05-13T09:43:37.151Z",
+      "status": "blocked",
+      "sectionsFetched": [],
+      "rowsWritten": 0,
+      "latestPeriod": null,
+      "errorMessage": "HTTP 403",
+      "notes": null
+    }
+  ]
+}

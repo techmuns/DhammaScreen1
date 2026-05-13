@@ -289,6 +289,12 @@ code {
   border-color: #bfdbfe;
 }
 
+.badge--screener-fetch {
+  color: #6d28d9;
+  background: #f5f3ff;
+  border-color: #ddd6fe;
+}
+
 .badge--audit {
   color: var(--tone-warn);
   background: var(--tone-warn-bg);

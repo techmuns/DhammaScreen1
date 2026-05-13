@@ -138,20 +138,32 @@ the tables above. Those still require a working extraction layer.
 
 ## Data-source provenance per metric
 
-Every metric in this audit can in principle be sourced two ways:
+Every metric in this audit can now be sourced three ways. The client
+has confirmed they are comfortable with the team fetching Screener
+data, so the automated fetch path is wired in addition to manual
+import. Page scraping happens server-side via GitHub Actions, never
+from the dashboard UI.
 
-| Path                | Snapshot family                | Trust level         | Status         |
-| ------------------- | ------------------------------ | ------------------- | -------------- |
-| Official filings    | `quarterly-financials`, …      | source-backed       | Discovery wired, extraction Audit |
-| Screener export     | `screener-normalized-financials`, `screener-peer-comparison` | import-backed | Parser scaffold ready, files not yet provided |
-| Screener scraping   | (none)                         | not allowed yet     | Deferred — needs client permission |
+| Path                | Snapshot family                                                                       | Trust level    | Status                                  |
+| ------------------- | ------------------------------------------------------------------------------------- | -------------- | --------------------------------------- |
+| Official filings    | `quarterly-financials`, `annual-financials`, `balance-sheet`, `cash-flow`             | source-backed  | Discovery wired, extraction Audit       |
+| Screener fetch      | `screener-normalized-financials`, `screener-peer-comparison`, `screener-fetch-status` | fetch-backed   | Fetcher wired; cached, never live in UI |
+| Screener import     | `screener-normalized-financials`, `screener-peer-comparison`, `screener-import-status`| import-backed  | Fallback, used when fetch is blocked    |
 
-**Decision rule:** A metric cell shown on the dashboard must declare
-its provenance. Official-path cells inherit the existing Build/Audit
-status from the tables above. Screener-import cells get a separate
-visual indicator and never overwrite an official cell. Until the
-client confirms Screener access or provides exports, the import path
-stays cold (empty snapshots, no UI surface).
+Rows in the two shared Screener snapshots carry a `sourceMethod` field
+(`"fetch"` or `"import"`) so that one ingestion script never overwrites
+the other's rows.
+
+**Resolution precedence used by the UI:**
+
+1. Official filing
+2. Screener fetch
+3. Screener import
+4. Pending (renders as em-dash)
+
+**Decision rule:** Every metric cell on the dashboard declares its
+provenance via a coloured badge. Imported and fetched cells are
+visually distinct from official cells, and from each other.
 
 ## Manual import expectations
 

@@ -36,9 +36,11 @@ export function App() {
       <KpiSummaryCards companyId={companyId} periodView={periodView} />
 
       <p className="source-precedence-note">
-        Imported Screener data is shown only when official filing rows are
-        unavailable. It is labeled separately and should be reconciled
-        before production use.
+        The dashboard reads cached snapshots only — it does not fetch
+        Screener live. Resolution order: <strong>Official filing</strong>{" "}
+        → <strong>Screener fetch</strong> → <strong>Screener import</strong>.
+        Imported and fetched rows are labelled separately and should be
+        reconciled against official filings before production use.
       </p>
 
       <FinancialStatementTables

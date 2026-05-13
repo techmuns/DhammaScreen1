@@ -10,6 +10,7 @@ import filingManifestJson from "../snapshots/filing-manifest.json";
 import guidanceActualJson from "../snapshots/guidance-actual-comparison.json";
 import guidanceCommentaryJson from "../snapshots/guidance-commentary.json";
 import quarterlyJson from "../snapshots/quarterly-financials.json";
+import screenerFetchStatusJson from "../snapshots/screener-fetch-status.json";
 import screenerImportStatusJson from "../snapshots/screener-import-status.json";
 import screenerNormalizedJson from "../snapshots/screener-normalized-financials.json";
 import screenerPeerJson from "../snapshots/screener-peer-comparison.json";
@@ -26,6 +27,7 @@ import type {
   GuidanceCommentaryRow,
   QuarterlyFinancialRow,
   ScreenerCompanyFinancialRow,
+  ScreenerFetchStatusRow,
   ScreenerImportStatusRow,
   ScreenerPeerComparisonRow,
   SegmentRevenueRow,
@@ -59,6 +61,8 @@ export const guidanceActualSnapshot =
   asSnapshot<GuidanceActualComparisonRow>(guidanceActualJson);
 export const screenerImportStatusSnapshot =
   asSnapshot<ScreenerImportStatusRow>(screenerImportStatusJson);
+export const screenerFetchStatusSnapshot =
+  asSnapshot<ScreenerFetchStatusRow>(screenerFetchStatusJson);
 export const screenerNormalizedSnapshot =
   asSnapshot<ScreenerCompanyFinancialRow>(screenerNormalizedJson);
 export const screenerPeerSnapshot =
@@ -76,6 +80,7 @@ export const ALL_SNAPSHOT_METAS: ReadonlyArray<SnapshotMeta> = [
   cashFlowSnapshot.meta,
   guidanceCommentarySnapshot.meta,
   guidanceActualSnapshot.meta,
+  screenerFetchStatusSnapshot.meta,
   screenerImportStatusSnapshot.meta,
   screenerNormalizedSnapshot.meta,
   screenerPeerSnapshot.meta,

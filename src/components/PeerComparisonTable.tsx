@@ -89,9 +89,13 @@ export function PeerComparisonTable({ companyId }: PeerComparisonTableProps) {
     return renderOfficialPeers(officialPeers, companyId);
   }
 
-  const screenerPeers = screenerPeerRows(screenerPeerSnapshot.rows);
-  if (screenerPeers.length > 0) {
-    return renderScreenerPeers(screenerPeers, companyId);
+  const fetchedPeers = screenerPeerRows(screenerPeerSnapshot.rows, "fetch");
+  if (fetchedPeers.length > 0) {
+    return renderScreenerPeers(fetchedPeers, companyId, "screener-fetch");
+  }
+  const importedPeers = screenerPeerRows(screenerPeerSnapshot.rows, "import");
+  if (importedPeers.length > 0) {
+    return renderScreenerPeers(importedPeers, companyId, "screener-import");
   }
 
   return (
@@ -176,19 +180,21 @@ function renderOfficialPeers(
 
 function renderScreenerPeers(
   rows: ScreenerPeerRow[],
-  focusedCompanyId: string | null
+  focusedCompanyId: string | null,
+  provenance: "screener-fetch" | "screener-import"
 ) {
   const sourceFile = rows[0]?.sourceFile ?? "";
-  // Only render columns where at least one peer has a value.
   const activeColumns = SCREENER_PEER_COLUMNS.filter(({ canonical }) =>
-    rows.some((row) => row.values[canonical] !== undefined && row.values[canonical] !== null)
+    rows.some(
+      (row) => row.values[canonical] !== undefined && row.values[canonical] !== null
+    )
   );
 
   return (
     <section className="peer-section" aria-label="Peer comparison">
       <div className="section-head">
         <h2 className="section-title">Peer comparison</h2>
-        <SourceBadge provenance="screener-import" />
+        <SourceBadge provenance={provenance} />
         <span className="section-subtitle">Source: {sourceFile}</span>
       </div>
       <div className="table-wrap">
@@ -219,7 +225,7 @@ function renderScreenerPeers(
                     </td>
                   ))}
                   <td>
-                    <SourceBadge provenance="screener-import" />
+                    <SourceBadge provenance={provenance} />
                   </td>
                 </tr>
               );
@@ -228,9 +234,9 @@ function renderScreenerPeers(
         </table>
       </div>
       <p className="section-note">
-        Imported from Screener export. Values are point-in-time snapshots,
-        not growth metrics. Reconcile against official filings before any
-        production use.
+        {provenance === "screener-fetch"
+          ? "Cached from automated Screener fetch. Values are point-in-time snapshots, not growth metrics. Reconcile against official filings before any production use."
+          : "Imported from Screener export. Values are point-in-time snapshots, not growth metrics. Reconcile against official filings before any production use."}
       </p>
     </section>
   );

@@ -178,60 +178,96 @@ yet parsed.
 
 ## Data-source strategy
 
-Three paths exist for getting numbers into the dashboard. Only the first
-is the production "source-of-truth"; the others are clearly labelled as
-import-backed or audit-backed so the team always knows what they're
-looking at.
+Four paths exist for getting numbers into the dashboard. The dashboard
+UI itself **never** reaches out to the internet — it always reads
+cached snapshots. Every refresh is driven by an ingestion script,
+either locally or via GitHub Actions.
 
-### 1. Official filing source path (production, source-backed)
+### 1. Automated Screener fetch (primary fast path, cached)
+
+- Inputs: Screener public company pages
+  (`https://www.screener.in/company/<slug>/`), fetched server-side.
+- Fetcher: `scripts/ingest/screener-fetch.ts`
+  (`npm run ingest:screener:fetch`).
+- Cadence: scheduled refresh via GitHub Actions, or manual trigger.
+- Output: same snapshot files as the manual import path
+  (`screener-normalized-financials.json`,
+  `screener-peer-comparison.json`) but rows are tagged
+  `sourceMethod: "fetch"` and `sourceLabel: "Screener fetch · <url>"`.
+  Status lives in its own snapshot: `screener-fetch-status.json`.
+- Provenance: rows are **fetch-backed**. Treat as a high-volume
+  prototyping source — quicker to refresh than manual exports, but
+  still secondary to official filings.
+- Hard rule: the dashboard UI does **not** call Screener directly on
+  company selection. It only reads the cached snapshots. Refreshes
+  happen out-of-band.
+
+### 2. Official filing source path (source-of-truth)
 
 - Inputs: NSE corporate filings, BSE corporate filings, company IR pages.
 - Discovery: `scripts/config/dhamma-sources.ts` (`nse`, `bse` adapters).
 - Manifest: `src/data/snapshots/filing-manifest.json`.
 - Status: discovery wired, extraction Audit.
-- This is the only path whose rows are allowed to appear in the
-  official financial snapshots (`quarterly-financials.json`,
+- This remains the only path whose rows are allowed in the official
+  financial snapshots (`quarterly-financials.json`,
   `annual-financials.json`, `balance-sheet.json`, `cash-flow.json`,
-  `segment-revenue.json`).
+  `segment-revenue.json`). Used to verify the Screener fetch path,
+  and ultimately to replace it for production reporting.
 
-### 2. Screener-compatible import path (prototyping, import-backed)
+### 3. Screener-compatible manual import path (fallback)
 
 - Inputs: client-provided Screener-style `.xlsx` or `.csv` exports
   dropped into `data/manual/screener/`.
 - Parser: `scripts/ingest/screener-export.ts`
   (`npm run ingest:screener`).
-- Output: separate snapshot files
-  (`screener-normalized-financials.json`,
-  `screener-peer-comparison.json`,
-  `screener-import-status.json`).
-- Status: ready to consume files, but treated as **import-backed**, not
-  source-backed. Imported rows are never merged into the official
-  snapshots; UI must visually mark them when shown.
-- This path lets the team prototype dashboard tables quickly when
-  filing extraction is still unreliable, without compromising the
-  source-of-truth guarantee.
-
-### 3. Screener page scraping — deferred
-
-- Automatic scraping of `screener.in` web pages is **not** done. It is
-  deferred unless the client confirms permission or supplies licensed
-  access.
-- This is a deliberate restraint: Screener's terms restrict automated
-  access, and even if permitted, scraped HTML is brittle relative to
-  filed XBRL.
+- Output: same shared snapshots as the fetch path, but rows are tagged
+  `sourceMethod: "import"`. Status lives in
+  `screener-import-status.json`.
+- Use when: the automated fetcher is blocked, a particular company is
+  not in the fetch universe, or an analyst wants to override a fetched
+  value with a hand-curated export.
+- Co-existence rule: manual-import rows and fetch rows live in the
+  same snapshot but never overwrite each other. Each ingestion script
+  preserves the other method's rows on write.
 
 ### 4. Guidance / commentary tracker
 
 - Stays Audit. Inputs (concall transcripts, investor presentations)
   are also gated on client-provided or hand-curated sources for now.
-- Will reuse the Screener-style "import folder" idea — e.g., a future
-  `data/manual/transcripts/` — rather than scraping aggregators.
+
+### UI rule
+
+> The dashboard never fetches Screener (or any source) live. Every
+> value rendered comes from a snapshot in `src/data/snapshots/`. Refresh
+> is the responsibility of `npm run ingest:*` and the GitHub Actions
+> workflow.
+
+### Provenance labels
+
+Every cell on the dashboard inherits one of four provenance labels:
+
+| Label             | Means                                                 |
+| ----------------- | ----------------------------------------------------- |
+| Official filing   | Came from NSE/BSE/AR extraction (source-of-truth)     |
+| Screener fetch    | Came from the automated `npm run ingest:screener:fetch` |
+| Screener import   | Came from a manual file in `data/manual/screener/`    |
+| Pending           | No data yet from any path                             |
+| Audit             | Guidance / commentary only                            |
+
+### Resolution precedence
+
+When more than one source has a value for the same (company, metric,
+period), the dashboard picks in this order:
+
+1. Official filing
+2. Screener fetch
+3. Screener import
+4. Pending (renders as `—`)
 
 ### Decision rules
 
-- If a metric is in an official snapshot, it came from path 1 and is
-  source-backed.
-- If a metric is in a `screener-*` snapshot, it came from path 2 and
-  is import-backed. UI must reflect this when surfaced.
-- Path 3 (page scraping) does not produce snapshots in this codebase.
+- If a metric is in an official snapshot, it is source-backed.
+- If a metric is in a `screener-*` snapshot, the row's `sourceMethod`
+  field tells the UI whether to badge it as "Screener fetch" or
+  "Screener import".
 - Missing values stay `null`, render as `—`. Never zero, never fake.

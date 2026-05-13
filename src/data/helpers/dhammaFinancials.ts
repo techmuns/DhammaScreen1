@@ -354,6 +354,7 @@ export function screenerImportCoverage(
 
 export type DataProvenance =
   | "official-filing"
+  | "screener-fetch"
   | "screener-import"
   | "audit"
   | "pending";
@@ -376,13 +377,15 @@ export function screenerLatestMetric(
   rows: readonly ScreenerCompanyFinancialRow[],
   companyId: string,
   canonical: string,
-  periodType?: "quarter" | "year"
+  periodType?: "quarter" | "year",
+  sourceMethod?: "fetch" | "import"
 ): ScreenerLatestMetric | null {
   const filtered = rows.filter(
     (row) =>
       row.companyId === companyId &&
       row.metricCanonical === canonical &&
       (periodType ? row.periodType === periodType : true) &&
+      (sourceMethod ? row.sourceMethod === sourceMethod : true) &&
       row.periodSortKey !== null
   );
   if (filtered.length === 0) return null;
@@ -402,6 +405,7 @@ export interface ScreenerPeriodSlice {
   period: string;
   periodSortKey: string;
   sourceFile: string;
+  sourceMethod: "fetch" | "import";
   values: Record<string, number | null>;
 }
 
@@ -412,13 +416,15 @@ export function screenerStatementRows(
   rows: readonly ScreenerCompanyFinancialRow[],
   companyId: string,
   sheetType: ScreenerCompanyFinancialRow["sheetType"],
-  n: number
+  n: number,
+  sourceMethod?: "fetch" | "import"
 ): ScreenerPeriodSlice[] {
   const byKey = new Map<string, ScreenerPeriodSlice>();
   for (const row of rows) {
     if (
       row.companyId !== companyId ||
       row.sheetType !== sheetType ||
+      (sourceMethod && row.sourceMethod !== sourceMethod) ||
       !row.periodSortKey ||
       !row.period ||
       !row.metricCanonical
@@ -431,6 +437,7 @@ export function screenerStatementRows(
         period: row.period,
         periodSortKey: row.periodSortKey,
         sourceFile: row.sourceFile,
+        sourceMethod: row.sourceMethod,
         values: {},
       };
       byKey.set(row.periodSortKey, slice);
@@ -448,20 +455,34 @@ export function screenerStatementRows(
 export interface ScreenerPeerRow {
   peerCompanyName: string;
   sourceFile: string;
+  sourceMethod: "fetch" | "import";
   values: Record<string, number | null>;
 }
 
 export function screenerPeerRows(
-  rows: readonly { peerCompanyName: string; sourceFile: string; metricCanonical: string | null; metricValue: number | null }[]
+  rows: readonly {
+    peerCompanyName: string;
+    sourceFile: string;
+    sourceMethod: "fetch" | "import";
+    metricCanonical: string | null;
+    metricValue: number | null;
+  }[],
+  sourceMethod?: "fetch" | "import"
 ): ScreenerPeerRow[] {
   const byPeer = new Map<string, ScreenerPeerRow>();
   for (const row of rows) {
     if (!row.metricCanonical) continue;
+    if (sourceMethod && row.sourceMethod !== sourceMethod) continue;
     const key = row.peerCompanyName.trim();
     if (!key) continue;
     let peer = byPeer.get(key);
     if (!peer) {
-      peer = { peerCompanyName: key, sourceFile: row.sourceFile, values: {} };
+      peer = {
+        peerCompanyName: key,
+        sourceFile: row.sourceFile,
+        sourceMethod: row.sourceMethod,
+        values: {},
+      };
       byPeer.set(key, peer);
     }
     peer.values[row.metricCanonical] = isFiniteNumber(row.metricValue)
@@ -477,11 +498,12 @@ export interface KpiResolution {
   periodLabel: string | null;
 }
 
-// Pick official first, Screener second, dash third. Period label is
-// passed through from whichever source was used.
+// Pick official → screener-fetch → screener-import → pending.
+// Period label is passed through from whichever source won.
 export function resolveKpi(args: {
   official: { value: number | null; periodLabel: string | null };
-  screener?: ScreenerLatestMetric | null;
+  screenerFetch?: ScreenerLatestMetric | null;
+  screenerImport?: ScreenerLatestMetric | null;
 }): KpiResolution {
   if (isFiniteNumber(args.official.value)) {
     return {
@@ -490,11 +512,18 @@ export function resolveKpi(args: {
       periodLabel: args.official.periodLabel,
     };
   }
-  if (args.screener && isFiniteNumber(args.screener.value)) {
+  if (args.screenerFetch && isFiniteNumber(args.screenerFetch.value)) {
     return {
-      value: args.screener.value,
+      value: args.screenerFetch.value,
+      provenance: "screener-fetch",
+      periodLabel: args.screenerFetch.periodLabel,
+    };
+  }
+  if (args.screenerImport && isFiniteNumber(args.screenerImport.value)) {
+    return {
+      value: args.screenerImport.value,
       provenance: "screener-import",
-      periodLabel: args.screener.periodLabel,
+      periodLabel: args.screenerImport.periodLabel,
     };
   }
   return { value: null, provenance: "pending", periodLabel: null };
@@ -505,10 +534,12 @@ export function resolveKpi(args: {
 // preferring `official` on ties.
 export function dataSourceForMetric(args: {
   hasOfficial: boolean;
-  hasScreener: boolean;
+  hasScreenerFetch?: boolean;
+  hasScreenerImport?: boolean;
 }): DataProvenance {
   if (args.hasOfficial) return "official-filing";
-  if (args.hasScreener) return "screener-import";
+  if (args.hasScreenerFetch) return "screener-fetch";
+  if (args.hasScreenerImport) return "screener-import";
   return "pending";
 }
 
@@ -578,6 +609,8 @@ export function provenanceLabel(provenance: DataProvenance): string {
   switch (provenance) {
     case "official-filing":
       return "Official filing";
+    case "screener-fetch":
+      return "Screener fetch";
     case "screener-import":
       return "Screener import";
     case "audit":

@@ -1,16 +1,16 @@
 {
   "meta": {
     "snapshotId": "screener-peer-comparison",
-    "description": "Peer-comparison rows extracted from Screener exports' Peer Comparison sheets.",
-    "generatedAt": "2026-05-13T08:14:00.408Z",
+    "description": "Peer-comparison rows from Screener (fetched or manually imported).",
+    "generatedAt": "2026-05-13T09:43:39.751Z",
     "rowCount": 0,
     "status": "empty",
-    "notes": "No Screener exports with a Peer Comparison sheet have been provided yet.",
+    "notes": "No Screener peer comparison data yet.",
     "source": {
       "sourceClass": "manual",
       "sourceUrl": null,
       "sourceLabel": "data/manual/screener/ — client-provided exports",
-      "fetchedAt": "2026-05-13T08:14:00.405Z",
+      "fetchedAt": "2026-05-13T09:43:39.747Z",
       "publishedAt": null,
       "notes": "Import-backed. Never merged into the official financial snapshots."
     },

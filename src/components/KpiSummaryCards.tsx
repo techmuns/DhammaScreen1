@@ -9,6 +9,7 @@ import {
   screenerLatestMetric,
   tableValueOrDash,
   type KpiResolution,
+  type ScreenerLatestMetric,
 } from "../data/helpers/dhammaFinancials";
 import {
   annualFinancialsSnapshot,
@@ -37,9 +38,17 @@ function buildCards(
   periodView: PeriodView
 ): CardModel[] {
   if (!companyId) return defaultEmptyCards();
+  // Re-bind to a non-null local so the closures below see the narrowed type.
+  const id: string = companyId;
 
   const screenerPeriodType = periodView === "quarters" ? "quarter" : "year";
   const screenerRows = screenerNormalizedSnapshot.rows;
+
+  // Helpers that pre-bind sourceMethod so the per-card resolution stays compact.
+  const latestFetched = (canonical: string, pType: "quarter" | "year") =>
+    screenerLatestMetric(screenerRows, id, canonical, pType, "fetch");
+  const latestImported = (canonical: string, pType: "quarter" | "year") =>
+    screenerLatestMetric(screenerRows, id, canonical, pType, "import");
 
   const latestQ = latestQuarter(quarterlyFinancialsSnapshot.rows, companyId);
   const latestY = latestYear(annualFinancialsSnapshot.rows, companyId);
@@ -63,89 +72,81 @@ function buildCards(
     )
     .at(-1);
 
-  // Revenue: official P&L → Screener (revenue canonical, period-type-matched)
+  // Revenue
   const revenue = resolveKpi({
     official: { value: pAndL?.revenue ?? null, periodLabel: officialPeriodLabel },
-    screener: screenerLatestMetric(screenerRows, companyId, "revenue", screenerPeriodType),
+    screenerFetch: latestFetched("revenue", screenerPeriodType),
+    screenerImport: latestImported("revenue", screenerPeriodType),
   });
 
-  // EBITDA margin: official derivation first, then Screener OPM (already %)
+  // EBITDA margin
   const officialEbitdaMargin = margin(pAndL?.ebitda ?? null, pAndL?.revenue ?? null);
-  const screenerOpm = screenerLatestMetric(
-    screenerRows,
-    companyId,
-    "opm",
-    screenerPeriodType
-  );
   const ebitdaMargin = resolveKpi({
     official: { value: officialEbitdaMargin, periodLabel: officialPeriodLabel },
-    screener: screenerOpm,
+    screenerFetch: latestFetched("opm", screenerPeriodType),
+    screenerImport: latestImported("opm", screenerPeriodType),
   });
-  // OPM from Screener is already in percentage points; official margin is a fraction.
+  // OPM (Screener) is in percentage points; official derivation is a fraction.
   const ebitdaMarginFormat =
+    ebitdaMargin.provenance === "screener-fetch" ||
     ebitdaMargin.provenance === "screener-import"
       ? formatPercentRaw
       : formatPercent;
 
-  // PAT margin: official derivation only — Screener "Net Profit" alone is
-  // not safely combinable with imported revenue without confirming both
-  // came from the same period.
+  // PAT margin: derive only when Sales and Net Profit come from the same
+  // Screener period, then compute. Otherwise fall back to dash.
+  function deriveScreenerPatMargin(
+    method: "fetch" | "import"
+  ): ScreenerLatestMetric | null {
+    const sales = screenerLatestMetric(screenerRows, id, "revenue", screenerPeriodType, method);
+    const pat = screenerLatestMetric(screenerRows, id, "pat", screenerPeriodType, method);
+    if (
+      !sales ||
+      !pat ||
+      sales.value === null ||
+      pat.value === null ||
+      sales.value <= 0 ||
+      sales.periodLabel !== pat.periodLabel
+    ) {
+      return null;
+    }
+    return {
+      value: pat.value / sales.value,
+      periodLabel: pat.periodLabel,
+      sourceFile: pat.sourceFile,
+      sourceSheet: pat.sourceSheet,
+    };
+  }
   const officialPatMargin = margin(
     pAndL?.patAttributableToOwners ?? pAndL?.pat ?? null,
     pAndL?.revenue ?? null
   );
-  const screenerSales = screenerLatestMetric(
-    screenerRows,
-    companyId,
-    "revenue",
-    screenerPeriodType
-  );
-  const screenerPat = screenerLatestMetric(
-    screenerRows,
-    companyId,
-    "pat",
-    screenerPeriodType
-  );
-  const screenerPatMargin: KpiResolution["value"] =
-    screenerSales &&
-    screenerPat &&
-    screenerSales.value !== null &&
-    screenerPat.value !== null &&
-    screenerSales.value > 0 &&
-    screenerSales.periodLabel === screenerPat.periodLabel
-      ? screenerPat.value / screenerSales.value
-      : null;
   const patMargin = resolveKpi({
     official: { value: officialPatMargin, periodLabel: officialPeriodLabel },
-    screener:
-      screenerPatMargin === null
-        ? null
-        : {
-            value: screenerPatMargin,
-            periodLabel: screenerPat?.periodLabel ?? null,
-            sourceFile: screenerPat?.sourceFile ?? null,
-            sourceSheet: screenerPat?.sourceSheet ?? null,
-          },
+    screenerFetch: deriveScreenerPatMargin("fetch"),
+    screenerImport: deriveScreenerPatMargin("import"),
   });
 
   // EPS
   const eps = resolveKpi({
     official: { value: pAndL?.epsBasic ?? null, periodLabel: officialPeriodLabel },
-    screener: screenerLatestMetric(screenerRows, companyId, "eps", screenerPeriodType),
+    screenerFetch: latestFetched("eps", screenerPeriodType),
+    screenerImport: latestImported("eps", screenerPeriodType),
   });
 
-  // CFO — Screener publishes only annual CFO, so the Screener fallback
-  // is "year" regardless of period view.
+  // CFO — Screener publishes annually only.
   const cfo = resolveKpi({
     official: { value: cashFlow?.cfo ?? null, periodLabel: officialPeriodLabel },
-    screener: screenerLatestMetric(screenerRows, companyId, "cfo", "year"),
+    screenerFetch: latestFetched("cfo", "year"),
+    screenerImport: latestImported("cfo", "year"),
   });
 
   // Net debt: official net-debt → official borrowings → Screener borrowings
   const officialNetDebt = balance?.netDebt ?? balance?.borrowingsTotal ?? null;
   const netDebt = resolveKpi({
     official: { value: officialNetDebt, periodLabel: officialPeriodLabel },
-    screener: screenerLatestMetric(screenerRows, companyId, "borrowings", "year"),
+    screenerFetch: latestFetched("borrowings", "year"),
+    screenerImport: latestImported("borrowings", "year"),
   });
 
   return [

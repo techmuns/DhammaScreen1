@@ -1,6 +1,7 @@
 import {
   filingManifestSnapshot,
   guidanceCommentarySnapshot,
+  screenerFetchStatusSnapshot,
   screenerImportStatusSnapshot,
   screenerNormalizedSnapshot,
   screenerPeerSnapshot,
@@ -15,20 +16,32 @@ interface PathStatus {
   detail: string;
 }
 
-function distinctSourceFiles(): number {
+function countRowsByMethod(method: "fetch" | "import"): { rows: number; files: number } {
   const files = new Set<string>();
-  for (const row of screenerNormalizedSnapshot.rows) files.add(row.sourceFile);
-  for (const row of screenerPeerSnapshot.rows) files.add(row.sourceFile);
-  return files.size;
+  let rows = 0;
+  for (const row of screenerNormalizedSnapshot.rows) {
+    if (row.sourceMethod === method) {
+      rows++;
+      files.add(row.sourceFile);
+    }
+  }
+  for (const row of screenerPeerSnapshot.rows) {
+    if (row.sourceMethod === method) {
+      rows++;
+      files.add(row.sourceFile);
+    }
+  }
+  return { rows, files: files.size };
 }
 
 function paths(): PathStatus[] {
   const filing = filingManifestSnapshot.meta;
-  const screener = screenerImportStatusSnapshot.meta;
+  const fetchStatus = screenerFetchStatusSnapshot;
+  const importStatus = screenerImportStatusSnapshot.meta;
   const guidance = guidanceCommentarySnapshot.meta;
-  const screenerRowCount =
-    screenerNormalizedSnapshot.rows.length + screenerPeerSnapshot.rows.length;
-  const fileCount = distinctSourceFiles();
+
+  const fetchCounts = countRowsByMethod("fetch");
+  const importCounts = countRowsByMethod("import");
 
   const filingTone: Tone =
     filing.status === "ok" || filing.status === "partial"
@@ -37,13 +50,27 @@ function paths(): PathStatus[] {
         ? "warn"
         : "neutral";
 
-  const screenerTone: Tone = screenerRowCount > 0 ? "ok" : "neutral";
-  const screenerStatus =
-    screenerRowCount > 0
-      ? screener.status === "partial"
+  // Fetch tone is driven by the per-company status rows; any "ok"/"partial"
+  // wins; otherwise tone follows whether everyone was blocked.
+  const fetchRows = fetchStatus.rows;
+  const fetchOk = fetchRows.some((r) => r.status === "ok" || r.status === "partial");
+  const fetchBlocked = fetchRows.length > 0 && fetchRows.every(
+    (r) => r.status === "blocked" || r.status === "error"
+  );
+  const fetchTone: Tone = fetchOk ? "ok" : fetchBlocked ? "warn" : "neutral";
+  const fetchLabel = fetchOk
+    ? "ok"
+    : fetchBlocked
+      ? "blocked"
+      : fetchStatus.meta.status;
+
+  const importTone: Tone = importCounts.rows > 0 ? "ok" : "neutral";
+  const importLabel =
+    importCounts.rows > 0
+      ? importStatus.status === "partial"
         ? "partial"
         : "ok"
-      : screener.status;
+      : importStatus.status;
 
   return [
     {
@@ -60,12 +87,23 @@ function paths(): PathStatus[] {
               : "No filings discovered yet",
     },
     {
-      label: "Screener import",
-      status: screenerStatus,
-      tone: screenerTone,
+      label: "Screener fetch",
+      status: fetchLabel,
+      tone: fetchTone,
       detail:
-        screenerRowCount > 0
-          ? `${screenerRowCount} rows · ${fileCount} file${fileCount === 1 ? "" : "s"}`
+        fetchCounts.rows > 0
+          ? `${fetchCounts.rows} rows · ${fetchRows.length} companies attempted`
+          : fetchRows.length === 0
+            ? "Not run yet"
+            : "All companies blocked or empty",
+    },
+    {
+      label: "Screener import",
+      status: importLabel,
+      tone: importTone,
+      detail:
+        importCounts.rows > 0
+          ? `${importCounts.rows} rows · ${importCounts.files} file${importCounts.files === 1 ? "" : "s"}`
           : "No client exports yet",
     },
     {

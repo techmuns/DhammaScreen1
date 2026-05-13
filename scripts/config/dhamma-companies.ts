@@ -32,6 +32,12 @@ export const COMPANIES: CompanyMaster[] = [
     reportingBasisDefault: "consolidated",
     irPageUrl: "https://www.tcs.com/investor-relations",
     status: "pilot",
+    screenerSlug: "TCS",
+    screenerUrl: "https://www.screener.in/company/TCS/",
+    fetchEnabled: true,
+    fetchPriority: 1,
+    sourceNotes:
+      "Screener slug inferred from NSE symbol; verify by opening the URL once before relying on fetched rows.",
     notes:
       "Pilot company for Step 2 source-discovery validation. Reverify BSE code 532540 and NSE symbol TCS before production.",
   },
@@ -53,6 +59,12 @@ export const COMPANIES: CompanyMaster[] = [
     reportingBasisDefault: "consolidated",
     irPageUrl: "https://www.infosys.com/investors/",
     status: "pilot",
+    screenerSlug: "INFY",
+    screenerUrl: "https://www.screener.in/company/INFY/",
+    fetchEnabled: true,
+    fetchPriority: 2,
+    sourceNotes:
+      "Screener slug inferred from NSE symbol INFY; reverify before production.",
     notes:
       "Pilot company. Reverify BSE code 500209 and NSE symbol INFY before production.",
   },
@@ -74,6 +86,12 @@ export const COMPANIES: CompanyMaster[] = [
     reportingBasisDefault: "consolidated",
     irPageUrl: "https://www.hcltech.com/investors",
     status: "pilot",
+    screenerSlug: "HCLTECH",
+    screenerUrl: "https://www.screener.in/company/HCLTECH/",
+    fetchEnabled: true,
+    fetchPriority: 3,
+    sourceNotes:
+      "Screener slug inferred from NSE symbol HCLTECH; reverify before production.",
     notes:
       "Pilot company. Reverify BSE code 532281 and NSE symbol HCLTECH before production.",
   },
@@ -95,6 +113,12 @@ export const COMPANIES: CompanyMaster[] = [
     reportingBasisDefault: "consolidated",
     irPageUrl: "https://www.wipro.com/investors/",
     status: "pilot",
+    screenerSlug: "WIPRO",
+    screenerUrl: "https://www.screener.in/company/WIPRO/",
+    fetchEnabled: true,
+    fetchPriority: 4,
+    sourceNotes:
+      "Screener slug inferred from NSE symbol WIPRO; reverify before production.",
     notes:
       "Pilot company. Reverify BSE code 507685 and NSE symbol WIPRO before production.",
   },

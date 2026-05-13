@@ -1,16 +1,16 @@
 {
   "meta": {
     "snapshotId": "screener-normalized-financials",
-    "description": "Normalized rows from client-provided Screener exports — import-backed, NOT source-backed.",
-    "generatedAt": "2026-05-13T08:14:00.407Z",
+    "description": "Normalized rows from Screener (fetched or manually imported).",
+    "generatedAt": "2026-05-13T09:43:39.751Z",
     "rowCount": 0,
     "status": "empty",
-    "notes": "No Screener exports have been provided yet. Drop files into data/manual/screener/.",
+    "notes": "No Screener data yet. Drop files into data/manual/screener/ or run `npm run ingest:screener:fetch`.",
     "source": {
       "sourceClass": "manual",
       "sourceUrl": null,
       "sourceLabel": "data/manual/screener/ — client-provided exports",
-      "fetchedAt": "2026-05-13T08:14:00.405Z",
+      "fetchedAt": "2026-05-13T09:43:39.747Z",
       "publishedAt": null,
       "notes": "Import-backed. Never merged into the official financial snapshots."
     },

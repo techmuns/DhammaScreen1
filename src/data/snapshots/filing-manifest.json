@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "filing-manifest",
     "description": "Discovered filings per company from NSE / BSE / company IR sources.",
-    "generatedAt": "2026-05-13T08:14:23.240Z",
+    "generatedAt": "2026-05-13T09:43:41.543Z",
     "rowCount": 0,
     "status": "error",
     "notes": "All sources failed (8 errors recorded).",
@@ -10,7 +10,7 @@
       "sourceClass": "nse_bse_filing",
       "sourceUrl": null,
       "sourceLabel": "NSE corporate-announcements + BSE AnnGetData",
-      "fetchedAt": "2026-05-13T08:14:23.240Z",
+      "fetchedAt": "2026-05-13T09:43:41.543Z",
       "publishedAt": null,
       "notes": null
     },
@@ -19,49 +19,49 @@
         "sourceId": "nse",
         "companyId": "tcs",
         "message": "NSE HTTP 403",
-        "occurredAt": "2026-05-13T08:14:23.061Z"
+        "occurredAt": "2026-05-13T09:43:40.752Z"
       },
       {
         "sourceId": "bse",
         "companyId": "tcs",
         "message": "BSE HTTP 403",
-        "occurredAt": "2026-05-13T08:14:23.171Z"
+        "occurredAt": "2026-05-13T09:43:40.851Z"
       },
       {
         "sourceId": "nse",
         "companyId": "infosys",
         "message": "NSE HTTP 403",
-        "occurredAt": "2026-05-13T08:14:23.210Z"
+        "occurredAt": "2026-05-13T09:43:41.516Z"
       },
       {
         "sourceId": "bse",
         "companyId": "infosys",
         "message": "BSE HTTP 403",
-        "occurredAt": "2026-05-13T08:14:23.216Z"
+        "occurredAt": "2026-05-13T09:43:41.522Z"
       },
       {
         "sourceId": "nse",
         "companyId": "hcltech",
         "message": "NSE HTTP 403",
-        "occurredAt": "2026-05-13T08:14:23.221Z"
+        "occurredAt": "2026-05-13T09:43:41.526Z"
       },
       {
         "sourceId": "bse",
         "companyId": "hcltech",
         "message": "BSE HTTP 403",
-        "occurredAt": "2026-05-13T08:14:23.225Z"
+        "occurredAt": "2026-05-13T09:43:41.530Z"
       },
       {
         "sourceId": "nse",
         "companyId": "wipro",
         "message": "NSE HTTP 403",
-        "occurredAt": "2026-05-13T08:14:23.229Z"
+        "occurredAt": "2026-05-13T09:43:41.534Z"
       },
       {
         "sourceId": "bse",
         "companyId": "wipro",
         "message": "BSE HTTP 403",
-        "occurredAt": "2026-05-13T08:14:23.235Z"
+        "occurredAt": "2026-05-13T09:43:41.539Z"
       }
     ]
   },

@@ -123,15 +123,10 @@ function ProfitLossTable({ companyId, periodView }: BaseTableProps) {
 
   const screenerSheet: ScreenerSheetType =
     periodView === "quarters" ? "quarterly_results" : "profit_and_loss";
-  const screenerSlices = screenerStatementRows(
-    screenerNormalizedSnapshot.rows,
-    companyId,
-    screenerSheet,
-    5
-  );
+  const slices = pickScreenerSlices(companyId, screenerSheet, 5);
 
-  if (screenerSlices.length > 0) {
-    return renderScreenerPl(screenerSlices);
+  if (slices) {
+    return renderScreenerPl(slices.slices, slices.provenance);
   }
 
   return (
@@ -140,11 +135,36 @@ function ProfitLossTable({ companyId, periodView }: BaseTableProps) {
       message="Discovery is wired but filing extraction has not produced rows for this company yet."
       hint={
         periodView === "quarters"
-          ? "Quarterly P&L will populate once NSE/BSE filings are parsed or a Screener export is dropped into data/manual/screener/."
-          : "Annual P&L will populate from Q4 / annual report extraction or from a Screener export."
+          ? "Quarterly P&L will populate once NSE/BSE filings are parsed, the automated Screener fetch picks up the company, or a manual export is dropped into data/manual/screener/."
+          : "Annual P&L will populate from Q4 / annual report extraction, automated Screener fetch, or a manual Screener export."
       }
     />
   );
+}
+
+// Prefer fetch slices, then fall back to import slices. Returns null if both empty.
+function pickScreenerSlices(
+  companyId: string,
+  sheetType: ScreenerSheetType,
+  n: number
+): { slices: ScreenerPeriodSlice[]; provenance: "screener-fetch" | "screener-import" } | null {
+  const fetched = screenerStatementRows(
+    screenerNormalizedSnapshot.rows,
+    companyId,
+    sheetType,
+    n,
+    "fetch"
+  );
+  if (fetched.length > 0) return { slices: fetched, provenance: "screener-fetch" };
+  const imported = screenerStatementRows(
+    screenerNormalizedSnapshot.rows,
+    companyId,
+    sheetType,
+    n,
+    "import"
+  );
+  if (imported.length > 0) return { slices: imported, provenance: "screener-import" };
+  return null;
 }
 
 function renderOfficialPl(rows: PlRow[], periodView: PeriodView) {
@@ -202,14 +222,18 @@ const SCREENER_PL_METRICS: CanonicalMetric[] = [
   "eps",
 ];
 
-function renderScreenerPl(slices: ScreenerPeriodSlice[]) {
+function renderScreenerPl(
+  slices: ScreenerPeriodSlice[],
+  provenance: "screener-fetch" | "screener-import"
+) {
   const sourceFile = slices[0]?.sourceFile ?? "";
+  const note =
+    provenance === "screener-fetch"
+      ? `P&L from Screener fetch · ${sourceFile}`
+      : `P&L from Screener export: ${sourceFile}`;
   return (
     <>
-      <TableHeader
-        provenance="screener-import"
-        note={`P&L from Screener export: ${sourceFile}`}
-      />
+      <TableHeader provenance={provenance} note={note} />
       <div className="table-wrap">
         <table className="data-table">
           <thead>
@@ -352,15 +376,14 @@ function BalanceSheetTable({ companyId, periodView }: BaseTableProps) {
   // Balance sheet is annual in Screener; if the user is on the quarterly
   // toggle and there are no quarterly official rows, still surface the
   // annual Screener rows for visibility (clearly badged).
-  const screenerSlices = screenerStatementRows(
-    screenerNormalizedSnapshot.rows,
-    companyId,
-    "balance_sheet",
-    5
-  );
-
-  if (screenerSlices.length > 0) {
-    return renderScreenerStatement(screenerSlices, SCREENER_BS_METRICS, "Balance sheet");
+  const pick = pickScreenerSlices(companyId, "balance_sheet", 5);
+  if (pick) {
+    return renderScreenerStatement(
+      pick.slices,
+      SCREENER_BS_METRICS,
+      "Balance sheet",
+      pick.provenance
+    );
   }
 
   return (
@@ -421,15 +444,14 @@ function CashFlowTable({ companyId, periodView }: BaseTableProps) {
     );
   }
 
-  const screenerSlices = screenerStatementRows(
-    screenerNormalizedSnapshot.rows,
-    companyId,
-    "cash_flow",
-    5
-  );
-
-  if (screenerSlices.length > 0) {
-    return renderScreenerStatement(screenerSlices, SCREENER_CFS_METRICS, "Cash flow");
+  const pick = pickScreenerSlices(companyId, "cash_flow", 5);
+  if (pick) {
+    return renderScreenerStatement(
+      pick.slices,
+      SCREENER_CFS_METRICS,
+      "Cash flow",
+      pick.provenance
+    );
   }
 
   return (
@@ -448,15 +470,17 @@ function CashFlowTable({ companyId, periodView }: BaseTableProps) {
 function renderScreenerStatement(
   slices: ScreenerPeriodSlice[],
   metrics: CanonicalMetric[],
-  label: string
+  label: string,
+  provenance: "screener-fetch" | "screener-import"
 ) {
   const sourceFile = slices[0]?.sourceFile ?? "";
+  const note =
+    provenance === "screener-fetch"
+      ? `${label} from Screener fetch · ${sourceFile}`
+      : `${label} from Screener export: ${sourceFile}`;
   return (
     <>
-      <TableHeader
-        provenance="screener-import"
-        note={`${label} from Screener export: ${sourceFile}`}
-      />
+      <TableHeader provenance={provenance} note={note} />
       <div className="table-wrap">
         <table className="data-table">
           <thead>
@@ -495,7 +519,7 @@ function SelectCompany() {
 }
 
 interface TableHeaderProps {
-  provenance: "official-filing" | "screener-import";
+  provenance: "official-filing" | "screener-fetch" | "screener-import";
   note: string;
 }
 
