@@ -357,10 +357,16 @@ export interface ScreenerImportMeta {
 }
 
 // Base shape used by every per-sheet specialized row.
+//
+// `reportingBasis` is the Screener / NSE / BSE accounting basis for the row.
+// Dashboard 1's hard policy is `"consolidated"` only: KPI cards and statement
+// tables ignore any row that is not `"consolidated"`. Rows from older fetches
+// that did not record the basis carry `null` and are also ignored by the UI.
 export interface ScreenerCompanyFinancialRow {
   companyId: string;
   companyName: string;
   sourceMethod: ScreenerSourceMethod;
+  reportingBasis: ReportingBasis | null;
   sourceFile: string;
   sourceSheet: string | null;
   sourceUrl: string | null;

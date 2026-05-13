@@ -243,6 +243,17 @@ code {
   gap: 12px;
 }
 
+.kpi-benchmarks__warning {
+  margin: 4px 0 12px;
+  padding: 10px 12px;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  border-radius: 6px;
+  color: #b45309;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
 .benchmark-card {
   background: var(--surface);
   border: 1px solid var(--border);

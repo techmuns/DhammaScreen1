@@ -27,7 +27,8 @@ const SNAPSHOT_HUMAN_LABELS: Record<string, string> = {
   "cash-flow": "Cash flow",
   "screener-fetch-status": "Screener fetch — per-company status",
   "screener-import-status": "Screener import — per-file status",
-  "screener-normalized-financials": "Screener financials (fetch + import)",
+  "screener-normalized-financials":
+    "Screener financials · Consolidated only (fetch + import)",
   "screener-peer-comparison":
     "Screener raw peer table · not shown · KPI benchmarks use fetched financials instead",
   "guidance-commentary": "Guidance commentary",
@@ -60,7 +61,9 @@ function groupSnapshots(): Group[] {
     },
     {
       title: "Screener",
-      description: "Cached fetch + manual import. UI never live-fetches.",
+      description:
+        "Cached fetch + manual import. UI never live-fetches. " +
+        "Consolidated data only — non-consolidated rows are excluded by policy.",
       snapshots: pick([
         "screener-fetch-status",
         "screener-import-status",

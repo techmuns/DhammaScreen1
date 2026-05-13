@@ -343,6 +343,10 @@ function normalizeSheet(args: {
           companyName,
           peerCompanyName: peerName,
           sourceMethod: "import",
+          // Manual exports do not encode reporting basis. Left null so the
+          // dashboard helpers exclude these rows until an analyst relabels
+          // them (Step 12 policy: consolidated-only for KPI use).
+          reportingBasis: null,
           sourceFile,
           sourceSheet: sheet.sheetName,
           sourceUrl: null,
@@ -385,6 +389,10 @@ function normalizeSheet(args: {
         companyId,
         companyName,
         sourceMethod: "import",
+        // Manual exports do not encode reporting basis. Left null so the
+        // dashboard helpers exclude these rows until an analyst relabels
+        // them (Step 12 policy: consolidated-only for KPI use).
+        reportingBasis: null,
         sourceFile,
         sourceSheet: sheet.sheetName,
         sourceUrl: null,

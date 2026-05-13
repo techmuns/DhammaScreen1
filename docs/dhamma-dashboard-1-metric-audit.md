@@ -242,3 +242,80 @@ companies — is written with `sourceMethod: "fetch"` and rendered on
 the dashboard with the **Screener fetch** badge. The manual-import
 fallback (`sourceMethod: "import"`) and the official-filing path are
 both untouched by this expansion.
+
+## Reporting basis policy
+
+Dashboard 1 is consolidated-only. This section documents the mechanism that
+enforces that, end-to-end.
+
+### Hard rules
+
+- **Dashboard uses consolidated data only.** KPI cards, peer-benchmark
+  cards, and financial statement tables all read through helpers in
+  `src/data/helpers/dhammaFinancials.ts` that filter on
+  `reportingBasis === "consolidated"` before returning any row.
+- **Standalone data is not used for KPI benchmarking.** Rows with
+  `reportingBasis: "standalone"` or `null` are excluded everywhere.
+- **Screener fetch hits explicit consolidated URLs.**
+  `scripts/ingest/screener-fetch.ts` builds the URL as
+  `https://www.screener.in/company/<slug>/consolidated/` for every
+  company; there is no fallback to the default page.
+- **Verification before emit.** The fetcher loads the consolidated page,
+  parses for the `quarters` and `profit-loss` sections, and refuses to
+  emit any row if neither is found. Failed companies are recorded with
+  `status: "error"` and `notes` describing why; no rows are written.
+- **Cleanse on merge.** On every successful run, the merge step drops
+  any pre-existing fetch row whose `reportingBasis !== "consolidated"`,
+  regardless of attempted-company set. The first scheduled GitHub Action
+  consolidated fetch after the Step 12 cutover is what wholesale
+  replaces the standalone-era dataset.
+
+### Field-level changes
+
+`src/data/types/dhammaDashboard.ts`:
+
+```
+export interface ScreenerCompanyFinancialRow {
+  …
+  reportingBasis: ReportingBasis | null;  // "consolidated" only is rendered
+  …
+}
+```
+
+Every row emitted by `screener-fetch.ts` carries
+`reportingBasis: "consolidated"` and `sourceLabel` of the form
+`"Screener fetch · Consolidated · <url>"`. Rows emitted by
+`screener-export.ts` (manual import) currently carry
+`reportingBasis: null` because Screener `.xlsx` exports do not encode the
+basis; they will be excluded from dashboard views until an analyst
+relabels them.
+
+### What the UI shows
+
+| Surface | Before Step 12 | After Step 12 |
+| ------- | -------------- | ------------- |
+| SourceBadge for fetch rows | `Screener fetch` | `Screener fetch · Consolidated` |
+| KPI peer benchmarks subtitle | `tracked IT peer group` | `tracked IT peer group. Consolidated data only` |
+| Statement table header | `P&L from Screener fetch · <file>` | `P&L from Screener fetch · Consolidated · <file>` |
+| Data status pill | `Screener fetch · ok/blocked` | `Screener fetch · Consolidated · consolidated/non-consolidated/blocked` |
+| Data provenance dataset name | `Screener financials (fetch + import)` | `Screener financials · Consolidated only (fetch + import)` |
+
+### Failure modes
+
+- **HTTP 403 / timeout on the consolidated URL:** company recorded as
+  `blocked` or `error`. No rows written; previously stored consolidated
+  rows for that company are preserved.
+- **Consolidated page returns no financial tables** (structure change,
+  redirect, etc.): company recorded as `error`. No fallback to
+  standalone is attempted.
+- **Empty consolidated dataset for a company:** UI renders em-dash plus
+  the KPI section warning "No consolidated Screener rows for this
+  company yet."
+
+### Manual import expectations
+
+- The manual import script writes rows with `reportingBasis: null` (the
+  basis is not encoded in `.xlsx` exports).
+- Such rows are deliberately invisible to the dashboard until an analyst
+  edits the export script to set `reportingBasis: "consolidated"` for a
+  file they have personally verified is the consolidated sheet.

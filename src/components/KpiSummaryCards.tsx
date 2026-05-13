@@ -5,9 +5,15 @@
 // KPI and surfaces: self value · peer average · rank · position vs peers
 // · mini per-peer strip. All values come from the cached Screener fetch
 // rows; the dashboard never live-fetches.
+//
+// Reporting-basis policy (Step 12): every value rendered here is sourced
+// from rows with `reportingBasis === "consolidated"`. The shared helpers
+// enforce this — if no consolidated rows exist for a company, every
+// metric falls back to em-dash and the section shows a warning.
 
 import {
   buildPeerBenchmark,
+  consolidatedScreenerRowCount,
   formatNumberCompact,
   formatPercentRaw,
   positionLabel,
@@ -168,20 +174,47 @@ export function KpiSummaryCards({
           <h2 className="section-title">KPI peer benchmarks</h2>
           <span className="section-subtitle">
             Select a company to compare against the tracked IT peer group.
+            Consolidated data only.
           </span>
         </div>
       </section>
     );
   }
 
+  // Surface the consolidated-data warning when the snapshot has zero
+  // consolidated rows for the selected company. This typically happens
+  // immediately after the Step 12 cutover, before the first scheduled
+  // GitHub Action consolidated fetch has landed.
+  const consolidatedRowCount =
+    companyId !== null
+      ? consolidatedScreenerRowCount(
+          screenerNormalizedSnapshot.rows,
+          companyId
+        )
+      : 0;
+  const consolidatedWarning =
+    companyId !== null && consolidatedRowCount === 0;
+
   return (
     <section className="kpi-benchmarks" aria-label="KPI peer benchmarks">
       <div className="kpi-benchmarks__head">
         <h2 className="section-title">KPI peer benchmarks</h2>
         <span className="section-subtitle">
-          Selected company vs. tracked IT peer group. Source: cached Screener fetch.
+          Selected company vs. tracked IT peer group. Consolidated data only.
+          Source: cached Screener fetch · Consolidated.
         </span>
       </div>
+      {consolidatedWarning && (
+        <div
+          className="kpi-benchmarks__warning"
+          role="status"
+          aria-live="polite"
+        >
+          No consolidated Screener rows for this company yet. Standalone /
+          legacy rows are excluded by policy. Run the consolidated fetch
+          workflow to populate.
+        </div>
+      )}
       <div className="kpi-benchmarks__grid">
         {cards.map((card) => (
           <BenchmarkCard key={card.spec.key} card={card} />
