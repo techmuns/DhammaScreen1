@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "annual-financials",
     "description": "Last 5 fiscal years of P&L line items per company, derived from annual reports / Q4 filings.",
-    "generatedAt": "2026-05-13T11:46:36.279Z",
+    "generatedAt": "2026-05-13T13:51:26.965Z",
     "rowCount": 0,
     "status": "empty",
     "notes": "Discovery is wired; annual-report extraction is not implemented.",
@@ -10,7 +10,7 @@
       "sourceClass": "annual_report",
       "sourceUrl": null,
       "sourceLabel": "Discovery adapters wired; financial-row extraction not yet implemented (Audit-status).",
-      "fetchedAt": "2026-05-13T11:46:29.173Z",
+      "fetchedAt": "2026-05-13T13:51:19.937Z",
       "publishedAt": null,
       "notes": "Quarterly/annual financial rows still require a parser. See dhamma-dashboard-1-metric-audit.md."
     },

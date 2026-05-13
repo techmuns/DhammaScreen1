@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "screener-fetch-status",
     "description": "Per-company health of the automated Screener fetcher.",
-    "generatedAt": "2026-05-13T11:47:05.973Z",
+    "generatedAt": "2026-05-13T13:53:18.978Z",
     "rowCount": 4,
     "status": "ok",
     "notes": null,
@@ -10,7 +10,7 @@
       "sourceClass": "manual",
       "sourceUrl": "https://www.screener.in/company/",
       "sourceLabel": "Screener automated fetch",
-      "fetchedAt": "2026-05-13T11:47:05.973Z",
+      "fetchedAt": "2026-05-13T13:53:18.978Z",
       "publishedAt": null,
       "notes": "Cached. Dashboard reads these rows; the UI never live-fetches."
     },
@@ -22,7 +22,7 @@
       "companyName": "TCS",
       "screenerSlug": "TCS",
       "screenerUrl": "https://www.screener.in/company/TCS/",
-      "fetchedAt": "2026-05-13T11:46:36.935Z",
+      "fetchedAt": "2026-05-13T13:51:27.621Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -34,14 +34,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login."
+      "notes": "Headless fetch did not reach https://www.screener.in/company/TCS/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/TCS/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
     },
     {
       "companyId": "infosys",
       "companyName": "Infosys",
       "screenerSlug": "INFY",
       "screenerUrl": "https://www.screener.in/company/INFY/",
-      "fetchedAt": "2026-05-13T11:46:45.271Z",
+      "fetchedAt": "2026-05-13T13:51:56.618Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -53,14 +53,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login."
+      "notes": "Headless fetch did not reach https://www.screener.in/company/INFY/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/INFY/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
     },
     {
       "companyId": "hcltech",
       "companyName": "HCLTech",
       "screenerSlug": "HCLTECH",
       "screenerUrl": "https://www.screener.in/company/HCLTECH/",
-      "fetchedAt": "2026-05-13T11:46:52.999Z",
+      "fetchedAt": "2026-05-13T13:52:24.889Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -72,14 +72,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login."
+      "notes": "Headless fetch did not reach https://www.screener.in/company/HCLTECH/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/HCLTECH/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
     },
     {
       "companyId": "wipro",
       "companyName": "Wipro",
       "screenerSlug": "WIPRO",
       "screenerUrl": "https://www.screener.in/company/WIPRO/",
-      "fetchedAt": "2026-05-13T11:47:00.705Z",
+      "fetchedAt": "2026-05-13T13:52:53.183Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -91,7 +91,7 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login."
+      "notes": "Headless fetch did not reach https://www.screener.in/company/WIPRO/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/WIPRO/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
     }
   ]
 }

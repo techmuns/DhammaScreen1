@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "balance-sheet",
     "description": "Summary balance sheet rows from quarterly filings and annual reports.",
-    "generatedAt": "2026-05-13T11:46:36.280Z",
+    "generatedAt": "2026-05-13T13:51:26.966Z",
     "rowCount": 0,
     "status": "empty",
     "notes": "Balance-sheet extraction not yet implemented.",
@@ -10,7 +10,7 @@
       "sourceClass": "nse_bse_filing",
       "sourceUrl": null,
       "sourceLabel": "Discovery adapters wired; financial-row extraction not yet implemented (Audit-status).",
-      "fetchedAt": "2026-05-13T11:46:29.173Z",
+      "fetchedAt": "2026-05-13T13:51:19.937Z",
       "publishedAt": null,
       "notes": "Quarterly/annual financial rows still require a parser. See dhamma-dashboard-1-metric-audit.md."
     },
