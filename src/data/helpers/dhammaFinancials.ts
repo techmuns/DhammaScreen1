@@ -925,6 +925,125 @@ export function positionLabel(position: PeerBenchmarkPosition): string {
   }
 }
 
+// ---------------------------------------------------------------------------
+// "Overall read" — one-sentence summary derived from a slice of KPI
+// benchmark results.
+//
+// Inputs are deliberately minimal (label + sentiment per card) so the
+// helper stays free of UI / company knowledge — no hardcoded company
+// names, no metric-specific text. The caller decides which KPI cards
+// participate and supplies their labels.
+// ---------------------------------------------------------------------------
+
+export type OverallReadTone = "strong" | "weak" | "mixed" | "pending";
+
+export interface OverallReadInput {
+  label: string;
+  sentiment: PeerBenchmarkSentiment;
+}
+
+export interface OverallRead {
+  tone: OverallReadTone;
+  sentence: string;
+  strengths: ReadonlyArray<string>; // positive-sentiment labels
+  gaps: ReadonlyArray<string>; // negative-sentiment labels
+  neutral: ReadonlyArray<string>; // neutral-sentiment labels
+  pending: ReadonlyArray<string>; // pending-sentiment labels
+}
+
+function naturalJoin(items: ReadonlyArray<string>): string {
+  if (items.length === 0) return "";
+  if (items.length === 1) return items[0];
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")}, and ${items[items.length - 1]}`;
+}
+
+function listWithCap(items: ReadonlyArray<string>, max = 3): string {
+  if (items.length <= max) return naturalJoin(items);
+  const head = items.slice(0, max);
+  const remainder = items.length - max;
+  return `${naturalJoin(head)} (+${remainder} more)`;
+}
+
+export function summarizeOverallRead(
+  items: ReadonlyArray<OverallReadInput>
+): OverallRead {
+  const strengths: string[] = [];
+  const gaps: string[] = [];
+  const neutral: string[] = [];
+  const pending: string[] = [];
+  for (const it of items) {
+    switch (it.sentiment) {
+      case "positive":
+        strengths.push(it.label);
+        break;
+      case "negative":
+        gaps.push(it.label);
+        break;
+      case "neutral":
+        neutral.push(it.label);
+        break;
+      case "pending":
+        pending.push(it.label);
+        break;
+    }
+  }
+
+  // Tone classification:
+  //   pending: nothing usable in the snapshot for this company / period
+  //   strong : at least 2 net strengths
+  //   weak   : at least 2 net gaps
+  //   mixed  : anything else with at least one strength or gap
+  let tone: OverallReadTone;
+  if (strengths.length === 0 && gaps.length === 0) {
+    tone = pending.length > 0 && neutral.length === 0 ? "pending" : "mixed";
+  } else if (strengths.length - gaps.length >= 2) {
+    tone = "strong";
+  } else if (gaps.length - strengths.length >= 2) {
+    tone = "weak";
+  } else {
+    tone = "mixed";
+  }
+
+  let sentence: string;
+  switch (tone) {
+    case "pending":
+      sentence =
+        "Awaiting consolidated data for this peer set — most KPIs are not computable yet.";
+      break;
+    case "strong":
+      sentence = `Strong on ${listWithCap(strengths)} versus peers${
+        gaps.length > 0 ? `; trailing on ${listWithCap(gaps)}.` : "."
+      }`;
+      break;
+    case "weak":
+      sentence = `Below peer median on ${listWithCap(gaps)}${
+        strengths.length > 0 ? `; better on ${listWithCap(strengths)}.` : "."
+      }`;
+      break;
+    case "mixed":
+      if (strengths.length === 0 && gaps.length === 0) {
+        sentence = `In line with peers on the tracked KPIs.`;
+      } else if (strengths.length > 0 && gaps.length === 0) {
+        sentence = `Strong on ${listWithCap(strengths)}; in line elsewhere.`;
+      } else if (gaps.length > 0 && strengths.length === 0) {
+        sentence = `Below peer median on ${listWithCap(gaps)}; in line elsewhere.`;
+      } else {
+        sentence = `Strong on ${listWithCap(strengths)}; below peer median on ${listWithCap(gaps)}.`;
+      }
+      break;
+  }
+
+  return {
+    tone,
+    sentence,
+    strengths,
+    gaps,
+    neutral,
+    pending,
+  };
+}
+
 // Re-exports used by helper consumers; keeps the public surface explicit.
 export type { Comparable };
 

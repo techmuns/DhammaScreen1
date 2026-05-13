@@ -330,7 +330,11 @@ function RevenueMixTable({ companyId, periodView }: BaseTableProps) {
 
   return (
     <>
-      <TableHeader provenance="official-filing" note="Segment disclosure block of filings" />
+      <TableHeader
+        provenance="official-filing"
+        note="Segment disclosure block of filings"
+        unit="₹ crore; mix shown as %"
+      />
       <div className="table-wrap">
         <table className="data-table">
           <thead>
@@ -383,7 +387,11 @@ function BalanceSheetTable({ companyId, periodView }: BaseTableProps) {
   if (officialRows.length > 0) {
     return (
       <>
-        <TableHeader provenance="official-filing" note="Balance sheet from filings / annual reports" />
+        <TableHeader
+          provenance="official-filing"
+          note="Balance sheet from filings / annual reports"
+          unit="₹ crore"
+        />
         <div className="table-wrap">
           <table className="data-table">
             <thead>
@@ -459,7 +467,7 @@ function CashFlowTable({ companyId, periodView }: BaseTableProps) {
   if (officialRows.length > 0) {
     return (
       <>
-        <TableHeader provenance="official-filing" note={note} />
+        <TableHeader provenance="official-filing" note={note} unit="₹ crore" />
         <div className="table-wrap">
           <table className="data-table">
             <thead>
@@ -518,9 +526,11 @@ function renderScreenerStatement(
     provenance === "screener-fetch"
       ? `${label} from Screener fetch · Consolidated · ${sourceFile}`
       : `${label} from Screener export · Consolidated · ${sourceFile}`;
+  // renderScreenerStatement is only used by BS and CFS today — neither
+  // sheet has EPS/margin rows, so the precise unit is just "₹ crore".
   return (
     <>
-      <TableHeader provenance={provenance} note={note} />
+      <TableHeader provenance={provenance} note={note} unit="₹ crore" />
       <div className="table-wrap">
         <table className="data-table data-table--statement">
           <thead>
@@ -566,13 +576,21 @@ function SelectCompany() {
 interface TableHeaderProps {
   provenance: "official-filing" | "screener-fetch" | "screener-import";
   note: string;
+  unit?: string;
 }
 
-function TableHeader({ provenance, note }: TableHeaderProps) {
+// Default unit hint — covers P&L / BS / CFS. EPS and margins are the
+// per-row exceptions and the rule line says so directly so a reader
+// doesn't have to infer it from formatting.
+const DEFAULT_UNIT_HINT = "₹ crore, except EPS and margins";
+
+function TableHeader({ provenance, note, unit }: TableHeaderProps) {
+  const unitHint = unit ?? DEFAULT_UNIT_HINT;
   return (
     <div className="table-header">
       <SourceBadge provenance={provenance} />
       <span className="table-header__note">{note}</span>
+      <span className="table-header__unit">{unitHint}</span>
     </div>
   );
 }

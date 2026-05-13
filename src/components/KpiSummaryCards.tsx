@@ -27,8 +27,10 @@ import {
   formatNumberCompact,
   formatPercentRaw,
   positionLabel,
+  summarizeOverallRead,
   tableValueOrDash,
   type MetricDirection,
+  type OverallReadTone,
   type PeerBenchmark,
   type PeerBenchmarkPeerEntry,
   type PeerBenchmarkPosition,
@@ -48,6 +50,12 @@ interface KpiSummaryCardsProps {
 
 type CardKind = "value" | "growth-yoy" | "ratio-cfo-conversion";
 
+// Categories let the UI signal *what kind of KPI* this card is. Most
+// cards are performance indicators (growth / margin / quality); the
+// balance-sheet-risk category gets a distinct chip so a reader doesn't
+// mistake a high borrowings figure for a growth print.
+type CardCategory = "performance" | "balance-sheet-risk";
+
 interface CardSpec {
   key: string;
   label: string;
@@ -59,9 +67,12 @@ interface CardSpec {
   periodScope: "follow-toggle" | "annual";
   format: "number" | "percent-points" | "percent-raw" | "ratio";
   direction: MetricDirection;
+  category: CardCategory;
   hint: string;
 }
 
+// Cards are ordered with performance KPIs first; the lone balance-sheet
+// risk card (Borrowings) sits last and is visually distinct.
 const CARD_SPECS: CardSpec[] = [
   {
     key: "revenue_growth",
@@ -71,6 +82,7 @@ const CARD_SPECS: CardSpec[] = [
     periodScope: "follow-toggle",
     format: "percent-points",
     direction: "higher-is-better",
+    category: "performance",
     hint: "Year-on-year change in revenue",
   },
   {
@@ -81,6 +93,7 @@ const CARD_SPECS: CardSpec[] = [
     periodScope: "follow-toggle",
     format: "percent-raw",
     direction: "higher-is-better",
+    category: "performance",
     hint: "Latest OPM %",
   },
   {
@@ -91,6 +104,7 @@ const CARD_SPECS: CardSpec[] = [
     periodScope: "follow-toggle",
     format: "percent-points",
     direction: "higher-is-better",
+    category: "performance",
     hint: "Year-on-year change in net profit",
   },
   {
@@ -101,6 +115,7 @@ const CARD_SPECS: CardSpec[] = [
     periodScope: "follow-toggle",
     format: "percent-points",
     direction: "higher-is-better",
+    category: "performance",
     hint: "Year-on-year change in basic EPS",
   },
   {
@@ -111,6 +126,7 @@ const CARD_SPECS: CardSpec[] = [
     periodScope: "annual",
     format: "percent-raw",
     direction: "higher-is-better",
+    category: "performance",
     hint: "Annual return on capital employed",
   },
   {
@@ -122,6 +138,7 @@ const CARD_SPECS: CardSpec[] = [
     periodScope: "annual",
     format: "ratio",
     direction: "higher-is-better",
+    category: "performance",
     hint:
       "CFO / Net Profit (preferred) or CFO / Revenue (fallback). Higher means more of the reported profit converted to cash.",
   },
@@ -133,7 +150,9 @@ const CARD_SPECS: CardSpec[] = [
     periodScope: "annual",
     format: "number",
     direction: "lower-is-better",
-    hint: "Latest annual borrowings. Lower is better.",
+    category: "balance-sheet-risk",
+    hint:
+      "Latest annual borrowings (₹ crore). Balance-sheet risk: lower is better. Not directly comparable to revenue / margin KPIs.",
   },
 ];
 
@@ -223,6 +242,20 @@ export function KpiSummaryCards({
   const consolidatedWarning =
     companyId !== null && consolidatedRowCount === 0;
 
+  // "Overall read" is computed only over performance-category cards.
+  // Borrowings (balance-sheet risk) is excluded so a high borrowings
+  // print doesn't get folded into the strengths/weaknesses sentence.
+  const overallRead = summarizeOverallRead(
+    cards
+      .filter((c) => c.spec.category === "performance")
+      .map((c) => ({
+        label: c.spec.label,
+        sentiment: c.benchmark.sentiment,
+      }))
+  );
+  const selfDisplayName =
+    cards[0]?.benchmark.selfDisplayName ?? "Selected company";
+
   return (
     <section className="kpi-benchmarks" aria-label="KPI peer benchmarks">
       <div className="kpi-benchmarks__head">
@@ -243,12 +276,42 @@ export function KpiSummaryCards({
           workflow to populate.
         </div>
       )}
+      <OverallReadStrip
+        tone={overallRead.tone}
+        sentence={overallRead.sentence}
+        selfDisplayName={selfDisplayName}
+      />
       <div className="kpi-benchmarks__grid">
         {cards.map((card) => (
           <BenchmarkCard key={card.spec.key} card={card} />
         ))}
       </div>
     </section>
+  );
+}
+
+const READ_TONE_CLASS: Record<OverallReadTone, string> = {
+  strong: "overall-read overall-read--strong",
+  weak: "overall-read overall-read--weak",
+  mixed: "overall-read overall-read--mixed",
+  pending: "overall-read overall-read--pending",
+};
+
+function OverallReadStrip({
+  tone,
+  sentence,
+  selfDisplayName,
+}: {
+  tone: OverallReadTone;
+  sentence: string;
+  selfDisplayName: string;
+}) {
+  return (
+    <div className={READ_TONE_CLASS[tone]} role="note" aria-live="polite">
+      <span className="overall-read__label">Overall read</span>
+      <span className="overall-read__self">{selfDisplayName}</span>
+      <span className="overall-read__sentence">{sentence}</span>
+    </div>
   );
 }
 
@@ -263,11 +326,21 @@ function BenchmarkCard({ card }: { card: BenchmarkCardModel }) {
   // Build the compact 3-row strip: best · self · worst. If self IS the
   // best or worst, drop the duplicate row so the card stays clean.
   const stripRows = compactStrip(benchmark);
+  const isRisk = spec.category === "balance-sheet-risk";
 
   return (
-    <article className="benchmark-card">
+    <article
+      className={`benchmark-card${isRisk ? " benchmark-card--risk" : ""}`}
+    >
       <header className="benchmark-card__header">
-        <span className="benchmark-card__label">{spec.label}</span>
+        <div className="benchmark-card__label-row">
+          <span className="benchmark-card__label">{spec.label}</span>
+          {isRisk && (
+            <span className="benchmark-card__category-tag">
+              Balance-sheet risk
+            </span>
+          )}
+        </div>
         <SourceBadge provenance="screener-fetch" />
       </header>
 
