@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "screener-fetch-status",
     "description": "Per-company health of the automated Screener fetcher.",
-    "generatedAt": "2026-05-13T10:48:38.348Z",
+    "generatedAt": "2026-05-13T11:47:05.973Z",
     "rowCount": 4,
     "status": "ok",
     "notes": null,
@@ -10,7 +10,7 @@
       "sourceClass": "manual",
       "sourceUrl": "https://www.screener.in/company/",
       "sourceLabel": "Screener automated fetch",
-      "fetchedAt": "2026-05-13T10:48:38.348Z",
+      "fetchedAt": "2026-05-13T11:47:05.973Z",
       "publishedAt": null,
       "notes": "Cached. Dashboard reads these rows; the UI never live-fetches."
     },
@@ -22,7 +22,7 @@
       "companyName": "TCS",
       "screenerSlug": "TCS",
       "screenerUrl": "https://www.screener.in/company/TCS/",
-      "fetchedAt": "2026-05-13T10:48:26.296Z",
+      "fetchedAt": "2026-05-13T11:46:36.935Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -34,14 +34,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Missing sections: peers"
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login."
     },
     {
       "companyId": "infosys",
       "companyName": "Infosys",
       "screenerSlug": "INFY",
       "screenerUrl": "https://www.screener.in/company/INFY/",
-      "fetchedAt": "2026-05-13T10:48:31.719Z",
+      "fetchedAt": "2026-05-13T11:46:45.271Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -53,14 +53,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Missing sections: peers"
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login."
     },
     {
       "companyId": "hcltech",
       "companyName": "HCLTech",
       "screenerSlug": "HCLTECH",
       "screenerUrl": "https://www.screener.in/company/HCLTECH/",
-      "fetchedAt": "2026-05-13T10:48:34.770Z",
+      "fetchedAt": "2026-05-13T11:46:52.999Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -72,14 +72,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Missing sections: peers"
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login."
     },
     {
       "companyId": "wipro",
       "companyName": "Wipro",
       "screenerSlug": "WIPRO",
       "screenerUrl": "https://www.screener.in/company/WIPRO/",
-      "fetchedAt": "2026-05-13T10:48:37.808Z",
+      "fetchedAt": "2026-05-13T11:47:00.705Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -91,7 +91,7 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Missing sections: peers"
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered or requires login."
     }
   ]
 }
