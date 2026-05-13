@@ -226,42 +226,42 @@ code {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 16px 16px 18px;
+  padding: 14px 14px 14px;
 }
 
 .kpi-benchmarks__head {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
 .kpi-benchmarks__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
 }
 
 .kpi-benchmarks__warning {
-  margin: 4px 0 12px;
-  padding: 10px 12px;
+  margin: 2px 0 10px;
+  padding: 8px 10px;
   background: rgba(217, 119, 6, 0.08);
   border: 1px solid rgba(217, 119, 6, 0.35);
   border-radius: 6px;
   color: #b45309;
-  font-size: 12.5px;
-  line-height: 1.45;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .benchmark-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 14px 16px 12px;
+  padding: 10px 12px 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
 .benchmark-card__header {
@@ -272,7 +272,7 @@ code {
 }
 
 .benchmark-card__label {
-  font-size: 11.5px;
+  font-size: 11px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-secondary);
@@ -289,18 +289,19 @@ code {
 .benchmark-card__value-block {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .benchmark-card__value {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.01em;
+  line-height: 1.1;
 }
 
 .benchmark-card__period {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--text-muted);
 }
 
@@ -313,13 +314,13 @@ code {
 }
 
 .benchmark-card__rank-number {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text);
 }
 
 .benchmark-card__rank-of {
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .benchmark-card__secondary {
@@ -328,11 +329,11 @@ code {
   align-items: center;
   gap: 8px;
   border-top: 1px solid var(--border);
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 .benchmark-card__peer-avg {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--text-secondary);
 }
 
@@ -349,20 +350,20 @@ code {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .benchmark-card__peers--compact {
-  gap: 3px;
+  gap: 2px;
 }
 
 .benchmark-card__peer {
   display: grid;
-  grid-template-columns: 64px 1fr auto;
+  grid-template-columns: 56px 1fr auto;
   align-items: baseline;
   gap: 6px;
-  font-size: 12px;
-  padding: 3px 6px;
+  font-size: 11.5px;
+  padding: 2px 6px;
   border-radius: 3px;
   color: var(--text-secondary);
 }
@@ -393,13 +394,14 @@ code {
 }
 
 .benchmark-card__hint {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--text-muted);
   margin: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
   align-items: baseline;
+  line-height: 1.35;
 }
 
 .benchmark-card__peer-count {
@@ -537,6 +539,72 @@ code {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 16px 16px 18px;
+}
+
+/* Summary grid — shown by default; the per-snapshot detail tables are
+   tucked behind a <details> element below. */
+.provenance-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px 16px;
+  margin: 10px 0 12px;
+  padding: 0;
+}
+
+.provenance-summary__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.provenance-summary__label {
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.provenance-summary__value {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.provenance-summary__hint {
+  font-size: 10.5px;
+  color: var(--text-muted);
+}
+
+.provenance-details {
+  margin-top: 4px;
+  border-top: 1px dashed var(--border);
+  padding-top: 8px;
+}
+
+.provenance-details__summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  user-select: none;
+  list-style: revert;
+  padding: 2px 0;
+}
+
+.provenance-details__summary:hover {
+  color: var(--text);
+}
+
+.provenance-details__body {
+  margin-top: 8px;
 }
 
 .provenance-group {
@@ -784,32 +852,111 @@ code {
 
 /* ---------- Guidance ---------- */
 
-.guidance-banner {
-  background: var(--tone-warn-bg);
+/* Planned-module presentation. The guidance feed is intentionally
+   empty (Audit status) — this styles the "feature on the way" card
+   so a client demo doesn't read it as a broken table. */
+.guidance-planned {
+  display: grid;
+  gap: 14px;
+  background: linear-gradient(180deg, #fffbeb 0%, #fefce8 100%);
   border: 1px solid #fde68a;
-  border-radius: 6px;
-  padding: 12px 14px;
-  margin-bottom: 12px;
+  border-radius: 8px;
+  padding: 14px 16px 16px;
 }
 
-.guidance-banner__title {
-  margin: 0 0 4px;
+.guidance-planned__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.guidance-planned__title {
+  margin: 0;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--tone-warn);
 }
 
-.guidance-banner__body {
+.guidance-planned__lede {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.45;
+  max-width: 70ch;
+}
+
+.guidance-planned__subtitle {
   margin: 0 0 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.guidance-planned__steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.guidance-planned__step {
+  background: var(--surface);
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 4px;
+  align-items: baseline;
+}
+
+.guidance-planned__step-label {
+  font-weight: 600;
   font-size: 12.5px;
   color: var(--text);
 }
 
-.guidance-banner__needs {
-  margin: 4px 0 0;
-  padding-left: 18px;
-  font-size: 12.5px;
+.guidance-planned__step-status {
+  justify-self: end;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--tone-warn);
+  background: rgba(217, 119, 6, 0.12);
+  border: 1px solid #fde68a;
+}
+
+.guidance-planned__step-detail {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
   color: var(--text-secondary);
+}
+
+.guidance-planned__columns-list {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+.guidance-planned__upgrade {
+  font-size: 12px;
+  color: var(--text);
+  background: var(--tone-ok-bg);
+  border: 1px solid #a7f3d0;
+  border-radius: 6px;
+  padding: 8px 10px;
 }
 
 /* ---------- Footer ---------- */

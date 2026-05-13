@@ -321,9 +321,9 @@ function RevenueMixTable({ companyId, periodView }: BaseTableProps) {
   if (!mix || mix.length === 0) {
     return (
       <EmptyState
-        title="No segment mix yet"
-        message="Segment revenue requires the segment-disclosure block from filings to be extracted and normalized."
-        hint="Screener exports do not include per-segment revenue, so this section stays empty until official filings are parsed."
+        title="Segment revenue mix · pending source"
+        message="Per-segment revenue is not part of the Screener consolidated dataset — it lives in investor presentations and the segment-disclosure block of annual reports. That extraction pipeline is queued for the official-filings module and is not yet wired."
+        hint="The Screener fetch is healthy; this section will turn on once investor-presentation / annual-report parsing produces segment rows. Until then, segment mix renders as em-dash by policy — never an inferred or fabricated split."
       />
     );
   }
