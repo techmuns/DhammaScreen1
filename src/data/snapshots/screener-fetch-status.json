@@ -2,24 +2,24 @@
   "meta": {
     "snapshotId": "screener-fetch-status",
     "description": "Per-company health of the automated Screener fetcher.",
-    "generatedAt": "2026-05-13T15:21:28.647Z",
+    "generatedAt": "2026-05-13T17:19:44.953Z",
     "rowCount": 20,
     "status": "partial",
     "notes": "Some companies failed (1 errors recorded).",
     "source": {
       "sourceClass": "manual",
-      "sourceUrl": "https://www.screener.in/company/",
-      "sourceLabel": "Screener automated fetch",
-      "fetchedAt": "2026-05-13T15:21:28.647Z",
+      "sourceUrl": "https://www.screener.in/company/<slug>/consolidated/",
+      "sourceLabel": "Screener automated fetch (Consolidated)",
+      "fetchedAt": "2026-05-13T17:19:44.953Z",
       "publishedAt": null,
-      "notes": "Cached. Dashboard reads these rows; the UI never live-fetches."
+      "notes": "Cached. Dashboard reads these rows; the UI never live-fetches. Reporting basis is always consolidated; standalone fetches are not performed."
     },
     "errors": [
       {
         "sourceId": "screener",
         "companyId": "ltim",
-        "message": "ltim: HTTP 404",
-        "occurredAt": "2026-05-13T15:14:55.985Z"
+        "message": "ltim: consolidated fetch failed — HTTP 404",
+        "occurredAt": "2026-05-13T17:17:57.765Z"
       }
     ]
   },
@@ -28,8 +28,8 @@
       "companyId": "tcs",
       "companyName": "TCS",
       "screenerSlug": "TCS",
-      "screenerUrl": "https://www.screener.in/company/TCS/",
-      "fetchedAt": "2026-05-13T15:12:35.359Z",
+      "screenerUrl": "https://www.screener.in/company/TCS/consolidated/",
+      "fetchedAt": "2026-05-13T17:17:19.337Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -41,14 +41,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/TCS/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/TCS/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "infosys",
       "companyName": "Infosys",
       "screenerSlug": "INFY",
-      "screenerUrl": "https://www.screener.in/company/INFY/",
-      "fetchedAt": "2026-05-13T15:13:04.204Z",
+      "screenerUrl": "https://www.screener.in/company/INFY/consolidated/",
+      "fetchedAt": "2026-05-13T17:17:27.452Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -60,14 +60,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/INFY/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/INFY/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "hcltech",
       "companyName": "HCLTech",
       "screenerSlug": "HCLTECH",
-      "screenerUrl": "https://www.screener.in/company/HCLTECH/",
-      "fetchedAt": "2026-05-13T15:13:32.245Z",
+      "screenerUrl": "https://www.screener.in/company/HCLTECH/consolidated/",
+      "fetchedAt": "2026-05-13T17:17:35.134Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -79,14 +79,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/HCLTECH/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/HCLTECH/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "wipro",
       "companyName": "Wipro",
       "screenerSlug": "WIPRO",
-      "screenerUrl": "https://www.screener.in/company/WIPRO/",
-      "fetchedAt": "2026-05-13T15:13:59.857Z",
+      "screenerUrl": "https://www.screener.in/company/WIPRO/consolidated/",
+      "fetchedAt": "2026-05-13T17:17:42.644Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -98,14 +98,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/WIPRO/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/WIPRO/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "techm",
       "companyName": "Tech Mahindra",
       "screenerSlug": "TECHM",
-      "screenerUrl": "https://www.screener.in/company/TECHM/",
-      "fetchedAt": "2026-05-13T15:14:27.869Z",
+      "screenerUrl": "https://www.screener.in/company/TECHM/consolidated/",
+      "fetchedAt": "2026-05-13T17:17:50.305Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -117,27 +117,27 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/TECHM/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/TECHM/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "ltim",
       "companyName": "LTIMindtree",
       "screenerSlug": "LTIM",
-      "screenerUrl": "https://www.screener.in/company/LTIM/",
-      "fetchedAt": "2026-05-13T15:14:55.985Z",
+      "screenerUrl": "https://www.screener.in/company/LTIM/consolidated/",
+      "fetchedAt": "2026-05-13T17:17:57.765Z",
       "status": "blocked",
       "sectionsFetched": [],
       "rowsWritten": 0,
       "latestPeriod": null,
       "errorMessage": "HTTP 404",
-      "notes": null
+      "notes": "Consolidated fetch failed (https://www.screener.in/company/LTIM/consolidated/). Not falling back to standalone."
     },
     {
       "companyId": "ofss",
       "companyName": "Oracle Financial Services",
       "screenerSlug": "OFSS",
-      "screenerUrl": "https://www.screener.in/company/OFSS/",
-      "fetchedAt": "2026-05-13T15:15:00.805Z",
+      "screenerUrl": "https://www.screener.in/company/OFSS/consolidated/",
+      "fetchedAt": "2026-05-13T17:18:02.183Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -149,14 +149,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/OFSS/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/OFSS/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "persistent",
       "companyName": "Persistent Systems",
       "screenerSlug": "PERSISTENT",
-      "screenerUrl": "https://www.screener.in/company/PERSISTENT/",
-      "fetchedAt": "2026-05-13T15:15:28.016Z",
+      "screenerUrl": "https://www.screener.in/company/PERSISTENT/consolidated/",
+      "fetchedAt": "2026-05-13T17:18:09.628Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -168,14 +168,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/PERSISTENT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/PERSISTENT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "coforge",
       "companyName": "Coforge",
       "screenerSlug": "COFORGE",
-      "screenerUrl": "https://www.screener.in/company/COFORGE/",
-      "fetchedAt": "2026-05-13T15:15:55.660Z",
+      "screenerUrl": "https://www.screener.in/company/COFORGE/consolidated/",
+      "fetchedAt": "2026-05-13T17:18:17.202Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -187,14 +187,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/COFORGE/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/COFORGE/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "mphasis",
       "companyName": "Mphasis",
       "screenerSlug": "MPHASIS",
-      "screenerUrl": "https://www.screener.in/company/MPHASIS/",
-      "fetchedAt": "2026-05-13T15:16:23.762Z",
+      "screenerUrl": "https://www.screener.in/company/MPHASIS/consolidated/",
+      "fetchedAt": "2026-05-13T17:18:24.647Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -206,14 +206,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/MPHASIS/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/MPHASIS/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "ltts",
       "companyName": "L&T Technology Services",
       "screenerSlug": "LTTS",
-      "screenerUrl": "https://www.screener.in/company/LTTS/",
-      "fetchedAt": "2026-05-13T15:16:51.382Z",
+      "screenerUrl": "https://www.screener.in/company/LTTS/consolidated/",
+      "fetchedAt": "2026-05-13T17:18:32.212Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -225,14 +225,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/LTTS/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/LTTS/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "hexaware",
       "companyName": "Hexaware Technologies",
       "screenerSlug": "HEXT",
-      "screenerUrl": "https://www.screener.in/company/HEXT/",
-      "fetchedAt": "2026-05-13T15:17:19.035Z",
+      "screenerUrl": "https://www.screener.in/company/HEXT/consolidated/",
+      "fetchedAt": "2026-05-13T17:18:39.648Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -244,14 +244,14 @@
       "rowsWritten": 576,
       "latestPeriod": "9999-99",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/HEXT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/HEXT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "tatatech",
       "companyName": "Tata Technologies",
       "screenerSlug": "TATATECH",
-      "screenerUrl": "https://www.screener.in/company/TATATECH/",
-      "fetchedAt": "2026-05-13T15:17:46.702Z",
+      "screenerUrl": "https://www.screener.in/company/TATATECH/consolidated/",
+      "fetchedAt": "2026-05-13T17:18:47.271Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -263,14 +263,14 @@
       "rowsWritten": 428,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/TATATECH/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/TATATECH/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "tataelxsi",
       "companyName": "Tata Elxsi",
       "screenerSlug": "TATAELXSI",
-      "screenerUrl": "https://www.screener.in/company/TATAELXSI/",
-      "fetchedAt": "2026-05-13T15:18:14.405Z",
+      "screenerUrl": "https://www.screener.in/company/TATAELXSI/consolidated/",
+      "fetchedAt": "2026-05-13T17:18:54.719Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -279,17 +279,17 @@
         "cash_flow",
         "ratios"
       ],
-      "rowsWritten": 564,
-      "latestPeriod": "2026-03",
+      "rowsWritten": 428,
+      "latestPeriod": "2015-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/TATAELXSI/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/TATAELXSI/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "kpittech",
       "companyName": "KPIT Technologies",
       "screenerSlug": "KPITTECH",
-      "screenerUrl": "https://www.screener.in/company/KPITTECH/",
-      "fetchedAt": "2026-05-13T15:18:42.447Z",
+      "screenerUrl": "https://www.screener.in/company/KPITTECH/consolidated/",
+      "fetchedAt": "2026-05-13T17:19:02.293Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -301,14 +301,14 @@
       "rowsWritten": 462,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/KPITTECH/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/KPITTECH/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "zensartech",
       "companyName": "Zensar Technologies",
       "screenerSlug": "ZENSARTECH",
-      "screenerUrl": "https://www.screener.in/company/ZENSARTECH/",
-      "fetchedAt": "2026-05-13T15:19:10.482Z",
+      "screenerUrl": "https://www.screener.in/company/ZENSARTECH/consolidated/",
+      "fetchedAt": "2026-05-13T17:19:09.733Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -320,14 +320,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/ZENSARTECH/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/ZENSARTECH/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "intellect",
       "companyName": "Intellect Design",
       "screenerSlug": "INTELLECT",
-      "screenerUrl": "https://www.screener.in/company/INTELLECT/",
-      "fetchedAt": "2026-05-13T15:19:38.520Z",
+      "screenerUrl": "https://www.screener.in/company/INTELLECT/consolidated/",
+      "fetchedAt": "2026-05-13T17:19:17.302Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -339,14 +339,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/INTELLECT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/INTELLECT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "cyient",
       "companyName": "Cyient",
       "screenerSlug": "CYIENT",
-      "screenerUrl": "https://www.screener.in/company/CYIENT/",
-      "fetchedAt": "2026-05-13T15:20:06.528Z",
+      "screenerUrl": "https://www.screener.in/company/CYIENT/consolidated/",
+      "fetchedAt": "2026-05-13T17:19:24.735Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -358,14 +358,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/CYIENT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/CYIENT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "birlasoft",
       "companyName": "Birlasoft",
       "screenerSlug": "BSOFT",
-      "screenerUrl": "https://www.screener.in/company/BSOFT/",
-      "fetchedAt": "2026-05-13T15:20:34.570Z",
+      "screenerUrl": "https://www.screener.in/company/BSOFT/consolidated/",
+      "fetchedAt": "2026-05-13T17:19:32.294Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -377,14 +377,14 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/BSOFT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/BSOFT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     },
     {
       "companyId": "sonata",
       "companyName": "Sonata Software",
       "screenerSlug": "SONATSOFTW",
-      "screenerUrl": "https://www.screener.in/company/SONATSOFTW/",
-      "fetchedAt": "2026-05-13T15:21:02.973Z",
+      "screenerUrl": "https://www.screener.in/company/SONATSOFTW/consolidated/",
+      "fetchedAt": "2026-05-13T17:19:39.723Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -396,7 +396,7 @@
       "rowsWritten": 564,
       "latestPeriod": "2026-03",
       "errorMessage": null,
-      "notes": "Headless fetch did not reach https://www.screener.in/company/SONATSOFTW/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/SONATSOFTW/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+      "notes": "Peer table not in main HTML; warehouse-id API and /peers/ fragment both unavailable. Likely client-side-rendered."
     }
   ]
 }
