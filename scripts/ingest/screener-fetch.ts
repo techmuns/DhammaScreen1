@@ -231,9 +231,27 @@ function extractTable(
   $: cheerio.CheerioAPI,
   sectionId: string
 ): ParsedTable | null {
-  const section = $(`#${sectionId}`);
-  if (section.length === 0) return null;
-  const table = section.find("table").first();
+  // Screener's "Peers" section is usually a `#peers` block that contains a
+  // <div id="peers-table-placeholder"> populated by JS at runtime. A static
+  // HTTP fetch therefore sees no rows there. Try the obvious ID first, then
+  // a small set of fallback selectors, then bail.
+  const selectors = [`#${sectionId}`];
+  if (sectionId === "peers") {
+    selectors.push("#peers-table-placeholder", "section.peers");
+  } else {
+    selectors.push(`section[data-cookie-section-name='${sectionId}']`);
+  }
+
+  let table = $().filter(() => false); // empty wrapped set with correct type
+  for (const sel of selectors) {
+    const section = $(sel);
+    if (section.length === 0) continue;
+    const t = section.find("table").first();
+    if (t.length > 0) {
+      table = t;
+      break;
+    }
+  }
   if (table.length === 0) return null;
 
   const headers = table
@@ -595,12 +613,18 @@ async function main(): Promise<void> {
       "Rows tagged sourceMethod='fetch' are managed by screener-fetch.ts; rows tagged 'import' are managed by screener-export.ts.",
   };
 
+  // Only touch fetch rows for companies attempted this run. Rows for other
+  // companies — whether method=fetch or method=import — pass through
+  // untouched. This means `--company tcs` (even if blocked) leaves
+  // Infosys / HCLTech / Wipro rows alone.
+  const attemptedCompanyIds = new Set(companies.map((c) => c.companyId));
   const existingFinancials =
     (await readSnapshot<ScreenerCompanyFinancialRow>(
       "screener-normalized-financials.json"
     )) ?? null;
   const preservedFinancials = (existingFinancials?.rows ?? []).filter(
-    (row) => row.sourceMethod !== "fetch"
+    (row) =>
+      row.sourceMethod !== "fetch" || !attemptedCompanyIds.has(row.companyId)
   );
   const mergedFinancials = [...preservedFinancials, ...allFetchRows];
 
@@ -625,8 +649,10 @@ async function main(): Promise<void> {
     (await readSnapshot<ScreenerPeerComparisonRow>(
       "screener-peer-comparison.json"
     )) ?? null;
+  // Same per-company preservation rule as the financials merge above.
   const preservedPeer = (existingPeer?.rows ?? []).filter(
-    (row) => row.sourceMethod !== "fetch"
+    (row) =>
+      row.sourceMethod !== "fetch" || !attemptedCompanyIds.has(row.companyId)
   );
   const mergedPeer = [...preservedPeer, ...allFetchPeerRows];
 
