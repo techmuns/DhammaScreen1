@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "source-health",
     "description": "Per (sourceId, companyId) probe of source reachability and freshness.",
-    "generatedAt": "2026-05-13T09:43:41.544Z",
+    "generatedAt": "2026-05-13T10:48:25.667Z",
     "rowCount": 8,
     "status": "ok",
     "notes": null,
@@ -10,7 +10,7 @@
       "sourceClass": "derived",
       "sourceUrl": null,
       "sourceLabel": "Derived from discovery adapter results",
-      "fetchedAt": "2026-05-13T09:43:41.544Z",
+      "fetchedAt": "2026-05-13T10:48:25.667Z",
       "publishedAt": null,
       "notes": null
     },
@@ -20,82 +20,82 @@
     {
       "sourceId": "nse",
       "companyId": "tcs",
-      "checkedAt": "2026-05-13T09:43:40.752Z",
-      "status": "blocked",
-      "filingsDiscovered": 0,
-      "latestFilingDate": null,
-      "errorMessage": "NSE HTTP 403",
-      "notes": "Source returned an error; see errorMessage."
+      "checkedAt": "2026-05-13T10:48:18.503Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "17-Jan-202",
+      "errorMessage": null,
+      "notes": null
     },
     {
       "sourceId": "bse",
       "companyId": "tcs",
-      "checkedAt": "2026-05-13T09:43:40.851Z",
-      "status": "blocked",
+      "checkedAt": "2026-05-13T10:48:20.107Z",
+      "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
-      "errorMessage": "BSE HTTP 403",
-      "notes": "Source returned an error; see errorMessage."
+      "errorMessage": null,
+      "notes": "Source reachable; no filings matched the discovery filter."
     },
     {
       "sourceId": "nse",
       "companyId": "infosys",
-      "checkedAt": "2026-05-13T09:43:41.516Z",
-      "status": "blocked",
-      "filingsDiscovered": 0,
-      "latestFilingDate": null,
-      "errorMessage": "NSE HTTP 403",
-      "notes": "Source returned an error; see errorMessage."
+      "checkedAt": "2026-05-13T10:48:20.694Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "28-Sep-202",
+      "errorMessage": null,
+      "notes": null
     },
     {
       "sourceId": "bse",
       "companyId": "infosys",
-      "checkedAt": "2026-05-13T09:43:41.522Z",
-      "status": "blocked",
+      "checkedAt": "2026-05-13T10:48:22.016Z",
+      "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
-      "errorMessage": "BSE HTTP 403",
-      "notes": "Source returned an error; see errorMessage."
+      "errorMessage": null,
+      "notes": "Source reachable; no filings matched the discovery filter."
     },
     {
       "sourceId": "nse",
       "companyId": "hcltech",
-      "checkedAt": "2026-05-13T09:43:41.526Z",
-      "status": "blocked",
-      "filingsDiscovered": 0,
-      "latestFilingDate": null,
-      "errorMessage": "NSE HTTP 403",
-      "notes": "Source returned an error; see errorMessage."
+      "checkedAt": "2026-05-13T10:48:22.302Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "29-Aug-202",
+      "errorMessage": null,
+      "notes": null
     },
     {
       "sourceId": "bse",
       "companyId": "hcltech",
-      "checkedAt": "2026-05-13T09:43:41.530Z",
-      "status": "blocked",
+      "checkedAt": "2026-05-13T10:48:23.665Z",
+      "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
-      "errorMessage": "BSE HTTP 403",
-      "notes": "Source returned an error; see errorMessage."
+      "errorMessage": null,
+      "notes": "Source reachable; no filings matched the discovery filter."
     },
     {
       "sourceId": "nse",
       "companyId": "wipro",
-      "checkedAt": "2026-05-13T09:43:41.534Z",
-      "status": "blocked",
-      "filingsDiscovered": 0,
-      "latestFilingDate": null,
-      "errorMessage": "NSE HTTP 403",
-      "notes": "Source returned an error; see errorMessage."
+      "checkedAt": "2026-05-13T10:48:23.958Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "30-Jan-202",
+      "errorMessage": null,
+      "notes": null
     },
     {
       "sourceId": "bse",
       "companyId": "wipro",
-      "checkedAt": "2026-05-13T09:43:41.539Z",
-      "status": "blocked",
+      "checkedAt": "2026-05-13T10:48:25.367Z",
+      "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
-      "errorMessage": "BSE HTTP 403",
-      "notes": "Source returned an error; see errorMessage."
+      "errorMessage": null,
+      "notes": "Source reachable; no filings matched the discovery filter."
     }
   ]
 }
