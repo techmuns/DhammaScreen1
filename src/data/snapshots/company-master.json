@@ -2,15 +2,15 @@
   "meta": {
     "snapshotId": "company-master",
     "description": "Master list of tracked Indian companies and their identifiers.",
-    "generatedAt": "2026-05-13T13:51:19.937Z",
-    "rowCount": 4,
+    "generatedAt": "2026-05-13T14:52:15.505Z",
+    "rowCount": 20,
     "status": "ok",
     "notes": null,
     "source": {
       "sourceClass": "manual",
       "sourceUrl": null,
       "sourceLabel": "scripts/config/dhamma-companies.ts",
-      "fetchedAt": "2026-05-13T13:51:19.937Z",
+      "fetchedAt": "2026-05-13T14:52:15.505Z",
       "publishedAt": null,
       "notes": null
     },
@@ -36,17 +36,17 @@
       "country": "IN",
       "sector": "Information Technology",
       "industry": "IT Services & Consulting",
-      "peerGroupId": "indian-it-services-largecap",
+      "peerGroupId": "it-services-broad",
       "fiscalYearEndMonth": 3,
       "reportingBasisDefault": "consolidated",
       "irPageUrl": "https://www.tcs.com/investor-relations",
-      "status": "pilot",
+      "status": "active",
       "screenerSlug": "TCS",
       "screenerUrl": "https://www.screener.in/company/TCS/",
       "fetchEnabled": true,
       "fetchPriority": 1,
-      "sourceNotes": "Screener slug inferred from NSE symbol; verify by opening the URL once before relying on fetched rows.",
-      "notes": "Pilot company for Step 2 source-discovery validation. Reverify BSE code 532540 and NSE symbol TCS before production."
+      "sourceNotes": "Screener slug = NSE symbol TCS. Verified end-to-end (production data).",
+      "notes": "Top-4 IT services large-cap. Reverify identifiers periodically."
     },
     {
       "companyId": "infosys",
@@ -67,17 +67,17 @@
       "country": "IN",
       "sector": "Information Technology",
       "industry": "IT Services & Consulting",
-      "peerGroupId": "indian-it-services-largecap",
+      "peerGroupId": "it-services-broad",
       "fiscalYearEndMonth": 3,
       "reportingBasisDefault": "consolidated",
       "irPageUrl": "https://www.infosys.com/investors/",
-      "status": "pilot",
+      "status": "active",
       "screenerSlug": "INFY",
       "screenerUrl": "https://www.screener.in/company/INFY/",
       "fetchEnabled": true,
       "fetchPriority": 2,
-      "sourceNotes": "Screener slug inferred from NSE symbol INFY; reverify before production.",
-      "notes": "Pilot company. Reverify BSE code 500209 and NSE symbol INFY before production."
+      "sourceNotes": "Screener slug = NSE symbol INFY. Verified end-to-end (production data).",
+      "notes": "Top-4 IT services large-cap."
     },
     {
       "companyId": "hcltech",
@@ -98,17 +98,17 @@
       "country": "IN",
       "sector": "Information Technology",
       "industry": "IT Services & Consulting",
-      "peerGroupId": "indian-it-services-largecap",
+      "peerGroupId": "it-services-broad",
       "fiscalYearEndMonth": 3,
       "reportingBasisDefault": "consolidated",
       "irPageUrl": "https://www.hcltech.com/investors",
-      "status": "pilot",
+      "status": "active",
       "screenerSlug": "HCLTECH",
       "screenerUrl": "https://www.screener.in/company/HCLTECH/",
       "fetchEnabled": true,
       "fetchPriority": 3,
-      "sourceNotes": "Screener slug inferred from NSE symbol HCLTECH; reverify before production.",
-      "notes": "Pilot company. Reverify BSE code 532281 and NSE symbol HCLTECH before production."
+      "sourceNotes": "Screener slug = NSE symbol HCLTECH. Verified end-to-end (production data).",
+      "notes": "Top-4 IT services large-cap."
     },
     {
       "companyId": "wipro",
@@ -129,17 +129,449 @@
       "country": "IN",
       "sector": "Information Technology",
       "industry": "IT Services & Consulting",
-      "peerGroupId": "indian-it-services-largecap",
+      "peerGroupId": "it-services-broad",
       "fiscalYearEndMonth": 3,
       "reportingBasisDefault": "consolidated",
       "irPageUrl": "https://www.wipro.com/investors/",
-      "status": "pilot",
+      "status": "active",
       "screenerSlug": "WIPRO",
       "screenerUrl": "https://www.screener.in/company/WIPRO/",
       "fetchEnabled": true,
       "fetchPriority": 4,
-      "sourceNotes": "Screener slug inferred from NSE symbol WIPRO; reverify before production.",
-      "notes": "Pilot company. Reverify BSE code 507685 and NSE symbol WIPRO before production."
+      "sourceNotes": "Screener slug = NSE symbol WIPRO. Verified end-to-end (production data).",
+      "notes": "Top-4 IT services large-cap."
+    },
+    {
+      "companyId": "techm",
+      "displayName": "Tech Mahindra",
+      "legalName": "Tech Mahindra Limited",
+      "nseSymbol": "TECHM",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "TECHM"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "TECHM",
+      "screenerUrl": "https://www.screener.in/company/TECHM/",
+      "fetchEnabled": true,
+      "fetchPriority": 5,
+      "sourceNotes": "Slug inferred from NSE symbol TECHM. Verify next workflow run lands rows; if not, flip fetchEnabled=false.",
+      "notes": "Top-5 IT services peer."
+    },
+    {
+      "companyId": "ltim",
+      "displayName": "LTIMindtree",
+      "legalName": "LTIMindtree Limited",
+      "nseSymbol": "LTIM",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "LTIM"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "LTIM",
+      "screenerUrl": "https://www.screener.in/company/LTIM/",
+      "fetchEnabled": true,
+      "fetchPriority": 6,
+      "sourceNotes": "Slug inferred from NSE symbol LTIM (post-merger ticker). Verify after first fetch.",
+      "notes": "Top-tier IT peer."
+    },
+    {
+      "companyId": "ofss",
+      "displayName": "Oracle Financial Services",
+      "legalName": "Oracle Financial Services Software Limited",
+      "nseSymbol": "OFSS",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "OFSS"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Software Products",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "OFSS",
+      "screenerUrl": "https://www.screener.in/company/OFSS/",
+      "fetchEnabled": true,
+      "fetchPriority": 7,
+      "sourceNotes": "Slug inferred from NSE symbol OFSS. Verify after first fetch.",
+      "notes": "Software products; included in Screener IT peer set."
+    },
+    {
+      "companyId": "persistent",
+      "displayName": "Persistent Systems",
+      "legalName": "Persistent Systems Limited",
+      "nseSymbol": "PERSISTENT",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "PERSISTENT"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "PERSISTENT",
+      "screenerUrl": "https://www.screener.in/company/PERSISTENT/",
+      "fetchEnabled": true,
+      "fetchPriority": 8,
+      "sourceNotes": "Slug inferred from NSE symbol PERSISTENT. Verify after first fetch.",
+      "notes": "Mid-cap IT peer."
+    },
+    {
+      "companyId": "coforge",
+      "displayName": "Coforge",
+      "legalName": "Coforge Limited",
+      "nseSymbol": "COFORGE",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "COFORGE"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "COFORGE",
+      "screenerUrl": "https://www.screener.in/company/COFORGE/",
+      "fetchEnabled": true,
+      "fetchPriority": 9,
+      "sourceNotes": "Slug inferred from NSE symbol COFORGE. Verify after first fetch.",
+      "notes": "Mid-cap IT peer."
+    },
+    {
+      "companyId": "mphasis",
+      "displayName": "Mphasis",
+      "legalName": "Mphasis Limited",
+      "nseSymbol": "MPHASIS",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "MPHASIS"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "MPHASIS",
+      "screenerUrl": "https://www.screener.in/company/MPHASIS/",
+      "fetchEnabled": true,
+      "fetchPriority": 10,
+      "sourceNotes": "Slug inferred from NSE symbol MPHASIS. Verify after first fetch.",
+      "notes": "Mid-cap IT peer."
+    },
+    {
+      "companyId": "ltts",
+      "displayName": "L&T Technology Services",
+      "legalName": "L&T Technology Services Limited",
+      "nseSymbol": "LTTS",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "LTTS"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting (ER&D)",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "LTTS",
+      "screenerUrl": "https://www.screener.in/company/LTTS/",
+      "fetchEnabled": true,
+      "fetchPriority": 11,
+      "sourceNotes": "Slug inferred from NSE symbol LTTS. Verify after first fetch.",
+      "notes": "Engineering R&D services peer."
+    },
+    {
+      "companyId": "hexaware",
+      "displayName": "Hexaware Technologies",
+      "legalName": "Hexaware Technologies Limited",
+      "nseSymbol": "HEXT",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "HEXT"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 12,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "HEXT",
+      "screenerUrl": "https://www.screener.in/company/HEXT/",
+      "fetchEnabled": true,
+      "fetchPriority": 12,
+      "sourceNotes": "Re-IPO'd in 2025. NSE symbol HEXT inferred; verify next workflow run. Note: calendar-year fiscal (Dec-end), unlike other peers.",
+      "notes": "Re-listed after PE buyout. Different FY-end means YoY math vs Mar-end peers may need adjustment."
+    },
+    {
+      "companyId": "tatatech",
+      "displayName": "Tata Technologies",
+      "legalName": "Tata Technologies Limited",
+      "nseSymbol": "TATATECH",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "TATATECH"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting (ER&D)",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "TATATECH",
+      "screenerUrl": "https://www.screener.in/company/TATATECH/",
+      "fetchEnabled": true,
+      "fetchPriority": 13,
+      "sourceNotes": "Slug inferred from NSE symbol TATATECH (post-IPO 2023). Verify after first fetch.",
+      "notes": "ER&D services peer."
+    },
+    {
+      "companyId": "tataelxsi",
+      "displayName": "Tata Elxsi",
+      "legalName": "Tata Elxsi Limited",
+      "nseSymbol": "TATAELXSI",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "TATAELXSI"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting (Design)",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "TATAELXSI",
+      "screenerUrl": "https://www.screener.in/company/TATAELXSI/",
+      "fetchEnabled": true,
+      "fetchPriority": 14,
+      "sourceNotes": "Slug inferred from NSE symbol TATAELXSI. Verify after first fetch.",
+      "notes": "Design + embedded services peer."
+    },
+    {
+      "companyId": "kpittech",
+      "displayName": "KPIT Technologies",
+      "legalName": "KPIT Technologies Limited",
+      "nseSymbol": "KPITTECH",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "KPITTECH"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting (Automotive)",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "KPITTECH",
+      "screenerUrl": "https://www.screener.in/company/KPITTECH/",
+      "fetchEnabled": true,
+      "fetchPriority": 15,
+      "sourceNotes": "Slug inferred from NSE symbol KPITTECH. Verify after first fetch.",
+      "notes": "Automotive-software-focused peer."
+    },
+    {
+      "companyId": "zensartech",
+      "displayName": "Zensar Technologies",
+      "legalName": "Zensar Technologies Limited",
+      "nseSymbol": "ZENSARTECH",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "ZENSARTECH"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "ZENSARTECH",
+      "screenerUrl": "https://www.screener.in/company/ZENSARTECH/",
+      "fetchEnabled": true,
+      "fetchPriority": 16,
+      "sourceNotes": "Slug inferred from NSE symbol ZENSARTECH. Verify after first fetch.",
+      "notes": "Mid-cap IT peer."
+    },
+    {
+      "companyId": "intellect",
+      "displayName": "Intellect Design",
+      "legalName": "Intellect Design Arena Limited",
+      "nseSymbol": "INTELLECT",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "INTELLECT"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Software Products",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "INTELLECT",
+      "screenerUrl": "https://www.screener.in/company/INTELLECT/",
+      "fetchEnabled": true,
+      "fetchPriority": 17,
+      "sourceNotes": "Slug inferred from NSE symbol INTELLECT. Verify after first fetch.",
+      "notes": "Banking software products peer."
+    },
+    {
+      "companyId": "cyient",
+      "displayName": "Cyient",
+      "legalName": "Cyient Limited",
+      "nseSymbol": "CYIENT",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "CYIENT"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting (ER&D)",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "CYIENT",
+      "screenerUrl": "https://www.screener.in/company/CYIENT/",
+      "fetchEnabled": true,
+      "fetchPriority": 18,
+      "sourceNotes": "Slug inferred from NSE symbol CYIENT. Verify after first fetch.",
+      "notes": "ER&D services peer."
+    },
+    {
+      "companyId": "birlasoft",
+      "displayName": "Birlasoft",
+      "legalName": "Birlasoft Limited",
+      "nseSymbol": "BSOFT",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "BSOFT"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "BSOFT",
+      "screenerUrl": "https://www.screener.in/company/BSOFT/",
+      "fetchEnabled": true,
+      "fetchPriority": 19,
+      "sourceNotes": "Slug inferred from NSE symbol BSOFT (Birlasoft trades as BSOFT post-2019 rename from KPIT-Cummins demerger). Verify next workflow run.",
+      "notes": "Mid-cap IT peer."
+    },
+    {
+      "companyId": "sonata",
+      "displayName": "Sonata Software",
+      "legalName": "Sonata Software Limited",
+      "nseSymbol": "SONATSOFTW",
+      "bseCode": null,
+      "exchanges": [
+        {
+          "exchange": "NSE",
+          "symbol": "SONATSOFTW"
+        }
+      ],
+      "country": "IN",
+      "sector": "Information Technology",
+      "industry": "IT Services & Consulting",
+      "peerGroupId": "it-services-broad",
+      "fiscalYearEndMonth": 3,
+      "reportingBasisDefault": "consolidated",
+      "irPageUrl": null,
+      "status": "active",
+      "screenerSlug": "SONATSOFTW",
+      "screenerUrl": "https://www.screener.in/company/SONATSOFTW/",
+      "fetchEnabled": true,
+      "fetchPriority": 20,
+      "sourceNotes": "Slug inferred from NSE symbol SONATSOFTW. Verify after first fetch.",
+      "notes": "Mid-cap IT peer."
     }
   ]
 }

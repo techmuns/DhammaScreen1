@@ -271,3 +271,98 @@ period), the dashboard picks in this order:
   field tells the UI whether to badge it as "Screener fetch" or
   "Screener import".
 - Missing values stay `null`, render as `—`. Never zero, never fake.
+
+## IT peer universe from Screener PDFs
+
+The peer-benchmark group `it-services-broad` (used by every KPI card on
+Dashboard 1) is built from the Screener IT sector listing the client
+shared. The universe is split into two tiers that are managed in
+`scripts/config/dhamma-companies.ts`:
+
+### Active fetch universe — 20 companies
+
+`COMPANIES[]` contains 20 active rows, all tagged
+`peerGroupId: "it-services-broad"` and `fetchEnabled: true`. These are
+the names that:
+
+- Appear in `company-master.json` after `npm run ingest:dhamma`.
+- Are passed to the Screener fetcher each time the GitHub Action runs.
+- Show up in the company selector and in every KPI peer-benchmark card.
+
+The current active group:
+
+| # | Company | NSE ticker | Notes |
+| - | ------- | ---------- | ----- |
+| 1 | Tata Consultancy Services | TCS | Verified end-to-end (production data) |
+| 2 | Infosys | INFY | Verified end-to-end (production data) |
+| 3 | HCL Technologies | HCLTECH | Verified end-to-end (production data) |
+| 4 | Wipro | WIPRO | Verified end-to-end (production data) |
+| 5 | Tech Mahindra | TECHM | Slug inferred from NSE symbol. Verify after first fetch. |
+| 6 | LTIMindtree | LTIM | Slug inferred from NSE symbol. Verify after first fetch. |
+| 7 | Oracle Financial Services | OFSS | Slug inferred from NSE symbol. Verify after first fetch. |
+| 8 | Persistent Systems | PERSISTENT | Slug inferred from NSE symbol. Verify after first fetch. |
+| 9 | Coforge | COFORGE | Slug inferred from NSE symbol. Verify after first fetch. |
+| 10 | Mphasis | MPHASIS | Slug inferred from NSE symbol. Verify after first fetch. |
+| 11 | L&T Technology Services | LTTS | Slug inferred from NSE symbol. Verify after first fetch. |
+| 12 | Hexaware Technologies | HEXT | Slug inferred from NSE symbol. Verify after first fetch. |
+| 13 | Tata Technologies | TATATECH | Slug inferred from NSE symbol. Verify after first fetch. |
+| 14 | Tata Elxsi | TATAELXSI | Slug inferred from NSE symbol. Verify after first fetch. |
+| 15 | KPIT Technologies | KPITTECH | Slug inferred from NSE symbol. Verify after first fetch. |
+| 16 | Zensar Technologies | ZENSARTECH | Slug inferred from NSE symbol. Verify after first fetch. |
+| 17 | Intellect Design Arena | INTELLECT | Slug inferred from NSE symbol. Verify after first fetch. |
+| 18 | Cyient | CYIENT | Slug inferred from NSE symbol. Verify after first fetch. |
+| 19 | Birlasoft | BSOFT | Slug inferred from NSE symbol. Verify after first fetch. |
+| 20 | Sonata Software | SONATSOFTW | Slug inferred from NSE symbol. Verify after first fetch. |
+
+Rows 1–4 are the original pilot peers and have been verified against
+both the NSE/BSE filings and Screener pages. Rows 5–20 have their
+Screener slug derived from the NSE symbol (lower-cased), matching the
+heuristic the fetcher already uses; the first GitHub Action run after
+this commit is expected to confirm every slug or surface a 404, which
+will be tracked in `screener-fetch-status.json` and corrected
+case-by-case via `sourceUrlOverride` in `dhamma-companies.ts`.
+
+### Inactive future candidates — 15 companies
+
+`INACTIVE_IT_CANDIDATES[]` is a separate metadata-only list. It holds
+the smaller and / or less-liquid Indian IT names from the second page
+of the Screener IT sector listing. These entries:
+
+- Are **not** members of `COMPANIES[]`.
+- Are **not** included in any peer group.
+- Are **never** sent to the Screener fetcher.
+- Carry no rows in any snapshot.
+
+They exist solely as a typed, source-labelled record of what we are
+deliberately leaving outside the active fetch universe today. The
+current candidates:
+
+`NPST`, `PROTEAN`, `CEINSYS`, `NUCLEUS`, `SAKSOFT`, `DLINKINDIA`,
+`ACCELYA`, `INFOBEAN`, `RAMCOSYS`, `EXPLEOSOL`, `QUICKHEAL`, `NINtec`
+(no ticker yet), `KSOLVES`, `SUBEXLTD`, `ONWARDTEC`.
+
+### Why the cap
+
+We intentionally constrain the fetch universe so that:
+
+- Each KPI benchmark card renders a peer strip with ≤20 entries —
+  large enough to be statistically meaningful, small enough to scan in
+  one glance.
+- Snapshot JSON bundled into the SPA stays well under the Cloudflare
+  Workers static-asset limit, even when every active company has a
+  full quarter + annual history.
+- Each scheduled fetch on GitHub Actions finishes in a single run
+  without partial-result merging gymnastics.
+
+Promoting a candidate from `INACTIVE_IT_CANDIDATES[]` to `COMPANIES[]`
+is a one-line move plus a doc update; demoting back out is symmetric.
+
+### Source labelling
+
+Every row produced by the Screener fetcher — whether for an original
+pilot peer or one of the newly added 16 — is written to
+`screener-normalized-financials.json` with
+`sourceMethod: "fetch"` and renders on the dashboard with the
+**Screener fetch** badge. The manual-import path (`sourceMethod:
+"import"`) remains available as the analyst fallback for any company
+the fetcher cannot reach.
