@@ -2,6 +2,8 @@ import {
   filingManifestSnapshot,
   guidanceCommentarySnapshot,
   screenerImportStatusSnapshot,
+  screenerNormalizedSnapshot,
+  screenerPeerSnapshot,
 } from "../data/helpers/snapshotLoader";
 
 type Tone = "ok" | "warn" | "neutral";
@@ -13,10 +15,20 @@ interface PathStatus {
   detail: string;
 }
 
+function distinctSourceFiles(): number {
+  const files = new Set<string>();
+  for (const row of screenerNormalizedSnapshot.rows) files.add(row.sourceFile);
+  for (const row of screenerPeerSnapshot.rows) files.add(row.sourceFile);
+  return files.size;
+}
+
 function paths(): PathStatus[] {
   const filing = filingManifestSnapshot.meta;
   const screener = screenerImportStatusSnapshot.meta;
   const guidance = guidanceCommentarySnapshot.meta;
+  const screenerRowCount =
+    screenerNormalizedSnapshot.rows.length + screenerPeerSnapshot.rows.length;
+  const fileCount = distinctSourceFiles();
 
   const filingTone: Tone =
     filing.status === "ok" || filing.status === "partial"
@@ -25,10 +37,13 @@ function paths(): PathStatus[] {
         ? "warn"
         : "neutral";
 
-  const screenerTone: Tone =
-    screener.status === "ok" || screener.status === "partial"
-      ? "ok"
-      : "neutral";
+  const screenerTone: Tone = screenerRowCount > 0 ? "ok" : "neutral";
+  const screenerStatus =
+    screenerRowCount > 0
+      ? screener.status === "partial"
+        ? "partial"
+        : "ok"
+      : screener.status;
 
   return [
     {
@@ -46,12 +61,12 @@ function paths(): PathStatus[] {
     },
     {
       label: "Screener import",
-      status: screener.status,
+      status: screenerStatus,
       tone: screenerTone,
       detail:
-        screener.status === "empty"
-          ? "No client exports yet"
-          : `${screener.rowCount} import sheet rows`,
+        screenerRowCount > 0
+          ? `${screenerRowCount} rows · ${fileCount} file${fileCount === 1 ? "" : "s"}`
+          : "No client exports yet",
     },
     {
       label: "Guidance commentary",

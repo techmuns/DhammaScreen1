@@ -353,8 +353,10 @@ export interface ScreenerCompanyFinancialRow {
   sourceSheet: string | null;
   sheetType: ScreenerSheetType;
   period: string | null;
+  periodSortKey: string | null;
   periodType: ScreenerPeriodType;
   metricName: string;
+  metricCanonical: string | null;
   metricValue: number | null;
   unit: string | null;
   currency: string | null;

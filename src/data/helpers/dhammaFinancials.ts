@@ -348,6 +348,170 @@ export function screenerImportCoverage(
   return coverage;
 }
 
+// ---------------------------------------------------------------------------
+// Data provenance — used both by UI badges and by resolution helpers below.
+// ---------------------------------------------------------------------------
+
+export type DataProvenance =
+  | "official-filing"
+  | "screener-import"
+  | "audit"
+  | "pending";
+
+// ---------------------------------------------------------------------------
+// Screener-source resolution helpers.
+//
+// These let the UI pick "official-filing first, Screener-import second,
+// dash otherwise" without writing the rule in every component.
+// ---------------------------------------------------------------------------
+
+export interface ScreenerLatestMetric {
+  value: number | null;
+  periodLabel: string | null;
+  sourceFile: string | null;
+  sourceSheet: string | null;
+}
+
+export function screenerLatestMetric(
+  rows: readonly ScreenerCompanyFinancialRow[],
+  companyId: string,
+  canonical: string,
+  periodType?: "quarter" | "year"
+): ScreenerLatestMetric | null {
+  const filtered = rows.filter(
+    (row) =>
+      row.companyId === companyId &&
+      row.metricCanonical === canonical &&
+      (periodType ? row.periodType === periodType : true) &&
+      row.periodSortKey !== null
+  );
+  if (filtered.length === 0) return null;
+  const sorted = [...filtered].sort((a, b) =>
+    (a.periodSortKey ?? "").localeCompare(b.periodSortKey ?? "")
+  );
+  const latest = sorted[sorted.length - 1];
+  return {
+    value: isFiniteNumber(latest.metricValue) ? latest.metricValue : null,
+    periodLabel: latest.period,
+    sourceFile: latest.sourceFile,
+    sourceSheet: latest.sourceSheet,
+  };
+}
+
+export interface ScreenerPeriodSlice {
+  period: string;
+  periodSortKey: string;
+  sourceFile: string;
+  values: Record<string, number | null>;
+}
+
+// Group rows for a given (company × sheetType) into one slice per period,
+// each slice mapping canonical-metric → value. Returns the last `n`
+// periods sorted ascending.
+export function screenerStatementRows(
+  rows: readonly ScreenerCompanyFinancialRow[],
+  companyId: string,
+  sheetType: ScreenerCompanyFinancialRow["sheetType"],
+  n: number
+): ScreenerPeriodSlice[] {
+  const byKey = new Map<string, ScreenerPeriodSlice>();
+  for (const row of rows) {
+    if (
+      row.companyId !== companyId ||
+      row.sheetType !== sheetType ||
+      !row.periodSortKey ||
+      !row.period ||
+      !row.metricCanonical
+    ) {
+      continue;
+    }
+    let slice = byKey.get(row.periodSortKey);
+    if (!slice) {
+      slice = {
+        period: row.period,
+        periodSortKey: row.periodSortKey,
+        sourceFile: row.sourceFile,
+        values: {},
+      };
+      byKey.set(row.periodSortKey, slice);
+    }
+    slice.values[row.metricCanonical] = isFiniteNumber(row.metricValue)
+      ? row.metricValue
+      : null;
+  }
+  return [...byKey.values()]
+    .sort((a, b) => a.periodSortKey.localeCompare(b.periodSortKey))
+    .slice(-n);
+}
+
+// One row per peer company, with canonical metrics as columns.
+export interface ScreenerPeerRow {
+  peerCompanyName: string;
+  sourceFile: string;
+  values: Record<string, number | null>;
+}
+
+export function screenerPeerRows(
+  rows: readonly { peerCompanyName: string; sourceFile: string; metricCanonical: string | null; metricValue: number | null }[]
+): ScreenerPeerRow[] {
+  const byPeer = new Map<string, ScreenerPeerRow>();
+  for (const row of rows) {
+    if (!row.metricCanonical) continue;
+    const key = row.peerCompanyName.trim();
+    if (!key) continue;
+    let peer = byPeer.get(key);
+    if (!peer) {
+      peer = { peerCompanyName: key, sourceFile: row.sourceFile, values: {} };
+      byPeer.set(key, peer);
+    }
+    peer.values[row.metricCanonical] = isFiniteNumber(row.metricValue)
+      ? row.metricValue
+      : null;
+  }
+  return [...byPeer.values()];
+}
+
+export interface KpiResolution {
+  value: number | null;
+  provenance: DataProvenance;
+  periodLabel: string | null;
+}
+
+// Pick official first, Screener second, dash third. Period label is
+// passed through from whichever source was used.
+export function resolveKpi(args: {
+  official: { value: number | null; periodLabel: string | null };
+  screener?: ScreenerLatestMetric | null;
+}): KpiResolution {
+  if (isFiniteNumber(args.official.value)) {
+    return {
+      value: args.official.value,
+      provenance: "official-filing",
+      periodLabel: args.official.periodLabel,
+    };
+  }
+  if (args.screener && isFiniteNumber(args.screener.value)) {
+    return {
+      value: args.screener.value,
+      provenance: "screener-import",
+      periodLabel: args.screener.periodLabel,
+    };
+  }
+  return { value: null, provenance: "pending", periodLabel: null };
+}
+
+// Used by tables to decide which dataset to render. Returns the source
+// that has the most non-null cells for the given (company × sheetType),
+// preferring `official` on ties.
+export function dataSourceForMetric(args: {
+  hasOfficial: boolean;
+  hasScreener: boolean;
+}): DataProvenance {
+  if (args.hasOfficial) return "official-filing";
+  if (args.hasScreener) return "screener-import";
+  return "pending";
+}
+
 // Re-exports used by helper consumers; keeps the public surface explicit.
 export type { Comparable };
 
@@ -357,12 +521,6 @@ export type { Comparable };
 // These exist so components never re-implement formatting or null-handling.
 // All metric formatting in the UI must go through one of these functions.
 // ---------------------------------------------------------------------------
-
-export type DataProvenance =
-  | "official-filing"
-  | "screener-import"
-  | "audit"
-  | "pending";
 
 export interface SnapshotShape {
   meta: { status: string; rowCount: number; generatedAt: string | null };

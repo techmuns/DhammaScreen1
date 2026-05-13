@@ -3,27 +3,36 @@ import { useState } from "react";
 import {
   formatNumberCompact,
   formatPercent,
+  formatPercentRaw,
   growthQoQ,
   growthYoY,
   lastNQuarters,
   lastNYears,
   margin,
   revenueMix,
+  screenerStatementRows,
   tableValueOrDash,
+  type ScreenerPeriodSlice,
 } from "../data/helpers/dhammaFinancials";
 import {
   annualFinancialsSnapshot,
   balanceSheetSnapshot,
   cashFlowSnapshot,
   quarterlyFinancialsSnapshot,
+  screenerNormalizedSnapshot,
   segmentRevenueSnapshot,
 } from "../data/helpers/snapshotLoader";
+import {
+  metricLabel,
+  type CanonicalMetric,
+} from "../data/helpers/screenerMapping";
 import type {
   AnnualFinancialRow,
   BalanceSheetRow,
   CashFlowRow,
   FinancialPeriod,
   QuarterlyFinancialRow,
+  ScreenerSheetType,
 } from "../data/types/dhammaDashboard";
 import { EmptyState } from "./EmptyState";
 import type { PeriodView } from "./PeriodToggle";
@@ -90,10 +99,6 @@ export function FinancialStatementTables({
   );
 }
 
-// ---------------------------------------------------------------------------
-// P&L
-// ---------------------------------------------------------------------------
-
 interface BaseTableProps {
   companyId: string | null;
   periodView: PeriodView;
@@ -101,27 +106,48 @@ interface BaseTableProps {
 
 type PlRow = QuarterlyFinancialRow | AnnualFinancialRow;
 
+// ---------------------------------------------------------------------------
+// P&L
+// ---------------------------------------------------------------------------
+
 function ProfitLossTable({ companyId, periodView }: BaseTableProps) {
   if (!companyId) return <SelectCompany />;
-  const rows: PlRow[] =
+  const officialRows: PlRow[] =
     periodView === "quarters"
       ? lastNQuarters(quarterlyFinancialsSnapshot.rows, companyId, 5)
       : lastNYears(annualFinancialsSnapshot.rows, companyId, 5);
 
-  if (rows.length === 0) {
-    return (
-      <EmptyState
-        title="No P&L data yet"
-        message="Discovery is wired but filing extraction has not produced rows for this company yet."
-        hint={
-          periodView === "quarters"
-            ? "Quarterly P&L will populate once NSE/BSE filings are parsed."
-            : "Annual P&L will populate from Q4 / annual report extraction."
-        }
-      />
-    );
+  if (officialRows.length > 0) {
+    return renderOfficialPl(officialRows, periodView);
   }
 
+  const screenerSheet: ScreenerSheetType =
+    periodView === "quarters" ? "quarterly_results" : "profit_and_loss";
+  const screenerSlices = screenerStatementRows(
+    screenerNormalizedSnapshot.rows,
+    companyId,
+    screenerSheet,
+    5
+  );
+
+  if (screenerSlices.length > 0) {
+    return renderScreenerPl(screenerSlices);
+  }
+
+  return (
+    <EmptyState
+      title="No P&L data yet"
+      message="Discovery is wired but filing extraction has not produced rows for this company yet."
+      hint={
+        periodView === "quarters"
+          ? "Quarterly P&L will populate once NSE/BSE filings are parsed or a Screener export is dropped into data/manual/screener/."
+          : "Annual P&L will populate from Q4 / annual report extraction or from a Screener export."
+      }
+    />
+  );
+}
+
+function renderOfficialPl(rows: PlRow[], periodView: PeriodView) {
   return (
     <>
       <TableHeader provenance="official-filing" note="P&L from NSE/BSE filings" />
@@ -136,22 +162,22 @@ function ProfitLossTable({ companyId, periodView }: BaseTableProps) {
             </tr>
           </thead>
           <tbody>
-            <MetricRow label="Revenue" rows={rows} pick={(r) => r.revenue} />
-            <MetricRow label="EBITDA" rows={rows} pick={(r) => r.ebitda} />
-            <MetricRow
+            <OfficialPlRow label="Revenue" rows={rows} pick={(r) => r.revenue} />
+            <OfficialPlRow label="EBITDA" rows={rows} pick={(r) => r.ebitda} />
+            <OfficialPlRow
               label="EBITDA margin"
               rows={rows}
               pick={(r) => margin(r.ebitda, r.revenue)}
               format={formatPercent}
             />
-            <MetricRow label="PAT" rows={rows} pick={(r) => r.patAttributableToOwners ?? r.pat} />
-            <MetricRow
+            <OfficialPlRow label="PAT" rows={rows} pick={(r) => r.patAttributableToOwners ?? r.pat} />
+            <OfficialPlRow
               label="PAT margin"
               rows={rows}
               pick={(r) => margin(r.patAttributableToOwners ?? r.pat, r.revenue)}
               format={formatPercent}
             />
-            <MetricRow label="EPS (basic)" rows={rows} pick={(r) => r.epsBasic} format={(n) => n.toFixed(2)} />
+            <OfficialPlRow label="EPS (basic)" rows={rows} pick={(r) => r.epsBasic} format={(n) => n.toFixed(2)} />
             <GrowthRow label="YoY revenue growth" rows={rows} pick={(r) => r.revenue} kind="yoy" periodView={periodView} />
             {periodView === "quarters" && (
               <GrowthRow label="QoQ revenue growth" rows={rows} pick={(r) => r.revenue} kind="qoq" periodView={periodView} />
@@ -163,8 +189,60 @@ function ProfitLossTable({ companyId, periodView }: BaseTableProps) {
   );
 }
 
+// Screener P&L rows. OPM is in percentage points; render with %, raw.
+const SCREENER_PL_METRICS: CanonicalMetric[] = [
+  "revenue",
+  "operating_profit",
+  "opm",
+  "other_income",
+  "interest",
+  "depreciation",
+  "pbt",
+  "pat",
+  "eps",
+];
+
+function renderScreenerPl(slices: ScreenerPeriodSlice[]) {
+  const sourceFile = slices[0]?.sourceFile ?? "";
+  return (
+    <>
+      <TableHeader
+        provenance="screener-import"
+        note={`P&L from Screener export: ${sourceFile}`}
+      />
+      <div className="table-wrap">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              {slices.map((slice) => (
+                <th key={slice.periodSortKey}>{slice.period}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {SCREENER_PL_METRICS.map((canonical) => (
+              <tr key={canonical}>
+                <td>{metricLabel(canonical)}</td>
+                {slices.map((slice) => (
+                  <td key={slice.periodSortKey} className="num">
+                    {tableValueOrDash(
+                      slice.values[canonical] ?? null,
+                      canonical === "opm" ? formatPercentRaw : canonical === "eps" ? (n) => n.toFixed(2) : formatNumberCompact
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
+
 // ---------------------------------------------------------------------------
-// Revenue mix
+// Revenue mix — official only (Screener doesn't ship segment mix)
 // ---------------------------------------------------------------------------
 
 function RevenueMixTable({ companyId, periodView }: BaseTableProps) {
@@ -175,11 +253,7 @@ function RevenueMixTable({ companyId, periodView }: BaseTableProps) {
       : lastNYears(annualFinancialsSnapshot.rows, companyId, 1)[0];
 
   const mix = latestPnL
-    ? revenueMix(
-        segmentRevenueSnapshot.rows,
-        companyId,
-        latestPnL.period
-      )
+    ? revenueMix(segmentRevenueSnapshot.rows, companyId, latestPnL.period)
     : null;
 
   if (!mix || mix.length === 0) {
@@ -187,7 +261,7 @@ function RevenueMixTable({ companyId, periodView }: BaseTableProps) {
       <EmptyState
         title="No segment mix yet"
         message="Segment revenue requires the segment-disclosure block from filings to be extracted and normalized."
-        hint="A per-company segment alias map is pending; see metric audit."
+        hint="Screener exports do not include per-segment revenue, so this section stays empty until official filings are parsed."
       />
     );
   }
@@ -223,50 +297,77 @@ function RevenueMixTable({ companyId, periodView }: BaseTableProps) {
 // Balance sheet
 // ---------------------------------------------------------------------------
 
+const SCREENER_BS_METRICS: CanonicalMetric[] = [
+  "share_capital",
+  "reserves",
+  "borrowings",
+  "other_liabilities",
+  "total_liabilities",
+  "fixed_assets",
+  "cwip",
+  "investments",
+  "other_assets",
+  "total_assets",
+];
+
 function BalanceSheetTable({ companyId, periodView }: BaseTableProps) {
   if (!companyId) return <SelectCompany />;
-  const rows = filterAndSortByPeriod(
+  const officialRows = filterAndSortByPeriod(
     balanceSheetSnapshot.rows.filter((r) => r.companyId === companyId),
     periodView,
     5
   );
 
-  if (rows.length === 0) {
+  if (officialRows.length > 0) {
     return (
-      <EmptyState
-        title="No balance sheet rows yet"
-        message="Balance sheet rows will populate once filings are parsed."
-      />
+      <>
+        <TableHeader provenance="official-filing" note="Balance sheet from filings / annual reports" />
+        <div className="table-wrap">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                {officialRows.map((row) => (
+                  <th key={row.period.periodEndDate}>{formatPeriod(row.period)}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <BsRow label="Total assets" rows={officialRows} pick={(r) => r.totalAssets} />
+              <BsRow
+                label="Total equity"
+                rows={officialRows}
+                pick={(r) => r.totalEquityAttributableToOwners ?? r.totalEquity}
+              />
+              <BsRow label="Borrowings" rows={officialRows} pick={(r) => r.borrowingsTotal} />
+              <BsRow label="Cash & equivalents" rows={officialRows} pick={(r) => r.cashAndEquivalents} />
+              <BsRow label="Net debt" rows={officialRows} pick={(r) => r.netDebt} />
+            </tbody>
+          </table>
+        </div>
+      </>
     );
   }
 
+  // Balance sheet is annual in Screener; if the user is on the quarterly
+  // toggle and there are no quarterly official rows, still surface the
+  // annual Screener rows for visibility (clearly badged).
+  const screenerSlices = screenerStatementRows(
+    screenerNormalizedSnapshot.rows,
+    companyId,
+    "balance_sheet",
+    5
+  );
+
+  if (screenerSlices.length > 0) {
+    return renderScreenerStatement(screenerSlices, SCREENER_BS_METRICS, "Balance sheet");
+  }
+
   return (
-    <>
-      <TableHeader provenance="official-filing" note="Balance sheet from filings / annual reports" />
-      <div className="table-wrap">
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Item</th>
-              {rows.map((row) => (
-                <th key={row.period.periodEndDate}>{formatPeriod(row.period)}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <BsRow label="Total assets" rows={rows} pick={(r) => r.totalAssets} />
-            <BsRow
-              label="Total equity"
-              rows={rows}
-              pick={(r) => r.totalEquityAttributableToOwners ?? r.totalEquity}
-            />
-            <BsRow label="Borrowings" rows={rows} pick={(r) => r.borrowingsTotal} />
-            <BsRow label="Cash & equivalents" rows={rows} pick={(r) => r.cashAndEquivalents} />
-            <BsRow label="Net debt" rows={rows} pick={(r) => r.netDebt} />
-          </tbody>
-        </table>
-      </div>
-    </>
+    <EmptyState
+      title="No balance sheet rows yet"
+      message="Balance sheet rows will populate once filings are parsed or a Screener export is provided."
+    />
   );
 }
 
@@ -274,9 +375,16 @@ function BalanceSheetTable({ companyId, periodView }: BaseTableProps) {
 // Cash flow
 // ---------------------------------------------------------------------------
 
+const SCREENER_CFS_METRICS: CanonicalMetric[] = [
+  "cfo",
+  "cfi",
+  "cff",
+  "net_cash_flow",
+];
+
 function CashFlowTable({ companyId, periodView }: BaseTableProps) {
   if (!companyId) return <SelectCompany />;
-  const rows = filterAndSortByPeriod(
+  const officialRows = filterAndSortByPeriod(
     cashFlowSnapshot.rows.filter((r) => r.companyId === companyId),
     periodView,
     5
@@ -284,47 +392,98 @@ function CashFlowTable({ companyId, periodView }: BaseTableProps) {
 
   const note =
     periodView === "quarters"
-      ? "Most Indian filers do not publish a quarterly CFS; dashes here are expected for the periods that weren't filed."
-      : "Annual CFS sourced from annual reports.";
+      ? "Most Indian filers do not publish a quarterly CFS; dashes here are expected for periods that weren't filed."
+      : "Annual CFS sourced from annual reports or imported Screener exports.";
 
-  if (rows.length === 0) {
+  if (officialRows.length > 0) {
     return (
-      <EmptyState
-        title="No cash flow rows yet"
-        message="Condensed CFS rows will populate once filings/annual reports are parsed."
-        hint={note}
-      />
+      <>
+        <TableHeader provenance="official-filing" note={note} />
+        <div className="table-wrap">
+          <table className="data-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                {officialRows.map((row) => (
+                  <th key={row.period.periodEndDate}>{formatPeriod(row.period)}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <CfRow label="CFO" rows={officialRows} pick={(r) => r.cfo} />
+              <CfRow label="Working capital changes" rows={officialRows} pick={(r) => r.workingCapitalChanges} />
+              <CfRow label="CFI" rows={officialRows} pick={(r) => r.cfi} />
+              <CfRow label="CFF" rows={officialRows} pick={(r) => r.cff} />
+            </tbody>
+          </table>
+        </div>
+      </>
     );
   }
 
+  const screenerSlices = screenerStatementRows(
+    screenerNormalizedSnapshot.rows,
+    companyId,
+    "cash_flow",
+    5
+  );
+
+  if (screenerSlices.length > 0) {
+    return renderScreenerStatement(screenerSlices, SCREENER_CFS_METRICS, "Cash flow");
+  }
+
   return (
-    <>
-      <TableHeader provenance="official-filing" note={note} />
-      <div className="table-wrap">
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Item</th>
-              {rows.map((row) => (
-                <th key={row.period.periodEndDate}>{formatPeriod(row.period)}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <CfRow label="CFO" rows={rows} pick={(r) => r.cfo} />
-            <CfRow label="Working capital changes" rows={rows} pick={(r) => r.workingCapitalChanges} />
-            <CfRow label="CFI" rows={rows} pick={(r) => r.cfi} />
-            <CfRow label="CFF" rows={rows} pick={(r) => r.cff} />
-          </tbody>
-        </table>
-      </div>
-    </>
+    <EmptyState
+      title="No cash flow rows yet"
+      message="Condensed CFS rows will populate once filings/annual reports are parsed or a Screener export is provided."
+      hint={note}
+    />
   );
 }
 
 // ---------------------------------------------------------------------------
 // Shared building blocks
 // ---------------------------------------------------------------------------
+
+function renderScreenerStatement(
+  slices: ScreenerPeriodSlice[],
+  metrics: CanonicalMetric[],
+  label: string
+) {
+  const sourceFile = slices[0]?.sourceFile ?? "";
+  return (
+    <>
+      <TableHeader
+        provenance="screener-import"
+        note={`${label} from Screener export: ${sourceFile}`}
+      />
+      <div className="table-wrap">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              {slices.map((slice) => (
+                <th key={slice.periodSortKey}>{slice.period}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {metrics.map((canonical) => (
+              <tr key={canonical}>
+                <td>{metricLabel(canonical)}</td>
+                {slices.map((slice) => (
+                  <td key={slice.periodSortKey} className="num">
+                    {tableValueOrDash(slice.values[canonical] ?? null, formatNumberCompact)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
+}
 
 function SelectCompany() {
   return (
@@ -349,19 +508,19 @@ function TableHeader({ provenance, note }: TableHeaderProps) {
   );
 }
 
-interface MetricRowProps<T> {
+interface OfficialPlRowProps<T> {
   label: string;
   rows: ReadonlyArray<T>;
   pick: (row: T) => number | null;
   format?: (n: number) => string;
 }
 
-function MetricRow<T>({
+function OfficialPlRow<T>({
   label,
   rows,
   pick,
   format = formatNumberCompact,
-}: MetricRowProps<T>) {
+}: OfficialPlRowProps<T>) {
   return (
     <tr>
       <td>{label}</td>
@@ -383,8 +542,6 @@ interface GrowthRowProps {
 }
 
 function GrowthRow({ label, rows, pick, kind, periodView }: GrowthRowProps) {
-  // YoY needs prior-year-same-period. For quarterly: index - 4. For annual:
-  // index - 1. QoQ only meaningful for quarterly: index - 1.
   return (
     <tr>
       <td>{label}</td>

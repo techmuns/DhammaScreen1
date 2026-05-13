@@ -35,6 +35,12 @@ export function App() {
 
       <KpiSummaryCards companyId={companyId} periodView={periodView} />
 
+      <p className="source-precedence-note">
+        Imported Screener data is shown only when official filing rows are
+        unavailable. It is labeled separately and should be reconciled
+        before production use.
+      </p>
+
       <FinancialStatementTables
         companyId={companyId}
         periodView={periodView}

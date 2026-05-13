@@ -36,6 +36,10 @@ import type {
   ScreenerPeriodType,
   ScreenerSheetType,
 } from "../../src/data/types/dhammaDashboard";
+import {
+  canonicalizeScreenerMetric,
+  parseScreenerPeriod,
+} from "../../src/data/helpers/screenerMapping";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const INPUT_DIR = resolve(here, "../../data/manual/screener");
@@ -125,9 +129,21 @@ function periodTypeForSheet(
   }
 }
 
+// For .csv, the filename can carry a sheet-type hint after a double
+// underscore: `tcs__quarters.csv`, `tcs__profit-and-loss.csv`. The first
+// token before `__` is the companyId; the rest (with `-` and `_`
+// replaced by spaces) feeds back into `classifySheetName`.
 function companyIdFromFilename(filename: string): string {
   const base = basename(filename, extname(filename));
-  return base.trim().toLowerCase();
+  const head = base.split("__")[0] ?? base;
+  return head.trim().toLowerCase();
+}
+
+function csvSheetNameFromFilename(filename: string): string {
+  const base = basename(filename, extname(filename));
+  const parts = base.split("__");
+  if (parts.length < 2) return base;
+  return parts.slice(1).join(" ").replace(/[-_]+/g, " ");
 }
 
 // Screener cells often include "%", "Rs.", "Cr.", commas, etc.
@@ -219,7 +235,7 @@ function parseCsv(content: string): string[][] {
 async function readCsvFile(filePath: string): Promise<ParsedSheet[]> {
   const content = await readFile(filePath, "utf8");
   const rows = parseCsv(content);
-  return [{ sheetName: basename(filePath, extname(filePath)), rows }];
+  return [{ sheetName: csvSheetNameFromFilename(filePath), rows }];
 }
 
 async function readXlsxFile(filePath: string): Promise<ParsedSheet[]> {
@@ -305,6 +321,7 @@ function normalizeSheet(args: {
         const metricName = periods[c - 1];
         if (!metricName) continue;
         const { value, unit } = parseScreenerNumber(row[c]);
+        const canonical = canonicalizeScreenerMetric(metricName);
         peerRows.push({
           companyId,
           companyName,
@@ -313,8 +330,10 @@ function normalizeSheet(args: {
           sourceSheet: sheet.sheetName,
           sheetType,
           period: null,
+          periodSortKey: null,
           periodType: "unknown",
           metricName,
+          metricCanonical: canonical,
           metricValue: value,
           unit,
           currency: null,
@@ -338,9 +357,11 @@ function normalizeSheet(args: {
     const row = sheet.rows[r];
     const metricName = (row[0] ?? "").toString().trim();
     if (!metricName) continue;
+    const canonical = canonicalizeScreenerMetric(metricName);
     for (let c = 1; c < row.length; c++) {
       const period = periods[c - 1];
       if (!period) continue;
+      const parsedPeriod = parseScreenerPeriod(period);
       const { value, unit } = parseScreenerNumber(row[c]);
       rows.push({
         companyId,
@@ -348,9 +369,11 @@ function normalizeSheet(args: {
         sourceFile,
         sourceSheet: sheet.sheetName,
         sheetType,
-        period,
+        period: parsedPeriod?.display ?? period,
+        periodSortKey: parsedPeriod?.sortKey ?? null,
         periodType,
         metricName,
+        metricCanonical: canonical,
         metricValue: value,
         unit,
         currency: null,
