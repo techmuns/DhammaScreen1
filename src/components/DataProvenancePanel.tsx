@@ -46,8 +46,11 @@ function groupSnapshots(): Group[] {
 
   return [
     {
-      title: "Official filings",
-      description: "Source of truth · NSE / BSE / annual reports",
+      title: "Official filings · Discovery",
+      description:
+        "NSE / BSE / annual report manifests. Filings are catalogued; " +
+        "financial-row extraction is not yet wired, so per-metric snapshots " +
+        "in this group are intentionally empty.",
       snapshots: pick([
         "company-master",
         "filing-manifest",

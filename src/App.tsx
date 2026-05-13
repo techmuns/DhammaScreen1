@@ -39,11 +39,12 @@ export function App() {
       <KpiSummaryCards companyId={companyId} periodView={periodView} />
 
       <p className="source-precedence-note">
-        The dashboard reads cached snapshots only — it does not fetch
-        Screener live. Resolution order: <strong>Official filing</strong>{" "}
-        → <strong>Screener fetch</strong> → <strong>Screener import</strong>.
-        Imported and fetched rows are labelled separately and should be
-        reconciled against official filings before production use.
+        Dashboard uses cached <strong>consolidated</strong> Screener
+        financials for current numbers — never live-fetched. Official
+        filing extraction is discovery-only for now: filings are catalogued
+        in the manifest below, but financial rows are not yet parsed out of
+        the source documents. Reconcile any number against the original
+        filing before quoting it externally.
       </p>
 
       <FinancialStatementTables
@@ -57,9 +58,9 @@ export function App() {
 
       <footer className="dashboard-footer">
         <p>
-          Dashboard 1 · Source-first foundation. Imported (Screener) data is
-          surfaced separately and is never merged into official snapshots.
-          Missing values render as “—”, never zero.
+          Dashboard 1 · Consolidated Screener financials, cached. Official
+          filing snapshots remain discovery-only and never co-mingle with
+          fetched rows. Missing values render as “—”, never zero.
         </p>
       </footer>
     </div>

@@ -352,11 +352,17 @@ code {
   gap: 2px;
 }
 
+.benchmark-card__peers--compact {
+  gap: 3px;
+}
+
 .benchmark-card__peer {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: baseline;
+  gap: 6px;
   font-size: 12px;
-  padding: 2px 6px;
+  padding: 3px 6px;
   border-radius: 3px;
   color: var(--text-secondary);
 }
@@ -367,6 +373,21 @@ code {
   font-weight: 600;
 }
 
+.benchmark-card__peer-tag {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.benchmark-card__peer--best .benchmark-card__peer-tag {
+  color: var(--tone-ok);
+}
+
+.benchmark-card__peer--worst .benchmark-card__peer-tag {
+  color: var(--tone-bad);
+}
+
 .benchmark-card__peer-value {
   font-variant-numeric: tabular-nums;
 }
@@ -375,9 +396,23 @@ code {
   font-size: 11px;
   color: var(--text-muted);
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: baseline;
 }
 
-/* Position chip — small pill describing self vs peer-average */
+.benchmark-card__peer-count {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.benchmark-card__hint-dot {
+  color: var(--text-muted);
+}
+
+/* Position chip — small pill describing self vs peer-median. Colour is
+   driven by sentiment (direction-aware), not raw magnitude. */
 .position-chip {
   display: inline-flex;
   align-items: center;
@@ -390,19 +425,19 @@ code {
   white-space: nowrap;
 }
 
-.position-chip--above {
+.position-chip--positive {
   color: var(--tone-ok);
   background: var(--tone-ok-bg);
   border-color: #a7f3d0;
 }
 
-.position-chip--below {
+.position-chip--negative {
   color: var(--tone-bad);
   background: var(--tone-bad-bg);
   border-color: #fecaca;
 }
 
-.position-chip--in-line {
+.position-chip--neutral {
   color: var(--text-secondary);
   background: var(--tone-muted-bg);
   border-color: var(--border);

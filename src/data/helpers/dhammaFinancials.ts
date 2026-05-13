@@ -694,6 +694,19 @@ export type PeerBenchmarkPosition =
   | "in-line"
   | "pending";
 
+// Some metrics are "higher is better" (margins, growth, ROCE), some are
+// "lower is better" (borrowings, debt ratios). Wording on the dashboard
+// stays the same — "Higher than peer median" / "Lower than peer median"
+// just describes the magnitude — but the chip colour (sentiment) flips
+// so a high borrowings figure reads as a *negative*, not a positive.
+export type MetricDirection = "higher-is-better" | "lower-is-better";
+
+export type PeerBenchmarkSentiment =
+  | "positive"
+  | "negative"
+  | "neutral"
+  | "pending";
+
 export interface PeerBenchmarkPeerEntry {
   companyId: string;
   displayName: string;
@@ -704,31 +717,103 @@ export interface PeerBenchmarkPeerEntry {
 
 export interface PeerBenchmark {
   selfCompanyId: string;
+  selfDisplayName: string;
   selfValue: number | null;
   selfPeriod: string | null;
+  // Full peer list is kept for components that still need it; the KPI
+  // cards no longer render every peer (only best / self / worst).
   peerEntries: PeerBenchmarkPeerEntry[];
+  peerCount: number; // peers with a finite value (includes self)
   peerAverage: number | null;
+  peerMedian: number | null;
+  bestPeer: PeerBenchmarkPeerEntry | null; // best given direction
+  worstPeer: PeerBenchmarkPeerEntry | null; // worst given direction
   rank: number | null;
   rankOf: number;
-  position: PeerBenchmarkPosition;
+  position: PeerBenchmarkPosition; // magnitude vs median
+  sentiment: PeerBenchmarkSentiment; // direction-aware good/bad
+  direction: MetricDirection;
+}
+
+// CFO conversion ratio.
+// Indian IT peers all report annual cash-from-operations; the question
+// the analyst really wants answered is "how much of the reported profit
+// turned into cash". This helper computes that with an explicit fallback
+// chain and tells the caller which basis it used so the UI can label
+// units precisely.
+//
+//   1. Preferred: latest annual CFO / latest annual PAT
+//   2. Fallback:  latest annual CFO / latest annual Revenue
+//   3. Last resort: return the absolute CFO with basis=null so the card
+//      can show "Annual CFO, scale-dependent".
+export type CfoConversionBasis = "cfo-to-pat" | "cfo-to-revenue" | "absolute";
+
+export interface CfoConversionResult {
+  value: number | null;
+  period: string | null;
+  basis: CfoConversionBasis | null;
+}
+
+export function cfoConversionRatio(
+  rows: ReadonlyArray<ScreenerCompanyFinancialRow>,
+  companyId: string
+): CfoConversionResult {
+  const cfo = latestScreenerValue(rows, companyId, "cfo", "year");
+  if (!isFiniteNumber(cfo.value)) {
+    return { value: null, period: null, basis: null };
+  }
+  const pat = latestScreenerValue(rows, companyId, "pat", "year");
+  if (isFiniteNumber(pat.value) && pat.value > 0) {
+    return {
+      value: (cfo.value as number) / pat.value,
+      period: cfo.period,
+      basis: "cfo-to-pat",
+    };
+  }
+  const revenue = latestScreenerValue(rows, companyId, "revenue", "year");
+  if (isFiniteNumber(revenue.value) && revenue.value > 0) {
+    return {
+      value: (cfo.value as number) / revenue.value,
+      period: cfo.period,
+      basis: "cfo-to-revenue",
+    };
+  }
+  // No safe ratio basis available — pass the absolute CFO through with
+  // basis=absolute so the UI can switch to a "scale-dependent" label.
+  return { value: cfo.value, period: cfo.period, basis: "absolute" };
+}
+
+function median(values: ReadonlyArray<number>): number | null {
+  if (values.length === 0) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 0
+    ? (sorted[mid - 1] + sorted[mid]) / 2
+    : sorted[mid];
 }
 
 // Builds a peer benchmark for one (company × metric) cell.
-//   kind="value"     → latestScreenerValue per peer
-//   kind="growth-yoy"→ latestYoYGrowth   per peer
-// Peer average = arithmetic mean over peers with a finite value (self
-// included). Rank = 1 means highest; "—" when self has no value.
+//   kind="value"               → latestScreenerValue per peer
+//   kind="growth-yoy"          → latestYoYGrowth   per peer
+//   kind="ratio-cfo-conversion"→ cfoConversionRatio per peer
+// Peer median is the dashboard's headline aggregate (peerAverage is also
+// returned for tooltips / copy). Rank 1 is the *best* peer given the
+// metric's direction. Position is "above" / "below" / "in-line" relative
+// to the median; sentiment maps that through `direction` so styling
+// reflects "good vs bad" not just "high vs low".
 // `inLineTolerance` is a relative fraction (default 5%) used to bucket
-// the position label as above / below / in-line.
+// the position label.
 export function buildPeerBenchmark(args: {
   companies: ReadonlyArray<CompanyMaster>;
   screenerRows: ReadonlyArray<ScreenerCompanyFinancialRow>;
   companyId: string;
   canonical: string;
-  kind: "value" | "growth-yoy";
+  kind: "value" | "growth-yoy" | "ratio-cfo-conversion";
   periodType: "year" | "quarter";
+  direction?: MetricDirection;
   inLineTolerance?: number;
 }): PeerBenchmark {
+  const direction: MetricDirection = args.direction ?? "higher-is-better";
   const peerIds = companiesInPeerGroup(args.companies, args.companyId);
   const peerEntries: PeerBenchmarkPeerEntry[] = peerIds.map((pid) => {
     const co = args.companies.find((c) => c.companyId === pid);
@@ -736,12 +821,14 @@ export function buildPeerBenchmark(args: {
     const lookup =
       args.kind === "growth-yoy"
         ? latestYoYGrowth(args.screenerRows, pid, args.canonical, args.periodType)
-        : latestScreenerValue(
-            args.screenerRows,
-            pid,
-            args.canonical,
-            args.periodType
-          );
+        : args.kind === "ratio-cfo-conversion"
+          ? cfoConversionRatio(args.screenerRows, pid)
+          : latestScreenerValue(
+              args.screenerRows,
+              pid,
+              args.canonical,
+              args.periodType
+            );
     return {
       companyId: pid,
       displayName,
@@ -751,55 +838,86 @@ export function buildPeerBenchmark(args: {
     };
   });
 
-  const finiteValues = peerEntries
-    .filter((e) => isFiniteNumber(e.value))
-    .map((e) => e.value as number);
+  const finiteEntries = peerEntries.filter((e) => isFiniteNumber(e.value));
+  const finiteValues = finiteEntries.map((e) => e.value as number);
   const peerAverage =
     finiteValues.length > 0
       ? finiteValues.reduce((a, b) => a + b, 0) / finiteValues.length
       : null;
+  const peerMedian = median(finiteValues);
 
-  const ranked = [...peerEntries]
-    .filter((e) => isFiniteNumber(e.value))
-    .sort((a, b) => (b.value as number) - (a.value as number));
+  // Rank by direction: highest-first for higher-is-better, lowest-first
+  // for lower-is-better. Rank 1 always means "best".
+  const ranked = [...finiteEntries].sort((a, b) =>
+    direction === "lower-is-better"
+      ? (a.value as number) - (b.value as number)
+      : (b.value as number) - (a.value as number)
+  );
   const rankIdx = ranked.findIndex((e) => e.companyId === args.companyId);
   const rank = rankIdx >= 0 ? rankIdx + 1 : null;
+
+  const bestPeer = ranked.length > 0 ? ranked[0] : null;
+  const worstPeer = ranked.length > 0 ? ranked[ranked.length - 1] : null;
 
   const selfEntry = peerEntries.find((e) => e.companyId === args.companyId);
   const selfValue = selfEntry?.value ?? null;
   const selfPeriod = selfEntry?.period ?? null;
+  const selfDisplayName = selfEntry?.displayName ?? args.companyId;
 
+  // Position is computed against the median (resilient to outliers in a
+  // skewed peer group). Tolerance lets us call near-ties "in line" so the
+  // chip doesn't flip on a 0.1-percentage-point difference.
   const tolerance = args.inLineTolerance ?? 0.05;
   let position: PeerBenchmarkPosition = "pending";
-  if (isFiniteNumber(selfValue) && isFiniteNumber(peerAverage)) {
-    if (peerAverage === 0) {
-      position = "in-line";
+  if (isFiniteNumber(selfValue) && isFiniteNumber(peerMedian)) {
+    if (peerMedian === 0) {
+      // Median is exactly zero; treat any non-zero self as above/below
+      // directly, otherwise in-line.
+      if (selfValue === 0) position = "in-line";
+      else position = selfValue > 0 ? "above" : "below";
     } else {
-      const ratio = (selfValue - peerAverage) / Math.abs(peerAverage);
+      const ratio = (selfValue - peerMedian) / Math.abs(peerMedian);
       if (Math.abs(ratio) <= tolerance) position = "in-line";
       else if (ratio > 0) position = "above";
       else position = "below";
     }
   }
 
+  // Sentiment = position × direction. "Above + higher-is-better" is
+  // positive (e.g., higher ROCE good); "above + lower-is-better" is
+  // negative (e.g., higher borrowings bad).
+  let sentiment: PeerBenchmarkSentiment = "pending";
+  if (position === "in-line") sentiment = "neutral";
+  else if (position === "above")
+    sentiment = direction === "higher-is-better" ? "positive" : "negative";
+  else if (position === "below")
+    sentiment = direction === "higher-is-better" ? "negative" : "positive";
+
   return {
     selfCompanyId: args.companyId,
+    selfDisplayName,
     selfValue,
     selfPeriod,
     peerEntries,
+    peerCount: finiteEntries.length,
     peerAverage,
+    peerMedian,
+    bestPeer,
+    worstPeer,
     rank,
     rankOf: ranked.length,
     position,
+    sentiment,
+    direction,
   };
 }
 
 export function positionLabel(position: PeerBenchmarkPosition): string {
   switch (position) {
     case "above":
-      return "Above peer average";
+      return "Higher than peer median";
     case "below":
-      return "Below peer average";
+      return "Lower than peer median";
     case "in-line":
       return "In line with peers";
     case "pending":
