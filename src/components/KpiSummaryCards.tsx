@@ -1,15 +1,25 @@
 // KPI peer-benchmark cards.
 //
-// Replaces the earlier standalone PeerComparisonTable. Each card lines the
-// selected company up against the rest of its peer group on one financial
-// KPI and surfaces: self value · peer average · rank · position vs peers
-// · mini per-peer strip. All values come from the cached Screener fetch
-// rows; the dashboard never live-fetches.
+// Each card lines the selected company up against the rest of its peer
+// group on one financial KPI and surfaces a *compact* slice of the data:
+//   - self value · self period
+//   - peer median · rank
+//   - best peer / self / worst peer mini-list
+//   - a direction-aware position chip ("Higher than peer median" etc.)
+//   - peer count footer + per-metric hint
+// The full peer list is intentionally hidden — it bloated the page.
 //
-// Reporting-basis policy (Step 12): every value rendered here is sourced
-// from rows with `reportingBasis === "consolidated"`. The shared helpers
-// enforce this — if no consolidated rows exist for a company, every
-// metric falls back to em-dash and the section shows a warning.
+// Reporting-basis policy (Step 12): every value is sourced from rows
+// where `reportingBasis === "consolidated"`. The shared helpers enforce
+// this; if no consolidated rows exist for a company, every metric falls
+// back to em-dash and the section shows a warning.
+//
+// Metric direction (Step 14): some metrics are "higher is better"
+// (margins, growth, ROCE, CFO conversion); some are "lower is better"
+// (borrowings). The CardSpec carries the direction, the helpers compute
+// the corresponding sentiment, and the position chip flips colour
+// accordingly. Wording stays "Higher / Lower than peer median" either
+// way — only the colour changes.
 
 import {
   buildPeerBenchmark,
@@ -18,8 +28,11 @@ import {
   formatPercentRaw,
   positionLabel,
   tableValueOrDash,
+  type MetricDirection,
   type PeerBenchmark,
+  type PeerBenchmarkPeerEntry,
   type PeerBenchmarkPosition,
+  type PeerBenchmarkSentiment,
 } from "../data/helpers/dhammaFinancials";
 import {
   companyMasterSnapshot,
@@ -33,7 +46,7 @@ interface KpiSummaryCardsProps {
   periodView: PeriodView;
 }
 
-type CardKind = "value" | "growth-yoy";
+type CardKind = "value" | "growth-yoy" | "ratio-cfo-conversion";
 
 interface CardSpec {
   key: string;
@@ -44,7 +57,8 @@ interface CardSpec {
   // annual data regardless of the toggle (used for ROCE / CFO / Borrowings
   // which Screener only publishes annually).
   periodScope: "follow-toggle" | "annual";
-  format: "number" | "percent-points" | "percent-raw";
+  format: "number" | "percent-points" | "percent-raw" | "ratio";
+  direction: MetricDirection;
   hint: string;
 }
 
@@ -56,6 +70,7 @@ const CARD_SPECS: CardSpec[] = [
     kind: "growth-yoy",
     periodScope: "follow-toggle",
     format: "percent-points",
+    direction: "higher-is-better",
     hint: "Year-on-year change in revenue",
   },
   {
@@ -65,6 +80,7 @@ const CARD_SPECS: CardSpec[] = [
     kind: "value",
     periodScope: "follow-toggle",
     format: "percent-raw",
+    direction: "higher-is-better",
     hint: "Latest OPM %",
   },
   {
@@ -74,6 +90,7 @@ const CARD_SPECS: CardSpec[] = [
     kind: "growth-yoy",
     periodScope: "follow-toggle",
     format: "percent-points",
+    direction: "higher-is-better",
     hint: "Year-on-year change in net profit",
   },
   {
@@ -83,6 +100,7 @@ const CARD_SPECS: CardSpec[] = [
     kind: "growth-yoy",
     periodScope: "follow-toggle",
     format: "percent-points",
+    direction: "higher-is-better",
     hint: "Year-on-year change in basic EPS",
   },
   {
@@ -92,16 +110,20 @@ const CARD_SPECS: CardSpec[] = [
     kind: "value",
     periodScope: "annual",
     format: "percent-raw",
+    direction: "higher-is-better",
     hint: "Annual return on capital employed",
   },
   {
-    key: "cfo",
-    label: "CFO",
+    key: "cfo_conversion",
+    label: "CFO Conversion",
+    // canonical is unused for the ratio kind, but kept for the spec shape.
     canonical: "cfo",
-    kind: "value",
+    kind: "ratio-cfo-conversion",
     periodScope: "annual",
-    format: "number",
-    hint: "Annual cash from operations",
+    format: "ratio",
+    direction: "higher-is-better",
+    hint:
+      "CFO / Net Profit (preferred) or CFO / Revenue (fallback). Higher means more of the reported profit converted to cash.",
   },
   {
     key: "borrowings",
@@ -110,7 +132,8 @@ const CARD_SPECS: CardSpec[] = [
     kind: "value",
     periodScope: "annual",
     format: "number",
-    hint: "Latest annual borrowings",
+    direction: "lower-is-better",
+    hint: "Latest annual borrowings. Lower is better.",
   },
 ];
 
@@ -120,6 +143,10 @@ function formatterFor(format: CardSpec["format"]): (n: number) => string {
       return (n) => `${n >= 0 ? "+" : ""}${n.toFixed(1)}%`;
     case "percent-raw":
       return (n) => formatPercentRaw(n, 1);
+    case "ratio":
+      // CFO-to-PAT ~ 1.0 = good; CFO-to-Revenue ~ 0.15 also common — the
+      // same x.xx format reads naturally for both.
+      return (n) => `${n.toFixed(2)}x`;
     case "number":
       return formatNumberCompact;
   }
@@ -152,6 +179,7 @@ function buildCards(
       canonical: spec.canonical,
       kind: spec.kind,
       periodType,
+      direction: spec.direction,
     });
     return { spec, benchmark };
   });
@@ -224,9 +252,18 @@ export function KpiSummaryCards({
   );
 }
 
+// ---------------------------------------------------------------------------
+// Single benchmark card
+// ---------------------------------------------------------------------------
+
 function BenchmarkCard({ card }: { card: BenchmarkCardModel }) {
   const { spec, benchmark } = card;
   const format = formatterFor(spec.format);
+
+  // Build the compact 3-row strip: best · self · worst. If self IS the
+  // best or worst, drop the duplicate row so the card stays clean.
+  const stripRows = compactStrip(benchmark);
+
   return (
     <article className="benchmark-card">
       <header className="benchmark-card__header">
@@ -255,40 +292,94 @@ function BenchmarkCard({ card }: { card: BenchmarkCardModel }) {
 
       <div className="benchmark-card__secondary">
         <span className="benchmark-card__peer-avg">
-          Peer avg{" "}
-          <strong>{tableValueOrDash(benchmark.peerAverage, format)}</strong>
+          Peer median{" "}
+          <strong>{tableValueOrDash(benchmark.peerMedian, format)}</strong>
         </span>
-        <PositionChip position={benchmark.position} />
+        <PositionChip
+          position={benchmark.position}
+          sentiment={benchmark.sentiment}
+        />
       </div>
 
-      <ul className="benchmark-card__peers">
-        {benchmark.peerEntries.map((peer) => (
+      <ul className="benchmark-card__peers benchmark-card__peers--compact">
+        {stripRows.map((row) => (
           <li
-            key={peer.companyId}
-            className={`benchmark-card__peer ${
-              peer.isSelf ? "benchmark-card__peer--self" : ""
+            key={row.tag}
+            className={`benchmark-card__peer benchmark-card__peer--${row.tag}${
+              row.entry.isSelf ? " benchmark-card__peer--self" : ""
             }`}
           >
-            <span className="benchmark-card__peer-name">{peer.displayName}</span>
+            <span className="benchmark-card__peer-tag">{row.label}</span>
+            <span className="benchmark-card__peer-name">
+              {row.entry.displayName}
+            </span>
             <span className="benchmark-card__peer-value">
-              {tableValueOrDash(peer.value, format)}
+              {tableValueOrDash(row.entry.value, format)}
             </span>
           </li>
         ))}
       </ul>
 
-      <p className="benchmark-card__hint">{spec.hint}</p>
+      <p className="benchmark-card__hint">
+        <span className="benchmark-card__peer-count">
+          Peer count: {benchmark.peerCount}
+        </span>
+        <span className="benchmark-card__hint-dot"> · </span>
+        {spec.hint}
+      </p>
     </article>
   );
 }
 
-const POSITION_CLASS: Record<PeerBenchmarkPosition, string> = {
-  above: "position-chip position-chip--above",
-  below: "position-chip position-chip--below",
-  "in-line": "position-chip position-chip--in-line",
+// Build the compact strip "best · self · worst", deduplicating when the
+// self row coincides with best or worst (so we never repeat the same
+// company within one card). If anything is missing (e.g. self has no
+// value yet) the strip just shows what exists.
+interface StripRow {
+  tag: "best" | "self" | "worst";
+  label: string;
+  entry: PeerBenchmarkPeerEntry;
+}
+
+function compactStrip(benchmark: PeerBenchmark): StripRow[] {
+  const out: StripRow[] = [];
+  const selfEntry =
+    benchmark.peerEntries.find((e) => e.isSelf) ?? null;
+  const best = benchmark.bestPeer;
+  const worst = benchmark.worstPeer;
+  const seen = new Set<string>();
+
+  function push(tag: StripRow["tag"], label: string, entry: PeerBenchmarkPeerEntry | null) {
+    if (!entry) return;
+    if (seen.has(entry.companyId)) return;
+    seen.add(entry.companyId);
+    out.push({ tag, label, entry });
+  }
+
+  push("best", "Best", best);
+  push("self", "Selected", selfEntry);
+  push("worst", "Worst", worst);
+  return out;
+}
+
+const POSITION_TEXT_CLASS: Record<PeerBenchmarkSentiment, string> = {
+  positive: "position-chip position-chip--positive",
+  negative: "position-chip position-chip--negative",
+  neutral: "position-chip position-chip--neutral",
   pending: "position-chip position-chip--pending",
 };
 
-function PositionChip({ position }: { position: PeerBenchmarkPosition }) {
-  return <span className={POSITION_CLASS[position]}>{positionLabel(position)}</span>;
+function PositionChip({
+  position,
+  sentiment,
+}: {
+  position: PeerBenchmarkPosition;
+  sentiment: PeerBenchmarkSentiment;
+}) {
+  return (
+    <span className={POSITION_TEXT_CLASS[sentiment]}>
+      {positionLabel(position)}
+    </span>
+  );
 }
+

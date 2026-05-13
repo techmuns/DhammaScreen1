@@ -108,16 +108,20 @@ function paths(): PathStatus[] {
 
   return [
     {
-      label: "Official filings",
+      // Renamed in Step 14: the filing manifest is the discovery layer
+      // only — financial-row extraction is still pending. The previous
+      // "Official filings · Partial" phrasing implied parsed financials
+      // existed, which they do not.
+      label: "Official filings · Discovery",
       status: filing.status,
       tone: filingTone,
       detail:
         filing.status === "ok"
-          ? `${filing.rowCount} filings discovered`
+          ? `${filing.rowCount} filings discovered; financial extraction pending`
           : filing.status === "partial"
-            ? `${filing.rowCount} filings — some sources failed`
+            ? `${filing.rowCount} filings discovered; financial extraction pending`
             : filing.status === "error"
-              ? `Sources blocked (${filing.errors?.length ?? 0} errors)`
+              ? `Discovery blocked (${filing.errors?.length ?? 0} errors)`
               : "No filings discovered yet",
     },
     {
