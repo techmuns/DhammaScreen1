@@ -74,10 +74,11 @@ jobs:
             echo "No snapshot changes to commit."
             exit 0
           fi
-          # NOTE: do not include `[skip ci]` in this commit message —
-          # Cloudflare's "Skip CI on this commit" honours that marker and
-          # the live dashboard would never see refreshed data. The
-          # workflow itself is gated on workflow_dispatch / schedule, so
-          # the data commit cannot retrigger this workflow regardless.
+          # NOTE: keep the snapshot commit message free of any CI-skip
+          # marker. Cloudflare and other CIs honour those markers and the
+          # live dashboard would never see refreshed data. The workflow
+          # itself is gated on workflow_dispatch / schedule (never on
+          # push), so the data commit cannot retrigger this workflow
+          # regardless of the message.
           git commit -m "chore(data): refresh Dhamma dashboard snapshots"
           git push origin HEAD:${GITHUB_REF_NAME}
