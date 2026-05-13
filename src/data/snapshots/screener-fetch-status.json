@@ -2,19 +2,26 @@
   "meta": {
     "snapshotId": "screener-fetch-status",
     "description": "Per-company health of the automated Screener fetcher.",
-    "generatedAt": "2026-05-13T13:53:18.978Z",
-    "rowCount": 4,
-    "status": "ok",
-    "notes": null,
+    "generatedAt": "2026-05-13T15:21:28.647Z",
+    "rowCount": 20,
+    "status": "partial",
+    "notes": "Some companies failed (1 errors recorded).",
     "source": {
       "sourceClass": "manual",
       "sourceUrl": "https://www.screener.in/company/",
       "sourceLabel": "Screener automated fetch",
-      "fetchedAt": "2026-05-13T13:53:18.978Z",
+      "fetchedAt": "2026-05-13T15:21:28.647Z",
       "publishedAt": null,
       "notes": "Cached. Dashboard reads these rows; the UI never live-fetches."
     },
-    "errors": []
+    "errors": [
+      {
+        "sourceId": "screener",
+        "companyId": "ltim",
+        "message": "ltim: HTTP 404",
+        "occurredAt": "2026-05-13T15:14:55.985Z"
+      }
+    ]
   },
   "rows": [
     {
@@ -22,7 +29,7 @@
       "companyName": "TCS",
       "screenerSlug": "TCS",
       "screenerUrl": "https://www.screener.in/company/TCS/",
-      "fetchedAt": "2026-05-13T13:51:27.621Z",
+      "fetchedAt": "2026-05-13T15:12:35.359Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -41,7 +48,7 @@
       "companyName": "Infosys",
       "screenerSlug": "INFY",
       "screenerUrl": "https://www.screener.in/company/INFY/",
-      "fetchedAt": "2026-05-13T13:51:56.618Z",
+      "fetchedAt": "2026-05-13T15:13:04.204Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -60,7 +67,7 @@
       "companyName": "HCLTech",
       "screenerSlug": "HCLTECH",
       "screenerUrl": "https://www.screener.in/company/HCLTECH/",
-      "fetchedAt": "2026-05-13T13:52:24.889Z",
+      "fetchedAt": "2026-05-13T15:13:32.245Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -79,7 +86,7 @@
       "companyName": "Wipro",
       "screenerSlug": "WIPRO",
       "screenerUrl": "https://www.screener.in/company/WIPRO/",
-      "fetchedAt": "2026-05-13T13:52:53.183Z",
+      "fetchedAt": "2026-05-13T15:13:59.857Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -92,6 +99,304 @@
       "latestPeriod": "2026-03",
       "errorMessage": null,
       "notes": "Headless fetch did not reach https://www.screener.in/company/WIPRO/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/WIPRO/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "techm",
+      "companyName": "Tech Mahindra",
+      "screenerSlug": "TECHM",
+      "screenerUrl": "https://www.screener.in/company/TECHM/",
+      "fetchedAt": "2026-05-13T15:14:27.869Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/TECHM/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/TECHM/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "ltim",
+      "companyName": "LTIMindtree",
+      "screenerSlug": "LTIM",
+      "screenerUrl": "https://www.screener.in/company/LTIM/",
+      "fetchedAt": "2026-05-13T15:14:55.985Z",
+      "status": "blocked",
+      "sectionsFetched": [],
+      "rowsWritten": 0,
+      "latestPeriod": null,
+      "errorMessage": "HTTP 404",
+      "notes": null
+    },
+    {
+      "companyId": "ofss",
+      "companyName": "Oracle Financial Services",
+      "screenerSlug": "OFSS",
+      "screenerUrl": "https://www.screener.in/company/OFSS/",
+      "fetchedAt": "2026-05-13T15:15:00.805Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/OFSS/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/OFSS/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "persistent",
+      "companyName": "Persistent Systems",
+      "screenerSlug": "PERSISTENT",
+      "screenerUrl": "https://www.screener.in/company/PERSISTENT/",
+      "fetchedAt": "2026-05-13T15:15:28.016Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/PERSISTENT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/PERSISTENT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "coforge",
+      "companyName": "Coforge",
+      "screenerSlug": "COFORGE",
+      "screenerUrl": "https://www.screener.in/company/COFORGE/",
+      "fetchedAt": "2026-05-13T15:15:55.660Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/COFORGE/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/COFORGE/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "mphasis",
+      "companyName": "Mphasis",
+      "screenerSlug": "MPHASIS",
+      "screenerUrl": "https://www.screener.in/company/MPHASIS/",
+      "fetchedAt": "2026-05-13T15:16:23.762Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/MPHASIS/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/MPHASIS/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "ltts",
+      "companyName": "L&T Technology Services",
+      "screenerSlug": "LTTS",
+      "screenerUrl": "https://www.screener.in/company/LTTS/",
+      "fetchedAt": "2026-05-13T15:16:51.382Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/LTTS/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/LTTS/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "hexaware",
+      "companyName": "Hexaware Technologies",
+      "screenerSlug": "HEXT",
+      "screenerUrl": "https://www.screener.in/company/HEXT/",
+      "fetchedAt": "2026-05-13T15:17:19.035Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 576,
+      "latestPeriod": "9999-99",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/HEXT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/HEXT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "tatatech",
+      "companyName": "Tata Technologies",
+      "screenerSlug": "TATATECH",
+      "screenerUrl": "https://www.screener.in/company/TATATECH/",
+      "fetchedAt": "2026-05-13T15:17:46.702Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 428,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/TATATECH/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/TATATECH/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "tataelxsi",
+      "companyName": "Tata Elxsi",
+      "screenerSlug": "TATAELXSI",
+      "screenerUrl": "https://www.screener.in/company/TATAELXSI/",
+      "fetchedAt": "2026-05-13T15:18:14.405Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/TATAELXSI/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/TATAELXSI/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "kpittech",
+      "companyName": "KPIT Technologies",
+      "screenerSlug": "KPITTECH",
+      "screenerUrl": "https://www.screener.in/company/KPITTECH/",
+      "fetchedAt": "2026-05-13T15:18:42.447Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 462,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/KPITTECH/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/KPITTECH/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "zensartech",
+      "companyName": "Zensar Technologies",
+      "screenerSlug": "ZENSARTECH",
+      "screenerUrl": "https://www.screener.in/company/ZENSARTECH/",
+      "fetchedAt": "2026-05-13T15:19:10.482Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/ZENSARTECH/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/ZENSARTECH/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "intellect",
+      "companyName": "Intellect Design",
+      "screenerSlug": "INTELLECT",
+      "screenerUrl": "https://www.screener.in/company/INTELLECT/",
+      "fetchedAt": "2026-05-13T15:19:38.520Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/INTELLECT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/INTELLECT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "cyient",
+      "companyName": "Cyient",
+      "screenerSlug": "CYIENT",
+      "screenerUrl": "https://www.screener.in/company/CYIENT/",
+      "fetchedAt": "2026-05-13T15:20:06.528Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/CYIENT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/CYIENT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "birlasoft",
+      "companyName": "Birlasoft",
+      "screenerSlug": "BSOFT",
+      "screenerUrl": "https://www.screener.in/company/BSOFT/",
+      "fetchedAt": "2026-05-13T15:20:34.570Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/BSOFT/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/BSOFT/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
+    },
+    {
+      "companyId": "sonata",
+      "companyName": "Sonata Software",
+      "screenerSlug": "SONATSOFTW",
+      "screenerUrl": "https://www.screener.in/company/SONATSOFTW/",
+      "fetchedAt": "2026-05-13T15:21:02.973Z",
+      "status": "partial",
+      "sectionsFetched": [
+        "quarters",
+        "profit_and_loss",
+        "balance_sheet",
+        "cash_flow",
+        "ratios"
+      ],
+      "rowsWritten": 564,
+      "latestPeriod": "2026-03",
+      "errorMessage": null,
+      "notes": "Headless fetch did not reach https://www.screener.in/company/SONATSOFTW/ (page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://www.screener.in/company/SONATSOFTW/\", waiting until \"networkidle\"\n). May be CAPTCHA, rate limit, or network block."
     }
   ]
 }

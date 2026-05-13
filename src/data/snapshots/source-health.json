@@ -2,15 +2,15 @@
   "meta": {
     "snapshotId": "source-health",
     "description": "Per (sourceId, companyId) probe of source reachability and freshness.",
-    "generatedAt": "2026-05-13T13:51:26.964Z",
-    "rowCount": 8,
+    "generatedAt": "2026-05-13T15:12:34.676Z",
+    "rowCount": 40,
     "status": "ok",
     "notes": null,
     "source": {
       "sourceClass": "derived",
       "sourceUrl": null,
       "sourceLabel": "Derived from discovery adapter results",
-      "fetchedAt": "2026-05-13T13:51:26.964Z",
+      "fetchedAt": "2026-05-13T15:12:34.676Z",
       "publishedAt": null,
       "notes": null
     },
@@ -20,7 +20,7 @@
     {
       "sourceId": "nse",
       "companyId": "tcs",
-      "checkedAt": "2026-05-13T13:51:19.939Z",
+      "checkedAt": "2026-05-13T15:12:09.539Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "17-Jan-202",
@@ -30,7 +30,7 @@
     {
       "sourceId": "bse",
       "companyId": "tcs",
-      "checkedAt": "2026-05-13T13:51:21.872Z",
+      "checkedAt": "2026-05-13T15:12:11.201Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -40,7 +40,7 @@
     {
       "sourceId": "nse",
       "companyId": "infosys",
-      "checkedAt": "2026-05-13T13:51:22.445Z",
+      "checkedAt": "2026-05-13T15:12:11.973Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "28-Sep-202",
@@ -50,7 +50,7 @@
     {
       "sourceId": "bse",
       "companyId": "infosys",
-      "checkedAt": "2026-05-13T13:51:23.885Z",
+      "checkedAt": "2026-05-13T15:12:13.275Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -60,7 +60,7 @@
     {
       "sourceId": "nse",
       "companyId": "hcltech",
-      "checkedAt": "2026-05-13T13:51:24.194Z",
+      "checkedAt": "2026-05-13T15:12:13.535Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "29-Aug-202",
@@ -70,7 +70,7 @@
     {
       "sourceId": "bse",
       "companyId": "hcltech",
-      "checkedAt": "2026-05-13T13:51:25.286Z",
+      "checkedAt": "2026-05-13T15:12:15.322Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -80,7 +80,7 @@
     {
       "sourceId": "nse",
       "companyId": "wipro",
-      "checkedAt": "2026-05-13T13:51:25.570Z",
+      "checkedAt": "2026-05-13T15:12:15.818Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "30-Jan-202",
@@ -90,12 +90,332 @@
     {
       "sourceId": "bse",
       "companyId": "wipro",
-      "checkedAt": "2026-05-13T13:51:26.666Z",
+      "checkedAt": "2026-05-13T15:12:17.530Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
       "errorMessage": null,
       "notes": "Source reachable; no filings matched the discovery filter."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "techm",
+      "checkedAt": "2026-05-13T15:12:17.947Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "30-Jan-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "techm",
+      "checkedAt": "2026-05-13T15:12:19.086Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "ltim",
+      "checkedAt": "2026-05-13T15:12:19.086Z",
+      "status": "ok",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": null,
+      "notes": "Source reachable; no filings matched the discovery filter."
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "ltim",
+      "checkedAt": "2026-05-13T15:12:19.752Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "ofss",
+      "checkedAt": "2026-05-13T15:12:19.752Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "28-Jul-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "ofss",
+      "checkedAt": "2026-05-13T15:12:20.981Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "persistent",
+      "checkedAt": "2026-05-13T15:12:20.981Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "30-Apr-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "persistent",
+      "checkedAt": "2026-05-13T15:12:22.332Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "coforge",
+      "checkedAt": "2026-05-13T15:12:22.332Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "29-Jul-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "coforge",
+      "checkedAt": "2026-05-13T15:12:23.475Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "mphasis",
+      "checkedAt": "2026-05-13T15:12:23.475Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "31-Oct-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "mphasis",
+      "checkedAt": "2026-05-13T15:12:24.584Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "ltts",
+      "checkedAt": "2026-05-13T15:12:24.584Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "27-Aug-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "ltts",
+      "checkedAt": "2026-05-13T15:12:25.452Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "hexaware",
+      "checkedAt": "2026-05-13T15:12:25.452Z",
+      "status": "ok",
+      "filingsDiscovered": 7,
+      "latestFilingDate": "28-Apr-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "hexaware",
+      "checkedAt": "2026-05-13T15:12:26.221Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "tatatech",
+      "checkedAt": "2026-05-13T15:12:26.221Z",
+      "status": "ok",
+      "filingsDiscovered": 13,
+      "latestFilingDate": "28-Oct-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "tatatech",
+      "checkedAt": "2026-05-13T15:12:27.027Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "tataelxsi",
+      "checkedAt": "2026-05-13T15:12:27.027Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "27-Jan-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "tataelxsi",
+      "checkedAt": "2026-05-13T15:12:27.997Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "kpittech",
+      "checkedAt": "2026-05-13T15:12:27.997Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "31-Jan-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "kpittech",
+      "checkedAt": "2026-05-13T15:12:28.819Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "zensartech",
+      "checkedAt": "2026-05-13T15:12:28.819Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "31-Oct-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "zensartech",
+      "checkedAt": "2026-05-13T15:12:30.132Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "intellect",
+      "checkedAt": "2026-05-13T15:12:30.132Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "30-Jan-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "intellect",
+      "checkedAt": "2026-05-13T15:12:31.462Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "cyient",
+      "checkedAt": "2026-05-13T15:12:31.462Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "25-Jul-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "cyient",
+      "checkedAt": "2026-05-13T15:12:32.569Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "birlasoft",
+      "checkedAt": "2026-05-13T15:12:32.569Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "31-Oct-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "birlasoft",
+      "checkedAt": "2026-05-13T15:12:33.640Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
+    },
+    {
+      "sourceId": "nse",
+      "companyId": "sonata",
+      "checkedAt": "2026-05-13T15:12:33.640Z",
+      "status": "ok",
+      "filingsDiscovered": 25,
+      "latestFilingDate": "31-Jul-202",
+      "errorMessage": null,
+      "notes": null
+    },
+    {
+      "sourceId": "bse",
+      "companyId": "sonata",
+      "checkedAt": "2026-05-13T15:12:34.673Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "BSE code not configured for this company.",
+      "notes": "Source returned an error; see errorMessage."
     }
   ]
 }
