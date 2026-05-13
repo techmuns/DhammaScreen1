@@ -28,7 +28,8 @@ const SNAPSHOT_HUMAN_LABELS: Record<string, string> = {
   "screener-fetch-status": "Screener fetch — per-company status",
   "screener-import-status": "Screener import — per-file status",
   "screener-normalized-financials": "Screener financials (fetch + import)",
-  "screener-peer-comparison": "Screener peer comparison",
+  "screener-peer-comparison":
+    "Screener raw peer table · not shown · KPI benchmarks use fetched financials instead",
   "guidance-commentary": "Guidance commentary",
   "guidance-actual-comparison": "Guidance — actual vs. prior",
 };

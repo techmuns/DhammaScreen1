@@ -1,20 +1,22 @@
+// KPI peer-benchmark cards.
+//
+// Replaces the earlier standalone PeerComparisonTable. Each card lines the
+// selected company up against the rest of its peer group on one financial
+// KPI and surfaces: self value · peer average · rank · position vs peers
+// · mini per-peer strip. All values come from the cached Screener fetch
+// rows; the dashboard never live-fetches.
+
 import {
+  buildPeerBenchmark,
   formatNumberCompact,
-  formatPercent,
   formatPercentRaw,
-  latestQuarter,
-  latestYear,
-  margin,
-  resolveKpi,
-  screenerLatestMetric,
+  positionLabel,
   tableValueOrDash,
-  type KpiResolution,
+  type PeerBenchmark,
+  type PeerBenchmarkPosition,
 } from "../data/helpers/dhammaFinancials";
 import {
-  annualFinancialsSnapshot,
-  balanceSheetSnapshot,
-  cashFlowSnapshot,
-  quarterlyFinancialsSnapshot,
+  companyMasterSnapshot,
   screenerNormalizedSnapshot,
 } from "../data/helpers/snapshotLoader";
 import type { PeriodView } from "./PeriodToggle";
@@ -25,215 +27,235 @@ interface KpiSummaryCardsProps {
   periodView: PeriodView;
 }
 
-interface CardModel {
+type CardKind = "value" | "growth-yoy";
+
+interface CardSpec {
+  key: string;
   label: string;
-  resolution: KpiResolution;
-  format: (n: number) => string;
+  canonical: string;
+  kind: CardKind;
+  // "follow-toggle" matches the dashboard's period toggle. "annual" forces
+  // annual data regardless of the toggle (used for ROCE / CFO / Borrowings
+  // which Screener only publishes annually).
+  periodScope: "follow-toggle" | "annual";
+  format: "number" | "percent-points" | "percent-raw";
   hint: string;
+}
+
+const CARD_SPECS: CardSpec[] = [
+  {
+    key: "revenue_growth",
+    label: "Revenue Growth (YoY)",
+    canonical: "revenue",
+    kind: "growth-yoy",
+    periodScope: "follow-toggle",
+    format: "percent-points",
+    hint: "Year-on-year change in revenue",
+  },
+  {
+    key: "opm",
+    label: "Operating Margin",
+    canonical: "opm",
+    kind: "value",
+    periodScope: "follow-toggle",
+    format: "percent-raw",
+    hint: "Latest OPM %",
+  },
+  {
+    key: "net_profit_growth",
+    label: "Net Profit Growth (YoY)",
+    canonical: "pat",
+    kind: "growth-yoy",
+    periodScope: "follow-toggle",
+    format: "percent-points",
+    hint: "Year-on-year change in net profit",
+  },
+  {
+    key: "eps_growth",
+    label: "EPS Growth (YoY)",
+    canonical: "eps",
+    kind: "growth-yoy",
+    periodScope: "follow-toggle",
+    format: "percent-points",
+    hint: "Year-on-year change in basic EPS",
+  },
+  {
+    key: "roce",
+    label: "ROCE",
+    canonical: "roce",
+    kind: "value",
+    periodScope: "annual",
+    format: "percent-raw",
+    hint: "Annual return on capital employed",
+  },
+  {
+    key: "cfo",
+    label: "CFO",
+    canonical: "cfo",
+    kind: "value",
+    periodScope: "annual",
+    format: "number",
+    hint: "Annual cash from operations",
+  },
+  {
+    key: "borrowings",
+    label: "Borrowings",
+    canonical: "borrowings",
+    kind: "value",
+    periodScope: "annual",
+    format: "number",
+    hint: "Latest annual borrowings",
+  },
+];
+
+function formatterFor(format: CardSpec["format"]): (n: number) => string {
+  switch (format) {
+    case "percent-points":
+      return (n) => `${n >= 0 ? "+" : ""}${n.toFixed(1)}%`;
+    case "percent-raw":
+      return (n) => formatPercentRaw(n, 1);
+    case "number":
+      return formatNumberCompact;
+  }
+}
+
+interface BenchmarkCardModel {
+  spec: CardSpec;
+  benchmark: PeerBenchmark;
 }
 
 function buildCards(
   companyId: string | null,
   periodView: PeriodView
-): CardModel[] {
-  if (!companyId) return defaultEmptyCards();
-  const id: string = companyId;
-
-  const screenerPeriodType = periodView === "quarters" ? "quarter" : "year";
+): BenchmarkCardModel[] {
+  if (!companyId) return [];
+  const companies = companyMasterSnapshot.rows;
   const screenerRows = screenerNormalizedSnapshot.rows;
 
-  const latestFetched = (canonical: string, pType: "quarter" | "year") =>
-    screenerLatestMetric(screenerRows, id, canonical, pType, "fetch");
-  const latestImported = (canonical: string, pType: "quarter" | "year") =>
-    screenerLatestMetric(screenerRows, id, canonical, pType, "import");
-
-  const latestQ = latestQuarter(quarterlyFinancialsSnapshot.rows, companyId);
-  const latestY = latestYear(annualFinancialsSnapshot.rows, companyId);
-  const pAndL = periodView === "years" ? latestY : latestQ;
-  const officialPeriodLabel = pAndL
-    ? `${pAndL.period.kind === "quarter" ? pAndL.period.quarter : "FY"}` +
-      ` ${String(pAndL.period.fiscalYear).slice(-2)}`
-    : null;
-
-  const balance = balanceSheetSnapshot.rows
-    .filter((row) => row.companyId === companyId)
-    .sort((a, b) =>
-      a.period.periodEndDate.localeCompare(b.period.periodEndDate)
-    )
-    .at(-1);
-
-  const cashFlow = cashFlowSnapshot.rows
-    .filter((row) => row.companyId === companyId)
-    .sort((a, b) =>
-      a.period.periodEndDate.localeCompare(b.period.periodEndDate)
-    )
-    .at(-1);
-
-  // Revenue / Sales
-  const revenue = resolveKpi({
-    official: { value: pAndL?.revenue ?? null, periodLabel: officialPeriodLabel },
-    screenerFetch: latestFetched("revenue", screenerPeriodType),
-    screenerImport: latestImported("revenue", screenerPeriodType),
+  return CARD_SPECS.map((spec) => {
+    const periodType =
+      spec.periodScope === "annual"
+        ? "year"
+        : periodView === "quarters"
+          ? "quarter"
+          : "year";
+    const benchmark = buildPeerBenchmark({
+      companies,
+      screenerRows,
+      companyId,
+      canonical: spec.canonical,
+      kind: spec.kind,
+      periodType,
+    });
+    return { spec, benchmark };
   });
-
-  // Operating Margin (OPM %)
-  const officialOpMargin = margin(pAndL?.ebitda ?? null, pAndL?.revenue ?? null);
-  const operatingMargin = resolveKpi({
-    official: { value: officialOpMargin, periodLabel: officialPeriodLabel },
-    screenerFetch: latestFetched("opm", screenerPeriodType),
-    screenerImport: latestImported("opm", screenerPeriodType),
-  });
-  // Screener OPM is already in percentage points; official derivation is a fraction.
-  const operatingMarginFormat =
-    operatingMargin.provenance === "screener-fetch" ||
-    operatingMargin.provenance === "screener-import"
-      ? formatPercentRaw
-      : formatPercent;
-
-  // Net Profit (absolute, not margin) — straight from Screener / filings.
-  const netProfit = resolveKpi({
-    official: {
-      value: pAndL?.patAttributableToOwners ?? pAndL?.pat ?? null,
-      periodLabel: officialPeriodLabel,
-    },
-    screenerFetch: latestFetched("pat", screenerPeriodType),
-    screenerImport: latestImported("pat", screenerPeriodType),
-  });
-
-  // EPS
-  const eps = resolveKpi({
-    official: { value: pAndL?.epsBasic ?? null, periodLabel: officialPeriodLabel },
-    screenerFetch: latestFetched("eps", screenerPeriodType),
-    screenerImport: latestImported("eps", screenerPeriodType),
-  });
-
-  // CFO — Screener only publishes annual CFO. Even on the quarterly toggle
-  // the fallback is the latest annual figure; label spells that out.
-  const cfoFetch = latestFetched("cfo", "year");
-  const cfoImport = latestImported("cfo", "year");
-  const cfo = resolveKpi({
-    official: { value: cashFlow?.cfo ?? null, periodLabel: officialPeriodLabel },
-    screenerFetch: cfoFetch,
-    screenerImport: cfoImport,
-  });
-
-  // Borrowings — annual-only from Screener for the same reason.
-  const borrowingsFetch = latestFetched("borrowings", "year");
-  const borrowingsImport = latestImported("borrowings", "year");
-  const borrowings = resolveKpi({
-    official: {
-      value: balance?.netDebt ?? balance?.borrowingsTotal ?? null,
-      periodLabel: officialPeriodLabel,
-    },
-    screenerFetch: borrowingsFetch,
-    screenerImport: borrowingsImport,
-  });
-
-  return [
-    {
-      label: "Revenue / Sales",
-      resolution: revenue,
-      format: formatNumberCompact,
-      hint: hintFor(revenue, "Reported revenue", periodView),
-    },
-    {
-      label: "Operating Margin",
-      resolution: operatingMargin,
-      format: operatingMarginFormat,
-      hint: hintFor(
-        operatingMargin,
-        operatingMargin.provenance === "screener-fetch" ||
-          operatingMargin.provenance === "screener-import"
-          ? "Screener OPM %"
-          : "Derived: EBITDA / Revenue",
-        periodView
-      ),
-    },
-    {
-      label: "Net Profit",
-      resolution: netProfit,
-      format: formatNumberCompact,
-      hint: hintFor(netProfit, "Net profit attributable to owners", periodView),
-    },
-    {
-      label: "EPS",
-      resolution: eps,
-      format: (n) => n.toFixed(2),
-      hint: hintFor(eps, "Basic EPS", periodView),
-    },
-    {
-      label: "CFO",
-      resolution: cfo,
-      format: formatNumberCompact,
-      hint:
-        cfo.provenance === "screener-fetch" ||
-        cfo.provenance === "screener-import"
-          ? `Annual cash from operations · ${cfo.periodLabel ?? "—"}`
-          : hintFor(cfo, "Net cash from operations", periodView),
-    },
-    {
-      label: "Borrowings",
-      resolution: borrowings,
-      format: formatNumberCompact,
-      hint:
-        borrowings.provenance === "screener-fetch" ||
-        borrowings.provenance === "screener-import"
-          ? `Annual borrowings · ${borrowings.periodLabel ?? "—"}`
-          : hintFor(
-              borrowings,
-              balance?.netDebt != null ? "Net debt" : "Total borrowings",
-              periodView
-            ),
-    },
-  ];
 }
 
-function hintFor(
-  resolution: KpiResolution,
-  baseHint: string,
-  _periodView: PeriodView
-): string {
-  if (resolution.value === null) return "Awaiting extraction or import";
-  const period = resolution.periodLabel;
-  return period ? `${baseHint} · ${period}` : baseHint;
-}
-
-function defaultEmptyCards(): CardModel[] {
-  const labels = [
-    "Revenue / Sales",
-    "Operating Margin",
-    "Net Profit",
-    "EPS",
-    "CFO",
-    "Borrowings",
-  ];
-  return labels.map((label) => ({
-    label,
-    resolution: { value: null, provenance: "pending", periodLabel: null },
-    format: formatNumberCompact,
-    hint: "Select a company to load metrics",
-  }));
-}
+// ---------------------------------------------------------------------------
+// Render
+// ---------------------------------------------------------------------------
 
 export function KpiSummaryCards({
   companyId,
   periodView,
 }: KpiSummaryCardsProps) {
   const cards = buildCards(companyId, periodView);
-  return (
-    <section className="kpi-cards" aria-label="Key performance indicators">
-      {cards.map((card) => (
-        <div key={card.label} className="kpi-card">
-          <div className="kpi-card__header">
-            <span className="kpi-card__label">{card.label}</span>
-            <SourceBadge provenance={card.resolution.provenance} />
-          </div>
-          <div className="kpi-card__value">
-            {tableValueOrDash(card.resolution.value, card.format)}
-          </div>
-          <div className="kpi-card__hint">{card.hint}</div>
+
+  if (cards.length === 0) {
+    return (
+      <section className="kpi-benchmarks" aria-label="KPI peer benchmarks">
+        <div className="kpi-benchmarks__head">
+          <h2 className="section-title">KPI peer benchmarks</h2>
+          <span className="section-subtitle">
+            Select a company to compare against its peer group.
+          </span>
         </div>
-      ))}
+      </section>
+    );
+  }
+
+  return (
+    <section className="kpi-benchmarks" aria-label="KPI peer benchmarks">
+      <div className="kpi-benchmarks__head">
+        <h2 className="section-title">KPI peer benchmarks</h2>
+        <span className="section-subtitle">
+          Selected company vs. tracked peer group. Source: cached Screener fetch.
+        </span>
+      </div>
+      <div className="kpi-benchmarks__grid">
+        {cards.map((card) => (
+          <BenchmarkCard key={card.spec.key} card={card} />
+        ))}
+      </div>
     </section>
   );
+}
+
+function BenchmarkCard({ card }: { card: BenchmarkCardModel }) {
+  const { spec, benchmark } = card;
+  const format = formatterFor(spec.format);
+  return (
+    <article className="benchmark-card">
+      <header className="benchmark-card__header">
+        <span className="benchmark-card__label">{spec.label}</span>
+        <SourceBadge provenance="screener-fetch" />
+      </header>
+
+      <div className="benchmark-card__primary">
+        <div className="benchmark-card__value-block">
+          <span className="benchmark-card__value">
+            {tableValueOrDash(benchmark.selfValue, format)}
+          </span>
+          <span className="benchmark-card__period">
+            {benchmark.selfPeriod ?? "—"}
+          </span>
+        </div>
+        <div className="benchmark-card__rank">
+          <span className="benchmark-card__rank-number">
+            {benchmark.rank !== null ? `${benchmark.rank}` : "—"}
+          </span>
+          <span className="benchmark-card__rank-of">
+            {benchmark.rankOf > 0 ? `/ ${benchmark.rankOf}` : ""}
+          </span>
+        </div>
+      </div>
+
+      <div className="benchmark-card__secondary">
+        <span className="benchmark-card__peer-avg">
+          Peer avg{" "}
+          <strong>{tableValueOrDash(benchmark.peerAverage, format)}</strong>
+        </span>
+        <PositionChip position={benchmark.position} />
+      </div>
+
+      <ul className="benchmark-card__peers">
+        {benchmark.peerEntries.map((peer) => (
+          <li
+            key={peer.companyId}
+            className={`benchmark-card__peer ${
+              peer.isSelf ? "benchmark-card__peer--self" : ""
+            }`}
+          >
+            <span className="benchmark-card__peer-name">{peer.displayName}</span>
+            <span className="benchmark-card__peer-value">
+              {tableValueOrDash(peer.value, format)}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <p className="benchmark-card__hint">{spec.hint}</p>
+    </article>
+  );
+}
+
+const POSITION_CLASS: Record<PeerBenchmarkPosition, string> = {
+  above: "position-chip position-chip--above",
+  below: "position-chip position-chip--below",
+  "in-line": "position-chip position-chip--in-line",
+  pending: "position-chip position-chip--pending",
+};
+
+function PositionChip({ position }: { position: PeerBenchmarkPosition }) {
+  return <span className={POSITION_CLASS[position]}>{positionLabel(position)}</span>;
 }

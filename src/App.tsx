@@ -7,7 +7,10 @@ import { DataStatusPanel } from "./components/DataStatusPanel";
 import { FinancialStatementTables } from "./components/FinancialStatementTables";
 import { GuidanceTrackerPanel } from "./components/GuidanceTrackerPanel";
 import { KpiSummaryCards } from "./components/KpiSummaryCards";
-import { PeerComparisonTable } from "./components/PeerComparisonTable";
+// Note: PeerComparisonTable is intentionally NOT rendered. Peer comparison
+// is now folded into KpiSummaryCards as per-KPI benchmarks. The file is
+// kept in src/components/PeerComparisonTable.tsx for reference / future
+// reactivation if the client asks for a standalone table.
 import { PeriodToggle, type PeriodView } from "./components/PeriodToggle";
 import { companyMasterSnapshot } from "./data/helpers/snapshotLoader";
 
@@ -47,8 +50,6 @@ export function App() {
         companyId={companyId}
         periodView={periodView}
       />
-
-      <PeerComparisonTable companyId={companyId} />
 
       <GuidanceTrackerPanel companyId={companyId} companies={companies} />
 
