@@ -15,7 +15,12 @@ jobs:
   ingest:
     name: Pull snapshots, typecheck, build
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Raised from 20 → 45 in Step 13 as a safety margin. The expected
+    # runtime after dropping Playwright + headless Chromium and using
+    # peer-mode=static is well under 20 minutes for the current 20-company
+    # universe, but 45 leaves room for a slow Screener day or a transient
+    # network blip without prematurely cancelling the run.
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,25 +41,28 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Headless Chromium for the Screener peer-comparison fallback only.
-      # The static financial fetch path does NOT need a browser; only
-      # Strategy D (peer-mode=auto/headless) reaches for Chromium when
-      # static strategies return no rows. Failure here would block the
-      # peer fetch but not the financial fetch, so the step is fault-tolerant.
-      - name: Install Playwright Chromium
-        run: npx playwright install --with-deps chromium
-        continue-on-error: true
+      # Note: the Playwright Chromium install step was removed in Step 13.
+      # Dashboard 1 no longer renders the standalone Screener peer table —
+      # KPI peer benchmarks are computed from the financial rows the static
+      # fetcher already returns. Keeping Chromium out of the workflow drops
+      # ~3 minutes of install time per run and avoids any chance of the
+      # browser-related steps blowing through the workflow timeout.
+      # The `playwright` dependency itself is intentionally kept in
+      # package.json so `npm ci` stays reproducible and a developer can
+      # still run the headless peer fetch locally if needed.
 
       - name: Ingest snapshots
         run: npm run ingest:dhamma
 
-      # Optional: automated Screener fetch. Writes status rows for each
-      # company; if Screener blocks the runner the script records that
-      # honestly and exits 0 — the workflow does NOT fail just because
-      # Screener is unreachable. --peer-mode auto tries static strategies
-      # first, then falls back to headless Chromium for the peer table.
-      - name: Ingest Screener fetch (optional)
-        run: npm run ingest:screener:fetch -- --peer-mode auto
+      # Automated Screener fetch. Writes status rows for each company; if
+      # Screener blocks the runner the script records that honestly and
+      # exits 0 — the workflow does NOT fail just because Screener is
+      # unreachable. --peer-mode static skips the (now unused) headless
+      # peer-table fallback entirely. --timeout-ms 15000 caps each HTTP
+      # request at 15s, so 20 companies finish in well under 20 minutes
+      # even when every request hits the upper retry budget.
+      - name: Ingest Screener fetch (consolidated, static)
+        run: npm run ingest:screener:fetch -- --peer-mode static --timeout-ms 15000
 
       # Optional: parses client-provided Screener exports from
       # data/manual/screener/. Passes cleanly (empty snapshots) when no
