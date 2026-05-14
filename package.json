@@ -13,6 +13,7 @@
     "ingest:dhamma": "tsx scripts/ingest/dhamma-dashboard-1.ts",
     "ingest:screener": "tsx scripts/ingest/screener-export.ts",
     "ingest:screener:fetch": "tsx scripts/ingest/screener-fetch.ts",
+    "ingest:guidance:sources": "tsx scripts/ingest/guidance-sources.ts",
     "deploy": "wrangler deploy",
     "deploy:preview": "wrangler versions upload"
   },
