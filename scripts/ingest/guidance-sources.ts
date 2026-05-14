@@ -58,6 +58,8 @@ export type DocumentType =
   | "earnings_release"
   | "press_release"
   | "management_commentary"
+  | "annual_report"
+  | "credit_rating"
   | "other";
 
 export type DiscoveryStatus =
@@ -120,6 +122,10 @@ interface CliOptions {
   sources: GuidanceSourceId[] | null;
   dryRun: boolean;
   timeoutMs: number;
+  // Per-source ceiling for how many document rows to emit per company.
+  // Acts as a sanity cap so a page with hundreds of links can't bloat
+  // the manifest in a single run.
+  maxDocuments: number;
 }
 
 function parseCli(argv: string[]): CliOptions {
@@ -129,6 +135,7 @@ function parseCli(argv: string[]): CliOptions {
     sources: null,
     dryRun: false,
     timeoutMs: 15_000,
+    maxDocuments: 20,
   };
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -157,6 +164,10 @@ function parseCli(argv: string[]): CliOptions {
     } else if (arg === "--timeout-ms" && next) {
       const parsed = Number.parseInt(next, 10);
       if (Number.isFinite(parsed) && parsed > 0) opts.timeoutMs = parsed;
+      i++;
+    } else if (arg === "--max-documents" && next) {
+      const parsed = Number.parseInt(next, 10);
+      if (Number.isFinite(parsed) && parsed > 0) opts.maxDocuments = parsed;
       i++;
     }
   }
@@ -438,6 +449,271 @@ async function discoverTijori(
   return { rows, errors };
 }
 
+// ---------------------------------------------------------------------------
+// Screener discovery
+//
+// Screener's per-company page carries a documents section at the bottom
+// (annual reports, credit ratings, concalls, sometimes presentations).
+// We prefer the consolidated URL since the rest of the dashboard is
+// already consolidated-only; both URLs serve identical document blocks
+// in practice, but the standalone is kept as a fallback in case
+// Screener changes that.
+//
+// Discovery only: we record the document anchor text, the resolved
+// document URL, and a best-effort document-type classification. We do
+// NOT download the linked PDFs and do NOT extract guidance text.
+// ---------------------------------------------------------------------------
+
+interface DiscoveredDocument {
+  documentType: DocumentType;
+  title: string;
+  documentUrl: string;
+  category: string | null; // the <h3> Screener uses ("Annual reports", "Concalls", ...)
+  period: string | null;
+  publishedDate: string | null;
+}
+
+const SCREENER_DOCUMENT_SELECTORS: ReadonlyArray<string> = [
+  "#documents",
+  "section[data-cookie-section-name='documents']",
+  "section.documents",
+];
+
+function classifyScreenerLink(
+  category: string | null,
+  linkText: string,
+  href: string
+): { type: DocumentType; confidence: DiscoveryConfidence } {
+  const haystack = `${category ?? ""} ${linkText} ${href}`.toLowerCase();
+  if (/\b(concall|conference call|earnings call|transcript)\b/.test(haystack))
+    return { type: "concall_transcript", confidence: "high" };
+  if (/\b(investor presentation|investor deck|presentation|\.ppt)\b/.test(haystack))
+    return { type: "investor_presentation", confidence: "high" };
+  if (/\bannual report\b/.test(haystack))
+    return { type: "annual_report", confidence: "high" };
+  if (/\b(credit rating|rating)\b/.test(haystack))
+    return { type: "credit_rating", confidence: "high" };
+  if (/\bearnings release|results release|results announcement\b/.test(haystack))
+    return { type: "earnings_release", confidence: "high" };
+  if (/\bpress release\b/.test(haystack))
+    return { type: "press_release", confidence: "high" };
+  // No firm category but Screener listed it under Documents — keep at low
+  // confidence rather than dropping the row, so the manifest still records
+  // that the link exists.
+  return { type: "other", confidence: "low" };
+}
+
+// Pull a period token like "Q1FY25", "Jun 2024", "FY24" out of the
+// link text. Best-effort: we never invent a period.
+function extractPeriodToken(text: string): string | null {
+  const t = text.trim();
+  const qfy = t.match(/\bQ[1-4]\s*FY\s*\d{2,4}\b/i);
+  if (qfy) return qfy[0].toUpperCase().replace(/\s+/g, "");
+  const monthYear = t.match(
+    /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?\s+\d{4}\b/i
+  );
+  if (monthYear) return monthYear[0];
+  const fyOnly = t.match(/\bFY\s*\d{2,4}\b/i);
+  if (fyOnly) return fyOnly[0].toUpperCase().replace(/\s+/g, "");
+  return null;
+}
+
+function extractScreenerDocuments(
+  $: cheerio.CheerioAPI,
+  baseUrl: string,
+  maxDocuments: number
+): DiscoveredDocument[] {
+  // Locate the Documents section. Screener's selectors have churned
+  // historically — we try a few in order and bail out of the first that
+  // produces anchors.
+  let section: cheerio.Cheerio<never> | null = null;
+  for (const sel of SCREENER_DOCUMENT_SELECTORS) {
+    const candidate = $(sel) as cheerio.Cheerio<never>;
+    if (candidate.length > 0) {
+      section = candidate;
+      break;
+    }
+  }
+  if (!section || section.length === 0) return [];
+
+  const out: DiscoveredDocument[] = [];
+  // Walk every anchor inside the section. For each anchor, find the
+  // nearest preceding heading (h2/h3/h4) so we can label the category.
+  section.find("a[href]").each((_i, el) => {
+    if (out.length >= maxDocuments) return false; // stop iteration
+
+    const $a = $(el);
+    const href = ($a.attr("href") ?? "").trim();
+    if (!href) return;
+    const linkText = $a.text().trim().replace(/\s+/g, " ");
+    if (!linkText) return;
+
+    // Find the category heading by walking up parents and looking for
+    // the previous h2/h3/h4 sibling.
+    let category: string | null = null;
+    let cursor: cheerio.Cheerio<never> = $a as unknown as cheerio.Cheerio<never>;
+    for (let depth = 0; depth < 5 && cursor.length > 0; depth++) {
+      const heading = cursor.prevAll("h2, h3, h4").first();
+      if (heading.length > 0) {
+        category = heading.text().trim().replace(/\s+/g, " ");
+        break;
+      }
+      cursor = cursor.parent() as unknown as cheerio.Cheerio<never>;
+    }
+
+    const documentUrl = absoluteUrl(href, baseUrl);
+    const { type, confidence } = classifyScreenerLink(
+      category,
+      linkText,
+      documentUrl
+    );
+    const period = extractPeriodToken(`${linkText} ${category ?? ""}`);
+
+    out.push({
+      documentType: type,
+      title: linkText,
+      documentUrl,
+      category,
+      period,
+      // Real publishedDate would require either a sibling <time> element
+      // or a server-rendered date string; Screener publishes dates only
+      // for some categories. Leave null when not parseable.
+      publishedDate: null,
+    });
+    // also pin confidence onto the object via a closure variable below
+    (out[out.length - 1] as DiscoveredDocument & {
+      confidence?: DiscoveryConfidence;
+    }).confidence = confidence;
+    return undefined;
+  });
+
+  return out;
+}
+
+function absoluteUrl(href: string, base: string): string {
+  try {
+    return new URL(href, base).toString();
+  } catch {
+    return href;
+  }
+}
+
+async function discoverScreener(
+  company: {
+    companyId: string;
+    displayName: string;
+    screenerSlug: string | null;
+  },
+  options: CliOptions
+): Promise<DiscoveryProbe> {
+  const fetchedAt = new Date().toISOString();
+  const rows: GuidanceSourceManifestRow[] = [];
+  const errors: SnapshotError[] = [];
+
+  if (!company.screenerSlug) {
+    rows.push(
+      makeProbeRow(company, "screener", null, "not_found", "low", {
+        notes:
+          "No screenerSlug configured for this company; cannot probe the " +
+          "Screener documents tab.",
+      })
+    );
+    return { rows, errors };
+  }
+
+  // Try consolidated first (matches the Step 12 policy), fall back to the
+  // standalone URL if the consolidated page is unreachable. Both pages
+  // carry the same Documents block in practice.
+  const slug = company.screenerSlug;
+  const candidateUrls = [
+    `https://www.screener.in/company/${slug}/consolidated/`,
+    `https://www.screener.in/company/${slug}/`,
+  ];
+
+  if (options.dryRun) {
+    rows.push(
+      makeProbeRow(company, "screener", candidateUrls[0], "discovered", "low", {
+        notes: `dry-run: would probe ${candidateUrls.length} Screener URL(s) for documents`,
+      })
+    );
+    return { rows, errors };
+  }
+
+  let landedUrl: string | null = null;
+  let landedHtml: string | null = null;
+  let lastFailure: FetchOutcome | null = null;
+
+  for (const url of candidateUrls) {
+    const result = await fetchHtml(url, options.timeoutMs);
+    if (result.ok && result.html) {
+      landedUrl = url;
+      landedHtml = result.html;
+      break;
+    }
+    lastFailure = result;
+  }
+
+  if (!landedUrl || !landedHtml) {
+    const status = lastFailure
+      ? classifyHttpFailure(lastFailure)
+      : "error";
+    rows.push(
+      makeProbeRow(company, "screener", candidateUrls[0], status, "low", {
+        errorMessage: lastFailure?.errorMessage ?? null,
+        notes:
+          `Both Screener URLs unreachable from this run. ` +
+          `Last error: ${lastFailure?.errorMessage ?? "unknown"}.`,
+      })
+    );
+    errors.push({
+      sourceId: "screener",
+      companyId: company.companyId,
+      message: `${company.companyId}: screener documents fetch failed (${
+        lastFailure?.errorMessage ?? "unknown"
+      })`,
+      occurredAt: fetchedAt,
+    });
+    return { rows, errors };
+  }
+
+  const $ = cheerio.load(landedHtml);
+  const documents = extractScreenerDocuments($, landedUrl, options.maxDocuments);
+
+  if (documents.length === 0) {
+    rows.push(
+      makeProbeRow(company, "screener", landedUrl, "discovered", "low", {
+        notes:
+          "Screener page reachable but the Documents section was not " +
+          "found in static HTML (selectors: " +
+          SCREENER_DOCUMENT_SELECTORS.join(", ") +
+          ").",
+      })
+    );
+    return { rows, errors };
+  }
+
+  for (const doc of documents) {
+    const confidence =
+      (doc as DiscoveredDocument & { confidence?: DiscoveryConfidence })
+        .confidence ?? "medium";
+    rows.push(
+      makeProbeRow(company, "screener", landedUrl, "discovered", confidence, {
+        documentType: doc.documentType,
+        title: doc.title,
+        documentUrl: doc.documentUrl,
+        period: doc.period,
+        publishedDate: doc.publishedDate,
+        notes:
+          doc.category !== null
+            ? `Screener documents section · category="${doc.category}"`
+            : "Screener documents section",
+      })
+    );
+  }
+
+  return { rows, errors };
+}
+
 function classifyHttpFailure(result: FetchOutcome): DiscoveryStatus {
   if (result.status === 404) return "not_found";
   if (
@@ -461,7 +737,13 @@ function makeProbeRow(
   extras: Partial<
     Pick<
       GuidanceSourceManifestRow,
-      "documentType" | "title" | "publishedDate" | "notes" | "errorMessage" | "period"
+      | "documentType"
+      | "title"
+      | "publishedDate"
+      | "notes"
+      | "errorMessage"
+      | "period"
+      | "documentUrl"
     >
   > = {}
 ): GuidanceSourceManifestRow {
@@ -473,7 +755,7 @@ function makeProbeRow(
     title: extras.title ?? null,
     sourceProvider,
     sourceUrl,
-    documentUrl: null,
+    documentUrl: extras.documentUrl ?? null,
     publishedDate: extras.publishedDate ?? null,
     fetchedAt: new Date().toISOString(),
     status,
@@ -566,6 +848,17 @@ async function main(): Promise<void> {
             companyId: company.companyId,
             displayName: company.displayName,
             nseSymbol: company.nseSymbol,
+          },
+          options
+        );
+        newRows.push(...out.rows);
+        errors.push(...out.errors);
+      } else if (source.sourceId === "screener") {
+        const out = await discoverScreener(
+          {
+            companyId: company.companyId,
+            displayName: company.displayName,
+            screenerSlug: company.screenerSlug,
           },
           options
         );

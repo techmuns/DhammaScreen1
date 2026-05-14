@@ -70,16 +70,27 @@ jobs:
       - name: Ingest Screener exports (optional)
         run: npm run ingest:screener
 
-      # Optional (Step 17): probe candidate guidance sources (Tijori,
-      # Screener documents tab, ...) for management commentary
-      # documents. Discovery only — never extracts guidance claims,
-      # never writes to guidance-commentary.json. Default-enabled
-      # sources only (no Playwright). The step is allowed to fail
-      # without breaking the main dashboard build because it's a
-      # data-collection probe, not a render-blocking dependency.
-      - name: Discover guidance sources (probe)
+      # Optional (Step 17/18): probe candidate guidance sources for
+      # management commentary documents. Discovery only — never
+      # extracts guidance claims, never writes to
+      # guidance-commentary.json. Both steps are allowed to fail
+      # without breaking the main dashboard build because they're
+      # data-collection probes, not render-blocking dependencies.
+      #
+      # Screener documents tab (Step 18) is the primary source: it
+      # parses cleanly from static HTML and reuses the screenerSlug
+      # we already have per company.
+      - name: Discover guidance sources · Screener documents
         continue-on-error: true
-        run: npm run ingest:guidance:sources -- --timeout-ms 15000
+        run: npm run ingest:guidance:sources -- --source screener --max-companies 4 --max-documents 10 --timeout-ms 15000
+
+      # Tijori probe (Step 17) is kept as a complementary signal so
+      # we can decide whether to wire a second source. Capped to
+      # one company per run because the slug heuristic is still
+      # unproven and we don't want to hammer the host.
+      - name: Discover guidance sources · Tijori probe
+        continue-on-error: true
+        run: npm run ingest:guidance:sources -- --source tijori --max-companies 1 --timeout-ms 15000
 
       - name: Typecheck
         run: npm run typecheck
