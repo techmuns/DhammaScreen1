@@ -365,3 +365,103 @@ until the first exact quote can be extracted" path.
   addition to `<h3>` headings should lift these to `high /
   classified-by=category` — a clean win for analyst auditability
   but not a blocker for extraction.
+
+## Step 22 status
+
+### Extraction approach
+
+The new script `scripts/ingest/guidance-extract.ts` reads the
+guidance-source manifest, filters to **concall_transcript rows with
+status=discovered + confidence ∈ {medium, high} + a non-null
+documentUrl**, downloads each candidate PDF, extracts text page-by-page
+via `pdfjs-dist` (the legacy Node-friendly entry point, lazy-imported),
+and runs a narrow regex catalogue against the text. Every match emits a
+`GuidanceCommentaryRow` with:
+
+- `rawQuote`: the verbatim sentence the regex landed on, expanded to
+  the nearest sentence boundaries (`. ? !`).
+- `cleanedQuote`: same sentence with whitespace normalised. No other
+  edits.
+- `pageIndex` / `charOffset` / `quoteLength`: pdfjs page number plus the
+  character offset within that page's joined text. Lets the analyst
+  re-find the quote exactly.
+- `numericLow` / `numericHigh` / `numericUnit`: filled only when the
+  matched sentence actually carried a literal range; null otherwise.
+  Qualitative quotes ("high single-digit growth") stay qualitative.
+- `commentaryId`:
+  `<companyId>::<docHash>::p<pageIndex>::o<charOffset>::<quoteHash>` —
+  deterministic across runs, so re-running never duplicates and so
+  analyst reviews survive a refetch.
+- `reviewStatus`: always `"needs_review"`. The dashboard renders only
+  `"approved"` rows; the (still to be built) analyst review tool is
+  what flips status.
+
+The script is idempotent: rows previously emitted whose
+`reviewStatus` is **not** `"needs_review"` are preserved untouched on
+re-run. New rows replace prior `needs_review` rows with the same id.
+
+### Regex scope
+
+Narrow on purpose — we optimise for precision, not recall. Adding a
+pattern is cheap; cleaning up a flood of false-positive
+`needs_review` rows is not. Current patterns:
+
+| Name                    | Regex                                       | Topic           | Confidence |
+| ----------------------- | ------------------------------------------- | --------------- | ---------- |
+| `expect-band-percent`   | `(expect/guide/guidance/target/projecting)…\d+(?:[-–to])\d+%` | `other`         | medium     |
+| `margin-band-percent`   | `(ebit/operating/net/margin)…\d+(?:[-–to])\d+%`               | `margin`        | medium     |
+| `growth-band-percent`   | `(revenue growth/growth)…\d+(?:[-–to])\d+%`                   | `revenue_growth`| medium     |
+| `attrition-percent`     | `attrition…\d+(?:[-–to])\d+%`                                  | `attrition`     | medium     |
+| `capex-quantum`         | `capex…(₹/$|USD|INR)?\d+ (cr/mn/bn/...)`                        | `capex`         | medium     |
+| `tax-rate-percent`      | `(effective tax rate/tax rate)…\d+(?:[-–to])\d+%`             | `tax_rate`      | medium     |
+| `margin-bps`            | `(bps/basis points)…(margin/growth/...)`                       | `margin`        | low        |
+
+### Review-status policy (unchanged from Step 19)
+
+Extractor only writes `needs_review`. Analyst tool flips to
+`approved` / `rejected`. The Guidance Tracker UI panel keeps showing
+the planned-module card until at least one `approved` row exists for
+the selected company.
+
+### Selected transcript pilot
+
+The workflow runs the extractor with `--max-documents 2`. Given the
+current manifest ordering it will pick:
+
+1. **TCS · Transcript** — `https://www.bseindia.com/xml-data/corpfiling/AttachHis/07ae2d32-1050-4e80-96ff-eb2d98378d4e.pdf`
+2. **Infosys · Transcript** — `https://www.bseindia.com/xml-data/corpfiling/AttachHis/2ab7badf-388c-4dab-bfcc-3e128677734c.pdf`
+
+Both are `medium`-confidence rows from Screener's documents tab. If
+either PDF fails to download or parse, the run records a row in
+`meta.errors[]` and continues with the next.
+
+### Why no actual-vs-guidance comparison yet
+
+`guidance-actual-comparison.json` remains untouched in Step 22. Three
+reasons:
+
+1. **Approved corpus first.** A comparison row requires a verified
+   guidance band and a confirmed target period. Both come from the
+   analyst tool, not the extractor. Building the comparator before
+   that pipeline exists would create the very thing this project's
+   no-fabrication rules ban — a row whose `expectedLow/High` was
+   *inferred* rather than verified.
+2. **Period parsing isn't reliable enough yet.** The current
+   manifest's transcript rows have `title: "Transcript"` with no
+   period token. The extractor leaves `targetPeriod` null until a
+   subsequent step recovers it from PDF metadata, filename, or the
+   first page's date stamp.
+3. **Type stability.** `GuidanceActualComparisonRow` still references
+   the structured `FinancialPeriod`. Tying that to whatever
+   string-based period we recover from PDFs is its own design
+   decision — better made when we have several real examples to
+   align against.
+
+### Local test result (Step 22)
+
+`npm run ingest:guidance:extract -- --company tcs --max-documents 1
+--timeout-ms 20000` was run from the sandbox. As expected the BSE
+PDF returned HTTP 403; the script recorded the failure honestly in
+`meta.errors[]`, exited 0, and wrote zero commentary rows. The
+committed `guidance-commentary.json` was reset to the empty baseline
+before commit so the first real-CI run owns the published rows.

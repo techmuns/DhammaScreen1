@@ -210,19 +210,85 @@ export type GuidanceDirection =
   | "margin_target"
   | "qualitative";
 
+// Coarse-grained topic bucket used by the extractor when the raw quote
+// can be tied to a recognised concept but the finer GuidanceMetric is
+// ambiguous from the regex alone. The dashboard's analyst review tool
+// is responsible for promoting topic → metric when it has signal.
+export type GuidanceTopic =
+  | "revenue_growth"
+  | "margin"
+  | "attrition"
+  | "capex"
+  | "tax_rate"
+  | "demand"
+  | "other";
+
+// Lifecycle of an extracted commentary row. Only `approved` rows
+// render on the dashboard. The extractor only ever writes
+// `needs_review`; `approved` / `rejected` / `superseded` come from
+// the (still-to-be-built) analyst review tool.
+export type GuidanceReviewStatus =
+  | "needs_review"
+  | "approved"
+  | "rejected"
+  | "superseded";
+
+// Extracted guidance commentary candidate.
+//
+// Every row is the product of a *verbatim* extraction from a source
+// document — never inferred from a title, never paraphrased. Numeric
+// bands (`numericLow` / `numericHigh`) are filled ONLY when the
+// surrounding sentence actually contained a range; qualitative quotes
+// (e.g. "high single-digit growth") carry `null` here and stay
+// qualitative until a human edits them.
+//
+// `commentaryId` is deterministic across runs:
+//   `<companyId>::<docHash>::p<pageIndex>::o<charOffset>::<quoteHash>`
+// so re-running the extractor never duplicates a quote and an analyst
+// review survives a refetch.
 export interface GuidanceCommentaryRow {
-  companyId: string;
+  // ─── Identity ──────────────────────────────────────────────────
   commentaryId: string;
-  saidInPeriod: FinancialPeriod;
-  targetPeriod: FinancialPeriod | null;
-  metric: GuidanceMetric;
-  direction: GuidanceDirection;
+  companyId: string;
+  companyName: string;
+
+  // ─── Source document provenance ────────────────────────────────
+  sourceProvider: string; // "screener" | "tijori" | "manual" | ...
+  sourceUrl: string | null; // the index/listing page the document was discovered from
+  documentUrl: string | null; // the document file URL itself (typically a PDF)
+  documentTitle: string | null;
+  documentType: string; // "concall_transcript" | "investor_presentation" | ...
+
+  // ─── Period ────────────────────────────────────────────────────
+  commentaryPeriod: string | null; // when management said it (best-effort, e.g. "Q4FY25")
+  targetPeriod: string | null; // when the guidance applies to
+
+  // ─── Speaker ───────────────────────────────────────────────────
+  speaker: string | null;
+  speakerRole: string | null;
+
+  // ─── Classification ────────────────────────────────────────────
+  topic: GuidanceTopic;
+  metric: GuidanceMetric | null;
+  expectedDirection: GuidanceDirection | null;
+
+  // ─── Quote (verbatim) ──────────────────────────────────────────
   rawQuote: string;
+  cleanedQuote: string; // whitespace-normalised; no other edits
+  pageIndex: number | null;
+  charOffset: number | null;
+  quoteLength: number | null;
+
+  // ─── Numeric guidance (optional; only when the quote carries it)
   numericLow: number | null;
   numericHigh: number | null;
-  numericUnit: "percent" | "absolute" | null;
-  speaker: string | null;
-  source: SourceMeta;
+  numericUnit: "percent" | "absolute" | "bps" | null;
+
+  // ─── Review pipeline ───────────────────────────────────────────
+  confidence: "low" | "medium" | "high";
+  reviewStatus: GuidanceReviewStatus;
+  extractedAt: string;
+  notes: string | null;
 }
 
 export type GuidanceAccuracyStatus =

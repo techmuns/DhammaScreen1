@@ -95,6 +95,18 @@ jobs:
         continue-on-error: true
         run: npm run ingest:guidance:sources -- --source tijori --max-companies 1 --timeout-ms 15000
 
+      # Step 22: download concall-transcript PDFs that the discovery
+      # step has just catalogued and run the regex-driven verbatim-
+      # quote spotter. Output rows land in
+      # src/data/snapshots/guidance-commentary.json with
+      # reviewStatus='needs_review'. Capped to 2 documents per run
+      # so the workflow stays inside the 45-minute timeout while we
+      # validate the parser. continue-on-error: true — extraction
+      # failures must NEVER break the financial dashboard deploy.
+      - name: Extract guidance commentary (concall transcripts)
+        continue-on-error: true
+        run: npm run ingest:guidance:extract -- --max-documents 2 --timeout-ms 20000
+
       - name: Typecheck
         run: npm run typecheck
 
