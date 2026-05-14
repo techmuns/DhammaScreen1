@@ -2,114 +2,132 @@
   "meta": {
     "snapshotId": "filing-manifest",
     "description": "Discovered filings per company from NSE / BSE / company IR sources.",
-    "generatedAt": "2026-05-14T07:13:04.582Z",
+    "generatedAt": "2026-05-14T07:47:36.387Z",
     "rowCount": 445,
     "status": "partial",
-    "notes": "Some sources failed (16 errors recorded).",
+    "notes": "Some sources failed (19 errors recorded).",
     "source": {
       "sourceClass": "nse_bse_filing",
       "sourceUrl": null,
       "sourceLabel": "NSE corporate-announcements + BSE AnnGetData",
-      "fetchedAt": "2026-05-14T07:13:04.582Z",
+      "fetchedAt": "2026-05-14T07:47:36.387Z",
       "publishedAt": null,
       "notes": null
     },
     "errors": [
       {
         "sourceId": "bse",
+        "companyId": "tcs",
+        "message": "BSE fetch failed: The operation was aborted due to timeout",
+        "occurredAt": "2026-05-14T07:46:26.273Z"
+      },
+      {
+        "sourceId": "bse",
+        "companyId": "hcltech",
+        "message": "BSE fetch failed: The operation was aborted due to timeout",
+        "occurredAt": "2026-05-14T07:46:44.722Z"
+      },
+      {
+        "sourceId": "bse",
+        "companyId": "wipro",
+        "message": "BSE fetch failed: The operation was aborted due to timeout",
+        "occurredAt": "2026-05-14T07:47:01.488Z"
+      },
+      {
+        "sourceId": "bse",
         "companyId": "techm",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:49.544Z"
+        "occurredAt": "2026-05-14T07:47:17.956Z"
       },
       {
         "sourceId": "bse",
         "companyId": "ltim",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:49.940Z"
+        "occurredAt": "2026-05-14T07:47:18.636Z"
       },
       {
         "sourceId": "bse",
         "companyId": "ofss",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:51.179Z"
+        "occurredAt": "2026-05-14T07:47:19.848Z"
       },
       {
         "sourceId": "bse",
         "companyId": "persistent",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:52.247Z"
+        "occurredAt": "2026-05-14T07:47:21.638Z"
       },
       {
         "sourceId": "bse",
         "companyId": "coforge",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:53.521Z"
+        "occurredAt": "2026-05-14T07:47:24.229Z"
       },
       {
         "sourceId": "bse",
         "companyId": "mphasis",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:54.489Z"
+        "occurredAt": "2026-05-14T07:47:25.900Z"
       },
       {
         "sourceId": "bse",
         "companyId": "ltts",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:55.422Z"
+        "occurredAt": "2026-05-14T07:47:26.869Z"
       },
       {
         "sourceId": "bse",
         "companyId": "hexaware",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:56.251Z"
+        "occurredAt": "2026-05-14T07:47:27.755Z"
       },
       {
         "sourceId": "bse",
         "companyId": "tatatech",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:57.167Z"
+        "occurredAt": "2026-05-14T07:47:28.604Z"
       },
       {
         "sourceId": "bse",
         "companyId": "tataelxsi",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:58.118Z"
+        "occurredAt": "2026-05-14T07:47:29.596Z"
       },
       {
         "sourceId": "bse",
         "companyId": "kpittech",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:12:59.152Z"
+        "occurredAt": "2026-05-14T07:47:30.610Z"
       },
       {
         "sourceId": "bse",
         "companyId": "zensartech",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:13:00.100Z"
+        "occurredAt": "2026-05-14T07:47:31.924Z"
       },
       {
         "sourceId": "bse",
         "companyId": "intellect",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:13:01.449Z"
+        "occurredAt": "2026-05-14T07:47:33.129Z"
       },
       {
         "sourceId": "bse",
         "companyId": "cyient",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:13:02.426Z"
+        "occurredAt": "2026-05-14T07:47:34.155Z"
       },
       {
         "sourceId": "bse",
         "companyId": "birlasoft",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:13:03.577Z"
+        "occurredAt": "2026-05-14T07:47:35.241Z"
       },
       {
         "sourceId": "bse",
         "companyId": "sonata",
         "message": "BSE code not configured for this company.",
-        "occurredAt": "2026-05-14T07:13:04.582Z"
+        "occurredAt": "2026-05-14T07:47:36.387Z"
       }
     ]
   },
@@ -127,7 +145,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SE_Letter-_financialssigned_09012025161053.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -144,7 +162,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEIntfinancials_10102024160639.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -161,7 +179,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SELetterFin_signed_11072024153849.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -178,7 +196,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SELetterFinancialResults_12042024153645.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -195,7 +213,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SELetter_signed_11012024155319.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -212,7 +230,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEFinsignedprinttopdf_11102023170352.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -229,7 +247,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEFinancials_12072023155453.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -246,7 +264,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMFinancialresultssignedprint_12042023171707.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -263,7 +281,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEINT_final_09012023171435.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -280,7 +298,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TCS_14102022182709_SEinttranscriptsigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -297,7 +315,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TCS_13072022184915_SEinttranscript13072022.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -314,7 +332,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SELetter_08072022163653.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -331,7 +349,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TCS_16042022205026_SEIntimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -348,7 +366,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEIntimation_11042022174050.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -365,7 +383,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SELetterfinancials_12012022233747.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -382,7 +400,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEIntimationOct8_08102021182349.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -399,7 +417,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEFiling_08072021184157.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -416,7 +434,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEfilingPg1and2.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -433,7 +451,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEIntimation_08012021180747.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -450,7 +468,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_07102020183218.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -467,7 +485,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEFiling_09072020174941.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -484,7 +502,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEIntimation_16042020191313.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -501,7 +519,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SELetter_17012020160152.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -518,7 +536,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TCS_VIVEK_13112019161849_NSEClarificationResponse131119_030.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -535,7 +553,7 @@
       "documentUrl": "-",
       "fileType": "unknown",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:41.527Z",
+      "fetchedAt": "2026-05-14T07:46:25.453Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -552,7 +570,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Infosys_05062025092103_Clarification_letter.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -569,7 +587,7 @@
       "documentUrl": "-",
       "fileType": "unknown",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -586,7 +604,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BM_Outcome_January162025_16012025155531.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -603,7 +621,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcomeOctober172024_17102024153901.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -620,7 +638,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMFINALQ1_18072024153846.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -637,7 +655,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeBM_19042024112349.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -654,7 +672,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/InfyBMOutcome_11012024160900.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -671,7 +689,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Infy_BM_12102023_12102023155902.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -688,7 +706,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INFY_BM_20072023_20072023155342.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -705,7 +723,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Boardoutcome_April132023_sd_13042023160958.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -722,7 +740,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/InfyBM12012023_12012023153816.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -739,7 +757,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INFY_17102022222130_Transcript_Oct132022.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -756,7 +774,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INFY_28072022211712_Transcript_Q1_Earningscall.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -773,7 +791,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INFY_09062022135706_Transcripts.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -790,7 +808,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INFY_19042022181446_Transcripts_INFY.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -807,7 +825,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Infy_BMOutcome_13042022162756.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -824,7 +842,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Infy_BMoutcome_12012022161013.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -841,7 +859,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INFY_13102021161322.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -858,7 +876,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INFY_28092021152951_INFY.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -875,7 +893,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/InfyResults_July2021_14072021161335.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -892,7 +910,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Infy_BMOutcome_14042021.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -909,7 +927,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Infy_BM_OC_13012021_13012021215609.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -926,7 +944,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INFY_07122020122623_IC.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -943,7 +961,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Infy_OurcomeofBM_14102020161024.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -960,7 +978,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_BM_Infy_July15_2020_15072020162100.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:43.917Z",
+      "fetchedAt": "2026-05-14T07:46:41.274Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -977,7 +995,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResultsOND24_13012025174542.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -994,7 +1012,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_14102024172002.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1011,7 +1029,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_29082024003248_InvestorDay2024Presentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1028,7 +1046,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_12072024174528.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1045,7 +1063,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_26042024173544.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1062,7 +1080,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_12012024174054.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1079,7 +1097,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_12102023174716.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1096,7 +1114,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_12072023180808.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1113,7 +1131,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_13062023192819_Presentation13June2023.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1130,7 +1148,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_20042023165608.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1147,7 +1165,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_12012023172717.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1164,7 +1182,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_09122022084642_InvestorDayPresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1181,7 +1199,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_17102022125739_AudioTranscript17Oct2022.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1198,7 +1216,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_18072022130012_AudioTranscipt.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1215,7 +1233,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_12072022175632.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1232,7 +1250,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_12052022000834_InvestorDayPresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1249,7 +1267,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_09052022164647_Transcript.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1266,7 +1284,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_25042022143424_Transcript.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1283,7 +1301,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/financialresults_21042022174535.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1300,7 +1318,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_14012022182502_USGAAPAccountsDec21.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1317,7 +1335,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Results_14012022181327.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1334,7 +1352,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_14102021190011_FinancialResultsnew.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1351,7 +1369,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HCLTECH_14102021185722_FinancialResultsnew.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1368,7 +1386,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_14102021182218.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1385,7 +1403,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResultsJune2021_19072021173740.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:45.715Z",
+      "fetchedAt": "2026-05-14T07:46:43.225Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1402,7 +1420,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Cslogin_29012026161958_Clarification_Letter.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1419,7 +1437,7 @@
       "documentUrl": "-",
       "fileType": "unknown",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1436,7 +1454,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Reg33_17012025154000.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1453,7 +1471,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResults_17102024154500.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1470,7 +1488,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting_19072024153436.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1487,7 +1505,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Results_19042024154444.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1504,7 +1522,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Reg33_12012024153637.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1521,7 +1539,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/WIPRO_29112023103326_Acknw_UDIN.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1538,7 +1556,7 @@
       "documentUrl": "-",
       "fileType": "unknown",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1555,7 +1573,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMQ2FY24Results_18102023154716.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1572,7 +1590,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/WIPRO_24072023112025_Coverletter_ClarificationNSE.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1589,7 +1607,7 @@
       "documentUrl": "-",
       "fileType": "unknown",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1606,7 +1624,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBM_13072023153905.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1623,7 +1641,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcomeQ4_27042023155805.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1640,7 +1658,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_Q3_13012023153914.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1657,7 +1675,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/WIPRO_15102022120118_Transcript_InvestorMeet.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1674,7 +1692,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/WIPRO_22072022174454_CoverLetterTranscript.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1691,7 +1709,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/WIPRO_02052022115212_Reg46_02052022.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1708,7 +1726,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome__29042022154556.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1725,7 +1743,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BM_Outcome_Q3_12012022153545.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1742,7 +1760,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome_13102021153440.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1759,7 +1777,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BM_Outcome_15072021160348.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1776,7 +1794,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Reg33.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1793,7 +1811,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting_13012021154205.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1810,7 +1828,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_13102020153553.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:47.758Z",
+      "fetchedAt": "2026-05-14T07:46:59.723Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1827,7 +1845,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Apekshakhemka_22042026170513_Investorpresentation_S.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1844,7 +1862,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_22042026140619_SEOutcomeF_S.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1861,7 +1879,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_16012026161125_SEintimationinvestorPresentationQ3_S.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1878,7 +1896,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Apekshakhemka_20112025085348_IntimationofInvestordaypresentation_S.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1895,7 +1913,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_14102025185452_investorspresentationSS.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1912,7 +1930,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_16072025162827_intimationforinvestorspresentation_Signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1929,7 +1947,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_24042025181443_SEintimationinvestorPresentation_signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1946,7 +1964,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_17012025160113_InvestorPresentation_Signed_1.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1963,7 +1981,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEintimationOutcomeofBM170125_signed_17012025154155.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1980,7 +1998,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_19102024045148_InvestorpresentationSF.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -1997,7 +2015,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FINALRESULTSF_19102024043730.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2014,7 +2032,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FINALOUTCOMEQ1FY25FFinal_25072024160458.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2031,7 +2049,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_25042024185943_TMLinvestorpresentation_final.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2048,7 +2066,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OUTCOMEOFTHEBOARDMEETING_FINAL25042024_25042024154503.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2065,7 +2083,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TMLintimationofoutcomeofboardmeeting24012024F_24012024154930.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2082,7 +2100,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEintimationoutcomeofboardmeeting2510_25102023153511.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2099,7 +2117,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/stockexchangeintimationBM26072023_26072023154919.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2116,7 +2134,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEINTIMATION2704_27042023155529.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2133,7 +2151,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TMLOutcomeofBM30012023_30012023154535.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2150,7 +2168,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_07112022194224_TMLSEIntimationEarningsCallTranscript07112022.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2167,7 +2185,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_28072022195633_TMLEarningsCallTranscriptQ1FY23.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2184,7 +2202,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TECHM_16052022170825_TMLEarningsCallTranscriptQ4FY22.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2201,7 +2219,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TMLOutcomeofBM13052022_13052022155416.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2218,7 +2236,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TMLOutcomeofBM01022022_01022022153648.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2235,7 +2253,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TMLOutcomeofBM25102021_25102021160405.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:48.418Z",
+      "fetchedAt": "2026-05-14T07:47:16.489Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2252,7 +2270,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting15012025_15012025202355.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2269,7 +2287,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting24102024sd_24102024194644.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2286,7 +2304,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting24072024_24072024181327.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2303,7 +2321,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting24042024sd_24042024194705.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2320,7 +2338,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting17012024_17012024195957.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2337,7 +2355,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting18102023_18102023191709.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2354,7 +2372,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting26072023sd_26072023192848.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2371,7 +2389,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting26042023_26042023194857.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2388,7 +2406,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSSOutcomeofBM18012023sd_18012023191304.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2405,7 +2423,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting04052022sd_04052022204136.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2422,7 +2440,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSSOutcomeofBoardMeeting19012022sd_19012022203411.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2439,7 +2457,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSSOutcomeBoardMeeting27102021sd_27102021204033.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2456,7 +2474,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSSOutcomeBoardMeeting28072021_28072021202637.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2473,7 +2491,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSSOutcomeofBoardMeeting05052021sd_05052021205948.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2490,7 +2508,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSSOutcomeBoardMeeting28012021_28012021212856.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2507,7 +2525,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting02112020_02112020195714.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2524,7 +2542,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSSIntimationtoSEAug112020_11082020195337.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2541,7 +2559,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSS_15052020091300_OutcomeofBoardMeeting14052020.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2558,7 +2576,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting14052020_14052020211908.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2575,7 +2593,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSS_06022020144328_OFSSIntimationtoSENewspaperadvtsd.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2592,7 +2610,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting04022019sd_04022020201919.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2609,7 +2627,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/listcontract3_2812020145437_OFSSIntimationtoSENewspaperadvtsd_122.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2626,7 +2644,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OFSSOutcomeofBM13112019_13112019204954.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2643,7 +2661,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting07082019sd_07082019195124.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2660,7 +2678,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting09052019sd_09052019201308.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:49.940Z",
+      "fetchedAt": "2026-05-14T07:47:18.636Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2677,7 +2695,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENTUSER1_21042026155105_PSLFactSheetQ4FY26008sdnew.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2694,7 +2712,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENTUSER1_20012026155306_PSLFactSheetQ3FY26.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2711,7 +2729,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENTUSER1_14102025155529_PSLFactSheetQ2FY26146signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2728,7 +2746,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENTUSER1_19082025190043_PSLOutcomeAugust192025Sd.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2745,7 +2763,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENTUSER1_23072025164625_PSLFactSheetQ1FY26096signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2762,7 +2780,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENTUSER1_24042025051955_PSLFactSheetQ4FY2526016signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2779,7 +2797,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENTUSER1_22012025155039_PSLFactSheetQ3FY25sd.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2796,7 +2814,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PSLBMOutcomeJan222025225sd_22012025152908.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2813,7 +2831,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_22102024154215_3PSLFactSheetQ2FY25sd.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2830,7 +2848,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/1PSLOutcomeQ2FY25sd_22102024153508.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2847,7 +2865,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_18072024162607_PSLFactSheetQ1FY25sd.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2864,7 +2882,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PSLOutcomeJuly182024signed_18072024154127.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2881,7 +2899,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_21052024102945_PersistentSystemsClarificationLettertoNSEsigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2898,7 +2916,7 @@
       "documentUrl": "-",
       "fileType": "unknown",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2915,7 +2933,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_03052024182658_35PSLOutcomeMay32024signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2932,7 +2950,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_30042024184427_PSLOutcomeApril302024signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2949,7 +2967,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_30042024152059_30PSLOutcomeApril272024signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2966,7 +2984,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_27042024194512_PSLOutcomeApril272024signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -2983,7 +3001,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_25042024205434_21PSLOutcomeApril252024.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3000,7 +3018,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_24042024124612_PSL_NDRS_OutcomeApril242024.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3017,7 +3035,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_21042024194843_14PSLFactSheetApr212024sd.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3034,7 +3052,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PSLBMOutcomeApr212024sd_21042024194153.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3051,7 +3069,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_20012024155956_FY24Q3InvestorPresentationsd.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3068,7 +3086,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/1PSLBMOutcomeJan2024sd_20012024154354.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3085,7 +3103,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/PERSISTENT_21122023201838_PSL_InvestorAnalystCall_OutcomeDecember212023_Signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:51.179Z",
+      "fetchedAt": "2026-05-14T07:47:19.848Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3102,7 +3120,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/COFORGE_28122025130244_Investor_Presentation_Intimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3119,7 +3137,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/COFORGE_02072025184139_Coforge_reply.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3136,7 +3154,7 @@
       "documentUrl": "-",
       "fileType": "unknown",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3153,7 +3171,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_of_BM_23012025010932.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3170,7 +3188,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_sept2024_22102024233243.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3187,7 +3205,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeJuly22_22072024233123.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3204,7 +3222,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_02052024170338.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3221,7 +3239,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeF_22012024154041.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3238,7 +3256,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Intimation_19102023071326.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3255,7 +3273,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Intimation_20072023152628.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3272,7 +3290,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_of_Boardmeeting_27042023071003.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3289,7 +3307,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_of_BM_20012023073458.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3306,7 +3324,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/COFORGE_25102022191921_TranscriptIntimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3323,7 +3341,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/COFORGE_29072022221636_Transcript_Intimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3340,7 +3358,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/COFORGE_19052022192819_Transcript_Intimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3357,7 +3375,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_of_Boardmeeting_12052022072052.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3374,7 +3392,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Binder1_27012022172046.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3391,7 +3409,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BM_Outcome_25102021075139.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3408,7 +3426,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BM_Outcome_28072021081409.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3425,7 +3443,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Mar21_06052021095834.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3442,7 +3460,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/COFORGE_17022021190504_Investor_Meet.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3459,7 +3477,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Finalresults_28012021181044.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3476,7 +3494,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/RESULT_23102020174255.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3493,7 +3511,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/COFORGE_22102020182629_SEResults.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3510,7 +3528,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Finalresults_28072020181836.zip",
       "fileType": "zip",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:52.247Z",
+      "fetchedAt": "2026-05-14T07:47:21.638Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3527,7 +3545,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_29042026233947_Call_Deck_Intimation_-_29_April_2026-signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3544,7 +3562,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_22012026170957_Earnings_Call_Deck_Intimation_-_22_January_2026-signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3561,7 +3579,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_31102025001849_Investor_Presentation-30_Oct_25.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3578,7 +3596,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_24072025235913_EarningsCallDeckIntimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3595,7 +3613,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_24042025235134_EarningsCallDeckIntimationMarch2025.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3612,7 +3630,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_23012025195952_OutcomeofBoardMeeting.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3629,7 +3647,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting_23012025193504.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3646,7 +3664,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_17102024063447_EarningsIntimation17102024.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3663,7 +3681,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_of_Board_Meeting16102024_17102024000044.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3680,7 +3698,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_26072024072809_intimationinvestorcall26072024.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3697,7 +3715,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome25072024_25072024222304.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3714,7 +3732,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/outcomebm25042024signed_25042024230755.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3731,7 +3749,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/outcome01022024_01022024171811.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3748,7 +3766,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_20102023075017_Presentation20231020signedSE.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3765,7 +3783,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OUTCOME2023_20102023024348.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3782,7 +3800,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_25082023090728_IntimationofpresentationAugust2023.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3799,7 +3817,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_21072023001414_InvestorDeckIntimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3816,7 +3834,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeeting_20072023222738.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3833,7 +3851,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_28042023071502_BSENSEEarningsCallDeckIntimation28April2023.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3850,7 +3868,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSENSEOUTCOMEOFBOARDMEETING_27042023223917.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3867,7 +3885,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_20012023073104_Earningscallupload.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3884,7 +3902,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMJanuary2023_19012023223550.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3901,7 +3919,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_28102022190233_Intimationoftranscript28102022.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3918,7 +3936,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_21102022082603_BSENSEInvestorDeck21102022.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3935,7 +3953,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MPHASIS_27072022203224_IntimationoftranscriptJuly2022.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:53.521Z",
+      "fetchedAt": "2026-05-14T07:47:24.229Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3952,7 +3970,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_24042026145206_LTTSInvestorPresentation24042026signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3969,7 +3987,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_22042026194446_LTTSPressReleaseandInvestorPresentation22042026signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -3986,7 +4004,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_15012026162851_LTTSPressReleaseandInvestorPresentation15012026signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4003,7 +4021,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_17102025165341_LTTSPressReleaseandInvestorPresentation_sd.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4020,7 +4038,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_10082025161028_Investor_presentation_sd.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4037,7 +4055,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_16072025163711_PressReleaseandInvestorRelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4054,7 +4072,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_24042025170630_PRandIRSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4071,7 +4089,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_05022025170357_Investor_presentation_signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4088,7 +4106,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_15012025155815_PRIR.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4105,7 +4123,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeBM_15012025154702.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4122,7 +4140,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_11112024172138_IRPR.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4139,7 +4157,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_16102024161958_PressReleaseandInvestorReleaseResults.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4156,7 +4174,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeSigned_16102024160948.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4173,7 +4191,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_27082024190006_IADStockExchangeFiling.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4190,7 +4208,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_18072024162056_PressReleaseandInvestorRelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4207,7 +4225,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeBM_18072024161431.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4224,7 +4242,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_25042024170139_StockExchangePressRelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4241,7 +4259,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcom_25042024163433.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4258,7 +4276,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_16012024155841_Press_Release_signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4275,7 +4293,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_signed_16012024154722.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4292,7 +4310,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_17102023165249_Press_Release_Investor_Presentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4309,7 +4327,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Quick_Results_17102023160547.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4326,7 +4344,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_18072023155731_LTTS_Investor_Release_Press_Release.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4343,7 +4361,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBM_July182023_Result_18072023153643.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4360,7 +4378,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/LTTS_26042023163237_StockExchangeFilingInvestorReleasePressRelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:54.489Z",
+      "fetchedAt": "2026-05-14T07:47:25.900Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4377,7 +4395,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HEXAWARETECH_06052026212519_Investorpresentationfinal.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:55.422Z",
+      "fetchedAt": "2026-05-14T07:47:26.869Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4394,7 +4412,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HEXAWARETECH_04022026204831_Invt_Presentationfinal.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:55.422Z",
+      "fetchedAt": "2026-05-14T07:47:26.869Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4411,7 +4429,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HEXAWARETECH_06112025232652_HTL_Invetsor_Presentation_Q3_Signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:55.422Z",
+      "fetchedAt": "2026-05-14T07:47:26.869Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4428,7 +4446,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HEXAWARETECH_24072025213825_Investorpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:55.422Z",
+      "fetchedAt": "2026-05-14T07:47:26.869Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4445,7 +4463,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HEXAWARETECH_28042025235543_investorpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:55.422Z",
+      "fetchedAt": "2026-05-14T07:47:26.869Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4462,7 +4480,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/HEXAWARETECH_07032025024521_Investor_Presentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:55.422Z",
+      "fetchedAt": "2026-05-14T07:47:26.869Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4479,7 +4497,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Results_07032025015132.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:55.422Z",
+      "fetchedAt": "2026-05-14T07:47:26.869Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4496,7 +4514,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TTLNSE_04052026170511_InvestorcallpresentationQ4.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4513,7 +4531,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TTLNSE_25022026190253_SE_Intimation_Analyst_Meeting_Presentation_Feb_2026_S.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4530,7 +4548,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TTLNSE_16012026163946_InvestorcallpresentationQ3_S.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4547,7 +4565,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TTLNSE_17102025161524_InvestorcallpresentationQ2_F.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4564,7 +4582,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TTLNSE_14072025161704_InvestorcallpresentationQ1.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4581,7 +4599,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TTLNSE_25042025164259_InvestorcallpresentationQ4.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4598,7 +4616,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TTLNSE_21012025172046_InvestorcallpresentationQ3.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4615,7 +4633,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcomeQ3_21012025163904.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4632,7 +4650,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATATECH_28102024172409_InvestorPresentationCombinedsigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4649,7 +4667,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Binder1_signed_28102024165309.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4666,7 +4684,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome_18072024155405.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4683,7 +4701,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcomesigned_03052024154747.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4700,7 +4718,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcomeQ3signed_25012024163644.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:56.251Z",
+      "fetchedAt": "2026-05-14T07:47:27.755Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4717,7 +4735,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TELNSE_21042026183848_InvestorPresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4734,7 +4752,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TELNSE_13012026181343_Reg30InvestorPresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4751,7 +4769,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TELNSE_09102025172902_Reg30InvestorsPresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4768,7 +4786,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TELNSE_10072025173244_Investorpresentation30062025.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4785,7 +4803,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TataElxsi_17042025185758_Reg30InvestorPresentation17042025.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4802,7 +4820,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TataElxsi_09012025163847_Reg30InvestorPresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4819,7 +4837,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Q3FY25_Financial_Results_signed_09012025162259.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4836,7 +4854,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATAELXSI_10102024175923_Investor_Q225_Fact_Sheet.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4853,7 +4871,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TataElxsi_Q2_FY25_Signed_10102024173536.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4870,7 +4888,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATAELXSI_01082024121406_Explantion_on_financial_results_23072024_signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4887,7 +4905,7 @@
       "documentUrl": "-",
       "fileType": "unknown",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4904,7 +4922,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATAELXSI_10072024184637_Q1FY2024_25_Fact_Sheet_Final.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4921,7 +4939,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Signed_Result_TEL_v1_10072024182112.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4938,7 +4956,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATAELXSI_23042024183004_Q4_FY24_Fact_Sheet.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4955,7 +4973,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Financial_Results_23042024_v1_23042024174938.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4972,7 +4990,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATAELXSI_23012024202557_Factsheet_Q3FY24_Updated.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -4989,7 +5007,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATAELXSI_23012024165045_Factsheet_Q3_24.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5006,7 +5024,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TataElxsi_Q3_Financial_Results_23012024160535.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5023,7 +5041,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATAELXSI_17102023162424_Factsheet_Q2FY24.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5040,7 +5058,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Q2_Results_17102023_17102023155554.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5057,7 +5075,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FY24_Q1_Results_SE_17072023160117.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5074,7 +5092,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATAELXSI_18052023174506_Tata_Elxsi_Fact_Sheet_Q4FY23_Final.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5091,7 +5109,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Q4_Results_18052023_18052023172754.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5108,7 +5126,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Results_Q3_Fy23_27012023112821.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5125,7 +5143,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/TATAELXSI_17102022104304_Results_Q2_2022_SE_Intimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:57.167Z",
+      "fetchedAt": "2026-05-14T07:47:28.604Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5142,7 +5160,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MeghanaPhadnis_06052026134642_CovletInvestorPresentationMar26_Signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5159,7 +5177,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_29012026125458_InvestorUpdate_Signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5176,7 +5194,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_10112025134449_CovletInvestorPresentation_Signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5193,7 +5211,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_30072025142150_InvestorUpdate_Signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5210,7 +5228,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/MeghanaPhadnis_28042025140744_InvestorUpdateMar25_Signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5227,7 +5245,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_29012025124308_CovletInvestorPresentation_Signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5244,7 +5262,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/NSE_Outcome_29012025123530.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5261,7 +5279,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_23102024130439_CovletInvestorPresentationSept30_Sig.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5278,7 +5296,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Results_BM_23_Oct_24_NSE_23102024123308.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5295,7 +5313,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_24072024135210_InvestorUpdateJuly24_Sig.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5312,7 +5330,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/NSEQuickresultsJuly24_24072024130127.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5329,7 +5347,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_29042024171026_InvestorUpdate5yrSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5346,7 +5364,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_29042024133844_InvestorUpdateSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5363,7 +5381,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/NSEquickresultsapr24_29042024131732.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5380,7 +5398,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_30012024120648_CovletInvestorPresentationJan24_Singed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5397,7 +5415,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/1BM_Outcome_30012024120016.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5414,7 +5432,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_30102023123122_CovletInvestorPresentationOct23.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5431,7 +5449,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/nseresultsep23_30102023122123.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5448,7 +5466,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_17082023090626_CovletInvestorPresentation17aug23.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5465,7 +5483,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_25072023120350_CovletInvestorPresentationJuly23.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5482,7 +5500,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Fullresultsnsejuly23_25072023114902.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5499,7 +5517,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_26042023134845_invrstorpresentationmar23.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5516,7 +5534,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Financial_Results_Stand_and_Consol_31032023_26042023133728.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5533,7 +5551,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/KPITTECH_31012023191815_CovLetIRJan23.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5550,7 +5568,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcomense31jan23_31012023185644.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:58.118Z",
+      "fetchedAt": "2026-05-14T07:47:29.596Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5567,7 +5585,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_24042026153018_SEIntimationPressrelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5584,7 +5602,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_22012026213545_SE_Intimation_Press_releaseF.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5601,7 +5619,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_31102025193538_SEIntimationPressrelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5618,7 +5636,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_22072025161028_SEIntimationPressRelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5635,7 +5653,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_02062025213626_SEIntimationIP.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5652,7 +5670,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_25042025195618_SEIntimationPressreleaseF.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5669,7 +5687,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_22012025153334_SEIntimationPressrelease__1_.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5686,7 +5704,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome_22012025152850.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5703,7 +5721,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_22102024154216_SEIntimationPressreleaseandpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5720,7 +5738,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BoardmeetingOutcome_22102024153708.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5737,7 +5755,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_22072024194242_SEIntimationPressrelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5754,7 +5772,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome_22072024193830.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5771,7 +5789,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_06062024205056_SEintimationRPGAICpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5788,7 +5806,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_25042024170440_SEIntimationPressrelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5805,7 +5823,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome25_25042024165129.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5822,7 +5840,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_22012024180950_SEIntimationPRINV22012024signedfinal.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5839,7 +5857,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcomefinalSigned_22012024174732.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5856,7 +5874,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_17102023161952_SEIntimationPRINV17102023.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5873,7 +5891,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BoardMeetingOutcome17102023_17102023161104.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5890,7 +5908,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_20072023150200_SEIntimationPressrelease20072023.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5907,7 +5925,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome20072023_20072023144416.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5924,7 +5942,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_11052023195531_SEIntimationPressrelease.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5941,7 +5959,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome110523_11052023191939.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5958,7 +5976,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/ZENSARTECH_23012023194428_SEIntimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5975,7 +5993,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome23012023signed_23012023193125.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:12:59.152Z",
+      "fetchedAt": "2026-05-14T07:47:30.610Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -5992,7 +6010,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_08052026155442_InvestorEarningsCallPresentationQ4FY26signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6009,7 +6027,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_30012026160752_InvestorPresentationQ3FY26DSC.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6026,7 +6044,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_25072025152127_AnnouncementunderReg30InvestorPresentationQ1FY26.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6043,7 +6061,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_09052025145007_IntimationofInvestoranalystpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6060,7 +6078,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_06022025111915_Intimation622025.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6077,7 +6095,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_24012025165536_Q3InvestorDeck.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6094,7 +6112,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeoftheBoardMeetingdated24012025q3FY25_24012025154905.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6111,7 +6129,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_19122024153816_deck.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6128,7 +6146,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_07112024174915_NSEClarificationletter6112024.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6145,7 +6163,7 @@
       "documentUrl": "-",
       "fileType": "unknown",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6162,7 +6180,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofQ2Intimation_25102024155224.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6179,7 +6197,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBMQ126072024FOF_26072024160753.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6196,7 +6214,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeQ4F_09052024160646.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6213,7 +6231,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_25012024171635_InvestorPresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6230,7 +6248,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcomeQ3_25012024154124.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6247,7 +6265,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_27102023164108_InvestordeckQ2.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6264,7 +6282,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBMQ2_27102023155002.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6281,7 +6299,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_27072023183934_IntimationofInvestorPresentation27072023.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6298,7 +6316,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBoardMeetingQ1_27072023161241.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6315,7 +6333,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_14052023212953_Intimation_of_Presentations_made_in_Q4_Investor_Call_with_DSC.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6332,7 +6350,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_11052023181022_InvestorPresentationQ4.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6349,7 +6367,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_of_Board_Meeting1052023_11052023163206.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6366,7 +6384,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_03022023184005_Revised_Investor_PResentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6383,7 +6401,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/INTELLECT_03022023164333_intimationinvestorpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6400,7 +6418,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBM03022023_03022023160127.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:00.100Z",
+      "fetchedAt": "2026-05-14T07:47:31.924Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6417,7 +6435,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_23042026165924_InvestorPrSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6434,7 +6452,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_22012026162200_InvestorPresentationFinalSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6451,7 +6469,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_16102025162931_InvestorPresentationSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6468,7 +6486,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_24072025164217_InvestorPresentationFinalSigned_1.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6485,7 +6503,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_24042025163435_CLInstPrsntSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6502,7 +6520,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_23012025160851_InvestorPresentationFinalSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6519,7 +6537,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialResultsFinalSigned_1_23012025160431.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6536,7 +6554,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_24102024163853_InvestorPresentationQ2FinalSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6553,7 +6571,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/24102024FinancialResultsSigned_24102024163611.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6570,7 +6588,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_01102024091605_01102024OutcomeofInstitutionAnalystmeetSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6587,7 +6605,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_25072024161613_InvestorPresentationQ1FinalSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6604,7 +6622,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/25072024FinancialsSigned_25072024161255.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6621,7 +6639,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_25042024162027_InvestorPresentationFinalQ4Signed1.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6638,7 +6656,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialsFinalSigned_25042024161401.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6655,7 +6673,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_25012024160601_Q3_Covering_letters_Investor_Pre.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6672,7 +6690,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/25012024FinanSigned_25012024160240.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6689,7 +6707,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_09122023110302_09122023InvestorDaySigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6706,7 +6724,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_19102023161532_InvestorSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6723,7 +6741,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialsSigned_19102023160843.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6740,7 +6758,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_25072023164141_InvestorPresentation25072023_signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6757,7 +6775,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/FinancialsConsolidatedFinalQ1signed_25072023162808.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6774,7 +6792,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_20042023165514_InvestorPresentation2pdf.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6791,7 +6809,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Financialresults_20042023161705.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6808,7 +6826,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/CYIENT_12012023160916_InvestorPresentataion.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6825,7 +6843,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/12012023Financials_12012023145204.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:01.449Z",
+      "fetchedAt": "2026-05-14T07:47:33.130Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6842,7 +6860,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Birlasoft_06052026171730_InvestorUpdateQ4FY26.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6859,7 +6877,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_28012026155917_InvestorUpdate.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6876,7 +6894,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_06112025172223_InvestorUpdate.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6893,7 +6911,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Birlasoft_07082025152933_InvestorUpdate.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6910,7 +6928,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_28052025210300_InvestorPPTQ4FY25.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6927,7 +6945,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_11022025161611_InvestorPPTsigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6944,7 +6962,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcomesigned_11022025155851.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6961,7 +6979,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_23102024175120_InvestorPPTSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6978,7 +6996,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeSigned_23102024174746.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -6995,7 +7013,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_31072024132924_SEIntimation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7012,7 +7030,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/Outcome_31072024131723.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7029,7 +7047,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_29042024160818_InvestorPPTQ4FY24signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7046,7 +7064,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeQuickResults_29042024155814.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7063,7 +7081,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_24012024161945_SEIntimationsigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7080,7 +7098,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcomesigned_24012024161226.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7097,7 +7115,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_31102023182418_InvestorPPTSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7114,7 +7132,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeBirlasoftSigned_31102023181514.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7131,7 +7149,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_27072023132108_SEInvestorPPT.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7148,7 +7166,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/QuickResultsSigned_27072023131155.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7165,7 +7183,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_08052023181824_InvestorUpdate.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7182,7 +7200,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBMSigned_08052023180828.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7199,7 +7217,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_02022023172338_Q3InvestorUpdateSigned.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7216,7 +7234,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeFeb22023Signed_02022023163416.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7233,7 +7251,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_25102022104245_TranscriptOct22signed.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7250,7 +7268,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BSOFT_21102022161042_InvestorUpdateQ2.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:02.426Z",
+      "fetchedAt": "2026-05-14T07:47:34.155Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7267,7 +7285,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_07052026184032_SEinvestorpresentation07052026.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7284,7 +7302,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_07022026091832_investorpresentationrevised.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7301,7 +7319,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_06022026175203_investorpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7318,7 +7336,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_06022026171550_investorpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7335,7 +7353,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_13112025175401_investordeck13112025.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7352,7 +7370,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_30072025175544_sefilinginvestorpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7369,7 +7387,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/k_vivek_sonata-software_com_07052025174318_seintimationinvestorpresentationq4.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7386,7 +7404,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/outcomeofboardmeeting06022025_06022025153831.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7403,7 +7421,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_06112024164548_reg30investorppt.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7420,7 +7438,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/sebmoutcome_06112024162731.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7437,7 +7455,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_31072024171446_SEIntimationinvestorpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7454,7 +7472,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/BMOutcome31072024_31072024170147.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7471,7 +7489,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_07052024171218_SEIntimationinvestorpresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7488,7 +7506,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SEintimationBMOutcome_07052024164614.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7505,7 +7523,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_01022024155415_Reg30InvestorPresentation.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7522,7 +7540,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBM_01022024153458.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7539,7 +7557,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_25102023164533_Reg30InvestorPPT.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7556,7 +7574,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBM25102023_25102023164013.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7573,7 +7591,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_29072023222428_RevisedInvestorPresentation29072023.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7590,7 +7608,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_29072023182509_Reg30InvestorPresentation29072023.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7607,7 +7625,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/OutcomeofBM29072023_29072023165518.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7624,7 +7642,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_15052023095247_Reg30InvestorPPT.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7641,7 +7659,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/outcomeofbm_13052023103152.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7658,7 +7676,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/SONATSOFTW_24012023154740_Reg30InvestorPPT.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     },
@@ -7675,7 +7693,7 @@
       "documentUrl": "https://nsearchives.nseindia.com/corporate/bmoutcome_24012023141502.pdf",
       "fileType": "pdf",
       "status": "discovered",
-      "fetchedAt": "2026-05-14T07:13:03.577Z",
+      "fetchedAt": "2026-05-14T07:47:35.241Z",
       "errorMessage": null,
       "sourceReliability": "primary"
     }

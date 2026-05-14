@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "screener-fetch-status",
     "description": "Per-company health of the automated Screener fetcher.",
-    "generatedAt": "2026-05-14T07:15:37.418Z",
+    "generatedAt": "2026-05-14T07:50:04.791Z",
     "rowCount": 20,
     "status": "partial",
     "notes": "Some companies failed (1 errors recorded).",
@@ -10,7 +10,7 @@
       "sourceClass": "manual",
       "sourceUrl": "https://www.screener.in/company/<slug>/consolidated/",
       "sourceLabel": "Screener automated fetch (Consolidated)",
-      "fetchedAt": "2026-05-14T07:15:37.418Z",
+      "fetchedAt": "2026-05-14T07:50:04.791Z",
       "publishedAt": null,
       "notes": "Cached. Dashboard reads these rows; the UI never live-fetches. Reporting basis is always consolidated; standalone fetches are not performed."
     },
@@ -19,7 +19,7 @@
         "sourceId": "screener",
         "companyId": "ltim",
         "message": "ltim: consolidated fetch failed — HTTP 404",
-        "occurredAt": "2026-05-14T07:13:45.184Z"
+        "occurredAt": "2026-05-14T07:48:15.896Z"
       }
     ]
   },
@@ -29,7 +29,7 @@
       "companyName": "TCS",
       "screenerSlug": "TCS",
       "screenerUrl": "https://www.screener.in/company/TCS/consolidated/",
-      "fetchedAt": "2026-05-14T07:13:05.270Z",
+      "fetchedAt": "2026-05-14T07:47:37.052Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -48,7 +48,7 @@
       "companyName": "Infosys",
       "screenerSlug": "INFY",
       "screenerUrl": "https://www.screener.in/company/INFY/consolidated/",
-      "fetchedAt": "2026-05-14T07:13:13.733Z",
+      "fetchedAt": "2026-05-14T07:47:45.286Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -67,7 +67,7 @@
       "companyName": "HCLTech",
       "screenerSlug": "HCLTECH",
       "screenerUrl": "https://www.screener.in/company/HCLTECH/consolidated/",
-      "fetchedAt": "2026-05-14T07:13:21.610Z",
+      "fetchedAt": "2026-05-14T07:47:53.026Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -86,7 +86,7 @@
       "companyName": "Wipro",
       "screenerSlug": "WIPRO",
       "screenerUrl": "https://www.screener.in/company/WIPRO/consolidated/",
-      "fetchedAt": "2026-05-14T07:13:29.530Z",
+      "fetchedAt": "2026-05-14T07:48:00.675Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -105,7 +105,7 @@
       "companyName": "Tech Mahindra",
       "screenerSlug": "TECHM",
       "screenerUrl": "https://www.screener.in/company/TECHM/consolidated/",
-      "fetchedAt": "2026-05-14T07:13:37.378Z",
+      "fetchedAt": "2026-05-14T07:48:08.283Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -124,7 +124,7 @@
       "companyName": "LTIMindtree",
       "screenerSlug": "LTIM",
       "screenerUrl": "https://www.screener.in/company/LTIM/consolidated/",
-      "fetchedAt": "2026-05-14T07:13:45.184Z",
+      "fetchedAt": "2026-05-14T07:48:15.896Z",
       "status": "blocked",
       "sectionsFetched": [],
       "rowsWritten": 0,
@@ -137,7 +137,7 @@
       "companyName": "Oracle Financial Services",
       "screenerSlug": "OFSS",
       "screenerUrl": "https://www.screener.in/company/OFSS/consolidated/",
-      "fetchedAt": "2026-05-14T07:13:49.690Z",
+      "fetchedAt": "2026-05-14T07:48:20.358Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -156,7 +156,7 @@
       "companyName": "Persistent Systems",
       "screenerSlug": "PERSISTENT",
       "screenerUrl": "https://www.screener.in/company/PERSISTENT/consolidated/",
-      "fetchedAt": "2026-05-14T07:13:57.503Z",
+      "fetchedAt": "2026-05-14T07:48:28.448Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -175,7 +175,7 @@
       "companyName": "Coforge",
       "screenerSlug": "COFORGE",
       "screenerUrl": "https://www.screener.in/company/COFORGE/consolidated/",
-      "fetchedAt": "2026-05-14T07:14:05.337Z",
+      "fetchedAt": "2026-05-14T07:48:36.055Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -194,7 +194,7 @@
       "companyName": "Mphasis",
       "screenerSlug": "MPHASIS",
       "screenerUrl": "https://www.screener.in/company/MPHASIS/consolidated/",
-      "fetchedAt": "2026-05-14T07:14:13.121Z",
+      "fetchedAt": "2026-05-14T07:48:43.670Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -213,7 +213,7 @@
       "companyName": "L&T Technology Services",
       "screenerSlug": "LTTS",
       "screenerUrl": "https://www.screener.in/company/LTTS/consolidated/",
-      "fetchedAt": "2026-05-14T07:14:21.034Z",
+      "fetchedAt": "2026-05-14T07:48:51.268Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -232,7 +232,7 @@
       "companyName": "Hexaware Technologies",
       "screenerSlug": "HEXT",
       "screenerUrl": "https://www.screener.in/company/HEXT/consolidated/",
-      "fetchedAt": "2026-05-14T07:14:28.939Z",
+      "fetchedAt": "2026-05-14T07:48:59.008Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -251,7 +251,7 @@
       "companyName": "Tata Technologies",
       "screenerSlug": "TATATECH",
       "screenerUrl": "https://www.screener.in/company/TATATECH/consolidated/",
-      "fetchedAt": "2026-05-14T07:14:36.816Z",
+      "fetchedAt": "2026-05-14T07:49:06.639Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -270,7 +270,7 @@
       "companyName": "Tata Elxsi",
       "screenerSlug": "TATAELXSI",
       "screenerUrl": "https://www.screener.in/company/TATAELXSI/consolidated/",
-      "fetchedAt": "2026-05-14T07:14:44.660Z",
+      "fetchedAt": "2026-05-14T07:49:14.249Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -289,7 +289,7 @@
       "companyName": "KPIT Technologies",
       "screenerSlug": "KPITTECH",
       "screenerUrl": "https://www.screener.in/company/KPITTECH/consolidated/",
-      "fetchedAt": "2026-05-14T07:14:52.502Z",
+      "fetchedAt": "2026-05-14T07:49:21.829Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -308,7 +308,7 @@
       "companyName": "Zensar Technologies",
       "screenerSlug": "ZENSARTECH",
       "screenerUrl": "https://www.screener.in/company/ZENSARTECH/consolidated/",
-      "fetchedAt": "2026-05-14T07:15:00.374Z",
+      "fetchedAt": "2026-05-14T07:49:29.374Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -327,7 +327,7 @@
       "companyName": "Intellect Design",
       "screenerSlug": "INTELLECT",
       "screenerUrl": "https://www.screener.in/company/INTELLECT/consolidated/",
-      "fetchedAt": "2026-05-14T07:15:08.216Z",
+      "fetchedAt": "2026-05-14T07:49:36.972Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -346,7 +346,7 @@
       "companyName": "Cyient",
       "screenerSlug": "CYIENT",
       "screenerUrl": "https://www.screener.in/company/CYIENT/consolidated/",
-      "fetchedAt": "2026-05-14T07:15:16.084Z",
+      "fetchedAt": "2026-05-14T07:49:44.507Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -365,7 +365,7 @@
       "companyName": "Birlasoft",
       "screenerSlug": "BSOFT",
       "screenerUrl": "https://www.screener.in/company/BSOFT/consolidated/",
-      "fetchedAt": "2026-05-14T07:15:24.012Z",
+      "fetchedAt": "2026-05-14T07:49:52.083Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
@@ -384,7 +384,7 @@
       "companyName": "Sonata Software",
       "screenerSlug": "SONATSOFTW",
       "screenerUrl": "https://www.screener.in/company/SONATSOFTW/consolidated/",
-      "fetchedAt": "2026-05-14T07:15:31.939Z",
+      "fetchedAt": "2026-05-14T07:49:59.634Z",
       "status": "partial",
       "sectionsFetched": [
         "quarters",
