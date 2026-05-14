@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "source-health",
     "description": "Per (sourceId, companyId) probe of source reachability and freshness.",
-    "generatedAt": "2026-05-13T17:17:18.667Z",
+    "generatedAt": "2026-05-14T07:13:04.589Z",
     "rowCount": 40,
     "status": "ok",
     "notes": null,
@@ -10,7 +10,7 @@
       "sourceClass": "derived",
       "sourceUrl": null,
       "sourceLabel": "Derived from discovery adapter results",
-      "fetchedAt": "2026-05-13T17:17:18.667Z",
+      "fetchedAt": "2026-05-14T07:13:04.589Z",
       "publishedAt": null,
       "notes": null
     },
@@ -20,7 +20,7 @@
     {
       "sourceId": "nse",
       "companyId": "tcs",
-      "checkedAt": "2026-05-13T17:16:54.537Z",
+      "checkedAt": "2026-05-14T07:12:41.527Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "17-Jan-202",
@@ -30,7 +30,7 @@
     {
       "sourceId": "bse",
       "companyId": "tcs",
-      "checkedAt": "2026-05-13T17:16:56.102Z",
+      "checkedAt": "2026-05-14T07:12:43.412Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -40,7 +40,7 @@
     {
       "sourceId": "nse",
       "companyId": "infosys",
-      "checkedAt": "2026-05-13T17:16:56.432Z",
+      "checkedAt": "2026-05-14T07:12:43.917Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "28-Sep-202",
@@ -50,7 +50,7 @@
     {
       "sourceId": "bse",
       "companyId": "infosys",
-      "checkedAt": "2026-05-13T17:16:57.558Z",
+      "checkedAt": "2026-05-14T07:12:45.396Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -60,7 +60,7 @@
     {
       "sourceId": "nse",
       "companyId": "hcltech",
-      "checkedAt": "2026-05-13T17:16:58.039Z",
+      "checkedAt": "2026-05-14T07:12:45.715Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "29-Aug-202",
@@ -70,7 +70,7 @@
     {
       "sourceId": "bse",
       "companyId": "hcltech",
-      "checkedAt": "2026-05-13T17:16:59.719Z",
+      "checkedAt": "2026-05-14T07:12:47.456Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -80,7 +80,7 @@
     {
       "sourceId": "nse",
       "companyId": "wipro",
-      "checkedAt": "2026-05-13T17:17:00.195Z",
+      "checkedAt": "2026-05-14T07:12:47.758Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "30-Jan-202",
@@ -90,7 +90,7 @@
     {
       "sourceId": "bse",
       "companyId": "wipro",
-      "checkedAt": "2026-05-13T17:17:01.793Z",
+      "checkedAt": "2026-05-14T07:12:48.106Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -100,7 +100,7 @@
     {
       "sourceId": "nse",
       "companyId": "techm",
-      "checkedAt": "2026-05-13T17:17:02.265Z",
+      "checkedAt": "2026-05-14T07:12:48.418Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "30-Jan-202",
@@ -110,7 +110,7 @@
     {
       "sourceId": "bse",
       "companyId": "techm",
-      "checkedAt": "2026-05-13T17:17:03.780Z",
+      "checkedAt": "2026-05-14T07:12:49.544Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -120,7 +120,7 @@
     {
       "sourceId": "nse",
       "companyId": "ltim",
-      "checkedAt": "2026-05-13T17:17:03.780Z",
+      "checkedAt": "2026-05-14T07:12:49.544Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -130,7 +130,7 @@
     {
       "sourceId": "bse",
       "companyId": "ltim",
-      "checkedAt": "2026-05-13T17:17:04.534Z",
+      "checkedAt": "2026-05-14T07:12:49.940Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -140,7 +140,7 @@
     {
       "sourceId": "nse",
       "companyId": "ofss",
-      "checkedAt": "2026-05-13T17:17:04.534Z",
+      "checkedAt": "2026-05-14T07:12:49.940Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "28-Jul-202",
@@ -150,7 +150,7 @@
     {
       "sourceId": "bse",
       "companyId": "ofss",
-      "checkedAt": "2026-05-13T17:17:05.849Z",
+      "checkedAt": "2026-05-14T07:12:51.179Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -160,7 +160,7 @@
     {
       "sourceId": "nse",
       "companyId": "persistent",
-      "checkedAt": "2026-05-13T17:17:05.849Z",
+      "checkedAt": "2026-05-14T07:12:51.179Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "30-Apr-202",
@@ -170,7 +170,7 @@
     {
       "sourceId": "bse",
       "companyId": "persistent",
-      "checkedAt": "2026-05-13T17:17:07.082Z",
+      "checkedAt": "2026-05-14T07:12:52.247Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -180,7 +180,7 @@
     {
       "sourceId": "nse",
       "companyId": "coforge",
-      "checkedAt": "2026-05-13T17:17:07.082Z",
+      "checkedAt": "2026-05-14T07:12:52.247Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "29-Jul-202",
@@ -190,7 +190,7 @@
     {
       "sourceId": "bse",
       "companyId": "coforge",
-      "checkedAt": "2026-05-13T17:17:08.025Z",
+      "checkedAt": "2026-05-14T07:12:53.521Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -200,7 +200,7 @@
     {
       "sourceId": "nse",
       "companyId": "mphasis",
-      "checkedAt": "2026-05-13T17:17:08.025Z",
+      "checkedAt": "2026-05-14T07:12:53.521Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "31-Oct-202",
@@ -210,7 +210,7 @@
     {
       "sourceId": "bse",
       "companyId": "mphasis",
-      "checkedAt": "2026-05-13T17:17:09.053Z",
+      "checkedAt": "2026-05-14T07:12:54.489Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -220,7 +220,7 @@
     {
       "sourceId": "nse",
       "companyId": "ltts",
-      "checkedAt": "2026-05-13T17:17:09.053Z",
+      "checkedAt": "2026-05-14T07:12:54.489Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "27-Aug-202",
@@ -230,7 +230,7 @@
     {
       "sourceId": "bse",
       "companyId": "ltts",
-      "checkedAt": "2026-05-13T17:17:09.998Z",
+      "checkedAt": "2026-05-14T07:12:55.422Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -240,7 +240,7 @@
     {
       "sourceId": "nse",
       "companyId": "hexaware",
-      "checkedAt": "2026-05-13T17:17:09.998Z",
+      "checkedAt": "2026-05-14T07:12:55.422Z",
       "status": "ok",
       "filingsDiscovered": 7,
       "latestFilingDate": "28-Apr-202",
@@ -250,7 +250,7 @@
     {
       "sourceId": "bse",
       "companyId": "hexaware",
-      "checkedAt": "2026-05-13T17:17:10.737Z",
+      "checkedAt": "2026-05-14T07:12:56.251Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -260,7 +260,7 @@
     {
       "sourceId": "nse",
       "companyId": "tatatech",
-      "checkedAt": "2026-05-13T17:17:10.737Z",
+      "checkedAt": "2026-05-14T07:12:56.251Z",
       "status": "ok",
       "filingsDiscovered": 13,
       "latestFilingDate": "28-Oct-202",
@@ -270,7 +270,7 @@
     {
       "sourceId": "bse",
       "companyId": "tatatech",
-      "checkedAt": "2026-05-13T17:17:11.570Z",
+      "checkedAt": "2026-05-14T07:12:57.167Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -280,7 +280,7 @@
     {
       "sourceId": "nse",
       "companyId": "tataelxsi",
-      "checkedAt": "2026-05-13T17:17:11.570Z",
+      "checkedAt": "2026-05-14T07:12:57.167Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "27-Jan-202",
@@ -290,7 +290,7 @@
     {
       "sourceId": "bse",
       "companyId": "tataelxsi",
-      "checkedAt": "2026-05-13T17:17:12.568Z",
+      "checkedAt": "2026-05-14T07:12:58.118Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -300,7 +300,7 @@
     {
       "sourceId": "nse",
       "companyId": "kpittech",
-      "checkedAt": "2026-05-13T17:17:12.568Z",
+      "checkedAt": "2026-05-14T07:12:58.118Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "31-Jan-202",
@@ -310,7 +310,7 @@
     {
       "sourceId": "bse",
       "companyId": "kpittech",
-      "checkedAt": "2026-05-13T17:17:13.491Z",
+      "checkedAt": "2026-05-14T07:12:59.152Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -320,7 +320,7 @@
     {
       "sourceId": "nse",
       "companyId": "zensartech",
-      "checkedAt": "2026-05-13T17:17:13.491Z",
+      "checkedAt": "2026-05-14T07:12:59.152Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "31-Oct-202",
@@ -330,7 +330,7 @@
     {
       "sourceId": "bse",
       "companyId": "zensartech",
-      "checkedAt": "2026-05-13T17:17:14.541Z",
+      "checkedAt": "2026-05-14T07:13:00.100Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -340,7 +340,7 @@
     {
       "sourceId": "nse",
       "companyId": "intellect",
-      "checkedAt": "2026-05-13T17:17:14.541Z",
+      "checkedAt": "2026-05-14T07:13:00.100Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "30-Jan-202",
@@ -350,7 +350,7 @@
     {
       "sourceId": "bse",
       "companyId": "intellect",
-      "checkedAt": "2026-05-13T17:17:15.558Z",
+      "checkedAt": "2026-05-14T07:13:01.449Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -360,7 +360,7 @@
     {
       "sourceId": "nse",
       "companyId": "cyient",
-      "checkedAt": "2026-05-13T17:17:15.558Z",
+      "checkedAt": "2026-05-14T07:13:01.449Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "25-Jul-202",
@@ -370,7 +370,7 @@
     {
       "sourceId": "bse",
       "companyId": "cyient",
-      "checkedAt": "2026-05-13T17:17:16.577Z",
+      "checkedAt": "2026-05-14T07:13:02.426Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -380,7 +380,7 @@
     {
       "sourceId": "nse",
       "companyId": "birlasoft",
-      "checkedAt": "2026-05-13T17:17:16.577Z",
+      "checkedAt": "2026-05-14T07:13:02.426Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "31-Oct-202",
@@ -390,7 +390,7 @@
     {
       "sourceId": "bse",
       "companyId": "birlasoft",
-      "checkedAt": "2026-05-13T17:17:17.625Z",
+      "checkedAt": "2026-05-14T07:13:03.577Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -400,7 +400,7 @@
     {
       "sourceId": "nse",
       "companyId": "sonata",
-      "checkedAt": "2026-05-13T17:17:17.625Z",
+      "checkedAt": "2026-05-14T07:13:03.577Z",
       "status": "ok",
       "filingsDiscovered": 25,
       "latestFilingDate": "31-Jul-202",
@@ -410,7 +410,7 @@
     {
       "sourceId": "bse",
       "companyId": "sonata",
-      "checkedAt": "2026-05-13T17:17:18.665Z",
+      "checkedAt": "2026-05-14T07:13:04.582Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,

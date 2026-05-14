@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "guidance-actual-comparison",
     "description": "Derived comparison of actual results against prior management commentary.",
-    "generatedAt": "2026-05-13T17:17:18.670Z",
+    "generatedAt": "2026-05-14T07:13:04.592Z",
     "rowCount": 0,
     "status": "empty",
     "notes": "Derivation pending; depends on guidance-commentary rows.",
@@ -10,7 +10,7 @@
       "sourceClass": "derived",
       "sourceUrl": null,
       "sourceLabel": "Derived from guidance-commentary + quarterly/annual financials",
-      "fetchedAt": "2026-05-13T17:17:18.670Z",
+      "fetchedAt": "2026-05-14T07:13:04.592Z",
       "publishedAt": null,
       "notes": null
     },
