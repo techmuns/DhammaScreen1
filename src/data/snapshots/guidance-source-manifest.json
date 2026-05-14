@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "source": "Guidance source discovery",
+    "snapshotId": "guidance-source-manifest",
+    "description": "Per-company discovery probes for management commentary sources (concall transcripts, investor presentations, earnings releases, press releases). Discovery only — no guidance claims are extracted here.",
+    "generatedAt": null,
+    "rowCount": 0,
+    "status": "empty",
+    "notes": "Not yet run. Use `npm run ingest:guidance:sources` to populate.",
+    "errors": []
+  },
+  "rows": []
+}

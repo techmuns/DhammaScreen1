@@ -70,6 +70,17 @@ jobs:
       - name: Ingest Screener exports (optional)
         run: npm run ingest:screener
 
+      # Optional (Step 17): probe candidate guidance sources (Tijori,
+      # Screener documents tab, ...) for management commentary
+      # documents. Discovery only — never extracts guidance claims,
+      # never writes to guidance-commentary.json. Default-enabled
+      # sources only (no Playwright). The step is allowed to fail
+      # without breaking the main dashboard build because it's a
+      # data-collection probe, not a render-blocking dependency.
+      - name: Discover guidance sources (probe)
+        continue-on-error: true
+        run: npm run ingest:guidance:sources -- --timeout-ms 15000
+
       - name: Typecheck
         run: npm run typecheck
 
