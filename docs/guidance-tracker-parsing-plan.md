@@ -229,3 +229,139 @@ When `GuidanceActualComparisonRow` rows are eventually produced:
   an annual report as the pilot for the extractor and re-evaluate
   whether Concalls are JS-rendered on Screener (Playwright
   decision).
+
+## Step 21 status
+
+### Expanded manifest (after `94f08f5`)
+
+The cap bump and category-aware classifier from Step 20 produced a much
+richer manifest on the next CI run:
+
+| Slice                    | Before Step 20 | After Step 20 |
+| ------------------------ | -------------: | ------------: |
+| Total rows               |             41 |           121 |
+| `concall_transcript`     |              0 |             6 |
+| `annual_report`          |              0 |            60 |
+| `credit_rating`          |              0 |            24 |
+| `press_release`          |              1 |             1 |
+| `other`                  |             40 |            30 |
+| `investor_presentation`  |              0 |             0 |
+
+Per (company × documentType):
+
+| Company  | annual_report | credit_rating | concall_transcript | press_release | other |
+| -------- | ------------: | ------------: | -----------------: | ------------: | ----: |
+| TCS      |            15 |             6 |                  1 |             1 |     8 |
+| Infosys  |            15 |             6 |                  2 |             0 |     7 |
+| HCLTech  |            15 |             6 |                  1 |             0 |     8 |
+| Wipro    |            15 |             6 |                  2 |             0 |     7 |
+
+Confidence buckets: `high` 85 · `medium` 6 · `low` 30. All 6 transcripts
+are `medium` because their classification came via `link-text` rather
+than via a `<h3>Concalls</h3>` category match — Screener appears to
+serve transcripts under an unlabelled section header on the current
+TCS/INFY/HCLT/WIPRO pages, so the legacy keyword scan (`transcript`)
+caught them. Promoting to `high` requires a follow-up tweak to the
+category walker (probably looking for `[id*="concall"]` block IDs in
+addition to the heading text); tracked separately, doesn't block
+parsing.
+
+### Selected first pilot
+
+**TCS · Transcript** (priority 1 per Step 21 spec).
+
+| Field         | Value                                                                                            |
+| ------------- | ------------------------------------------------------------------------------------------------ |
+| Company       | TCS                                                                                              |
+| documentType  | `concall_transcript`                                                                             |
+| Title         | `Transcript` (Screener anchor text — period not derivable from the title alone)                  |
+| documentUrl   | https://www.bseindia.com/xml-data/corpfiling/AttachHis/07ae2d32-1050-4e80-96ff-eb2d98378d4e.pdf  |
+| sourceUrl     | https://www.screener.in/company/TCS/consolidated/                                                |
+| sourceProvider| `screener`                                                                                       |
+| Confidence    | `medium` (link-text classifier; eligible per the ≥medium threshold)                              |
+| Login wall    | None known — BSE serves these PDFs without a session                                             |
+
+Rationale: TCS is the priority-1 company and is the only one with a
+single transcript row, so there's no ambiguity in "the latest". Other
+candidates if the pipeline picks a fallback:
+
+- Infosys: 2 transcripts (uuid `2ab7badf` and `b4632b94`)
+- HCLTech: 1 transcript (uuid `48f5d6fd`)
+- Wipro: 2 transcripts (uuid `78fab9a0` and `a3dbcb44`)
+
+`investor_presentation` rows: 0. Screener's documents block on these
+four companies does not currently expose an `Investor Presentations`
+section in static HTML; either it's JS-rendered behind a tab or the
+companies publish presentations exclusively to their IR pages. Defer
+to the next step.
+
+### Accessibility result
+
+All four candidate BSE PDFs returned **HTTP 403** from this sandbox,
+content-type `text/plain` / content-length 21 (the same 21-byte block
+page we have seen on every prior sandbox probe). The CI runner reached
+Screener successfully this run — `94f08f5` is the new data refresh
+commit — so the same BSE URLs the runner just *catalogued* should be
+reachable from a follow-up CI step that downloads them. We will know
+for certain when the extractor step runs in CI.
+
+### No commentary rows created
+
+`guidance-commentary.json` and `guidance-actual-comparison.json` both
+remain `rowCount: 0 · status: "empty"`. No quote was extracted; no
+guidance row was fabricated. This is the documented "leave empty
+until the first exact quote can be extracted" path.
+
+### Next extraction plan
+
+1. **New script `scripts/ingest/guidance-extract.ts`**. Inputs:
+   `guidance-source-manifest.json` rows where
+   `documentType === "concall_transcript"`,
+   `status === "discovered"`,
+   `confidence ∈ { "medium", "high" }`,
+   `documentUrl !== null`.
+   Skips anything already processed (idempotent on the manifest
+   `documentUrl`).
+2. **PDF text extraction**: lazy-import a single dependency (e.g.
+   `pdf-parse` or `pdfjs-dist`'s text layer) so the cold path stays
+   small. Convert pages → plain text → array of `{ pageIndex, text }`.
+3. **Verbatim-quote spotter**: scan management answers for
+   *numeric forward-looking statements only*. The first cut should
+   match patterns like:
+   - `(expect|guide|expecting|targeting)…(\\d+[\\-–to]+\\d+%|\\d+%)`
+   - `(margin|growth|capex|attrition).{0,40}(\\d+[\\-–to]+\\d+%)`
+   The matcher returns the surrounding sentence verbatim plus the
+   `(pageIndex, charOffset, length)` triple so each emitted row is
+   provably tied back to the source text.
+4. **Schema**: `GuidanceCommentaryRow` from the existing
+   `dhammaDashboard.ts` types, extended with the new
+   `reviewStatus: "needs_review"` field. `commentaryId` follows the
+   deterministic `<company>::<doc-slug>::<page>::<seq>` convention.
+   No `numericLow/High` is written unless the regex matched a
+   numeric band — qualitative quotes get `null` and stay as
+   "qualitative" until an analyst sets explicit bounds.
+5. **Run order**: extractor runs **after** the data refresh step in
+   the workflow but **outside** the financial-dashboard critical
+   path (`continue-on-error: true`). The dashboard UI continues to
+   show the planned-module card until at least one `approved` row
+   exists in `guidance-commentary.json` (already wired in the
+   Step 15 GuidanceTrackerPanel).
+6. **Manual review tool** (Step 22+): a one-pager that shows
+   `needs_review` rows with their verbatim quote, source URL,
+   page number and char offset, plus a single approve/reject
+   button. Reviews persist to a `guidance-review-log.json` audit
+   trail; only the `approved` rows render on the dashboard.
+
+### Open questions for the next step
+
+- **Period extraction from PDF metadata, not title.** The Screener
+  anchor text "Transcript" has no period. We will need to read the
+  PDF's first page (or its filename heuristic) to recover a period
+  like "Q4FY26" before a guidance row can be tied to a
+  `targetPeriod`.
+- **Category-walker robustness.** All 6 transcripts came in at
+  `medium / classified-by=link-text · category=(unknown)`. A small
+  patch to look for Screener block IDs (`[id*="concall"]`) in
+  addition to `<h3>` headings should lift these to `high /
+  classified-by=category` — a clean win for analyst auditability
+  but not a blocker for extraction.
