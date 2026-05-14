@@ -179,16 +179,53 @@ When `GuidanceActualComparisonRow` rows are eventually produced:
 
 ## Next operational steps
 
-1. Bump the workflow's Screener step to `--max-documents 30` to give
-   the parser a shot at the `Concalls` and `Credit ratings` sections
-   on Screener (assuming they exist in static HTML for these
-   companies).
-2. Patch `classifyScreenerLink()` so `"Financial Year 2025 from bse"`
-   under category `"Annual reports"` resolves to `annual_report` (the
-   current keyword classifier only matches `annual report` exactly).
-3. Re-run the discovery workflow; if a `concall_transcript` row lands
-   for TCS or Infosys, switch the pilot to that document.
+1. ✅ **(Step 20)** Workflow's Screener step bumped from
+   `--max-documents 10` to `--max-documents 30`. The Concalls and
+   Credit-ratings sections on Screener typically appear below the
+   Announcements + Annual reports blocks, so the previous cap was
+   clipping them out of the manifest.
+2. ✅ **(Step 20)** `classifyScreenerLink()` is now category-aware.
+   The section `<h3>` drives the type whenever the header is
+   unambiguous (`Concalls`, `Annual reports`, `Investor
+   Presentations`, `Credit ratings`); only the generic
+   `Announcements` bucket falls back to keyword detection on the
+   link text. Every row's `notes` field records the classification
+   trail: `classified-by=category | link-text | default`,
+   alongside the Screener category header and the source URL the
+   link came from.
+3. Re-run the discovery workflow on `workflow_dispatch`; if a
+   `concall_transcript` row lands for TCS or Infosys, switch the
+   pilot to that document.
 4. Once a pilot document is reachable in production: build a minimal
    PDF text extractor + verbatim-quote spotter behind a new script
    `scripts/ingest/guidance-extract.ts`. Output rows with
    `reviewStatus: "needs_review"`. Wire the analyst review tool last.
+
+### Step 20 note
+
+- **Max document cap**: increased from 10 → 30 in the
+  `Discover guidance sources · Screener documents` workflow step.
+  Concall and Investor Presentation sections sit below
+  Announcements + Annual Reports on Screener's documents block, so
+  the previous cap was the structural reason transcripts didn't
+  surface.
+- **Classifier is category-aware**: a `Concalls` section forces
+  `concall_transcript` for every link inside it (including bare
+  date-only labels like `Q4FY25` and generic `Download` anchors).
+  The same applies to `Annual reports`, `Investor Presentations`,
+  and `Credit ratings`. `Announcements` retains keyword-driven
+  routing because Screener mixes everything (regulatory filings,
+  press releases, occasional transcripts) under that single
+  bucket.
+- **Concall transcript discovery is priority**. Concalls are
+  the highest-signal source of forward guidance — they carry the
+  numeric bands the dashboard tracker needs. The cap bump + the
+  category-first classifier together should make them visible on
+  the next CI run.
+- **Annual reports remain fallback only**. The MD&A section in an
+  annual report carries directional commentary but rarely
+  quarter-by-quarter numeric guidance. If the next CI run still
+  yields zero `concall_transcript` rows, we fall through to using
+  an annual report as the pilot for the extractor and re-evaluate
+  whether Concalls are JS-rendered on Screener (Playwright
+  decision).

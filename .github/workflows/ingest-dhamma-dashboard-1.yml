@@ -79,10 +79,13 @@ jobs:
       #
       # Screener documents tab (Step 18) is the primary source: it
       # parses cleanly from static HTML and reuses the screenerSlug
-      # we already have per company.
+      # we already have per company. Step 20 bumped the per-company
+      # ceiling from 10 → 30 so the Concalls and Credit-rating
+      # sections (which appear further down the documents block) can
+      # land in the manifest.
       - name: Discover guidance sources · Screener documents
         continue-on-error: true
-        run: npm run ingest:guidance:sources -- --source screener --max-companies 4 --max-documents 10 --timeout-ms 15000
+        run: npm run ingest:guidance:sources -- --source screener --max-companies 4 --max-documents 30 --timeout-ms 15000
 
       # Tijori probe (Step 17) is kept as a complementary signal so
       # we can decide whether to wire a second source. Capped to

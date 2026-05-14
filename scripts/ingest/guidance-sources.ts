@@ -469,6 +469,8 @@ interface DiscoveredDocument {
   title: string;
   documentUrl: string;
   category: string | null; // the <h3> Screener uses ("Annual reports", "Concalls", ...)
+  classifySource: ClassifySource;
+  confidence: DiscoveryConfidence;
   period: string | null;
   publishedDate: string | null;
 }
@@ -479,28 +481,119 @@ const SCREENER_DOCUMENT_SELECTORS: ReadonlyArray<string> = [
   "section.documents",
 ];
 
+// classifySource tells the row note WHERE the classification came from
+// so an analyst can spot false positives without re-reading the doc.
+type ClassifySource = "category" | "link-text" | "default";
+
+interface Classification {
+  type: DocumentType;
+  confidence: DiscoveryConfidence;
+  source: ClassifySource;
+}
+
+// Category-first classifier.
+//
+//   1. If the Screener section header (e.g. "Concalls", "Annual
+//      reports") is unambiguous, ALL anchors under it inherit that
+//      type — including bare date labels and generic "Download"
+//      links. This is what produces the missing concall_transcript
+//      rows; Screener's <h3>Concalls</h3> usually wraps anchors
+//      whose link text is just "Q1FY25" or a quarter abbreviation.
+//
+//   2. The exception: under the generic "Announcements" bucket the
+//      category isn't a type — it's a stream of mixed regulatory
+//      filings. There we fall back to keyword detection on the link
+//      text.
+//
+//   3. As a last resort, the legacy keyword scan over (category +
+//      link text + href) still runs so an unforeseen Screener
+//      layout change degrades gracefully to a low-confidence row
+//      rather than dropping the link.
 function classifyScreenerLink(
   category: string | null,
   linkText: string,
   href: string
-): { type: DocumentType; confidence: DiscoveryConfidence } {
-  const haystack = `${category ?? ""} ${linkText} ${href}`.toLowerCase();
+): Classification {
+  const catLower = (category ?? "").toLowerCase().trim();
+
+  // 1. Strong category signals → propagate to every link in the
+  //    section. Confidence 'high' because Screener consistently
+  //    groups these under matching <h3> blocks.
+  if (/\bconcalls?\b/.test(catLower) || /\bearnings calls?\b/.test(catLower))
+    return { type: "concall_transcript", confidence: "high", source: "category" };
+  if (
+    /\binvestor (presentations?|decks?)\b/.test(catLower) ||
+    /\bpresentations?\b/.test(catLower)
+  )
+    return {
+      type: "investor_presentation",
+      confidence: "high",
+      source: "category",
+    };
+  if (/\bannual reports?\b/.test(catLower))
+    return { type: "annual_report", confidence: "high", source: "category" };
+  if (/\b(credit ratings?|ratings?)\b/.test(catLower))
+    return { type: "credit_rating", confidence: "high", source: "category" };
+
+  const linkLower = linkText.toLowerCase();
+  const hrefLower = href.toLowerCase();
+  const textHaystack = `${linkLower} ${hrefLower}`;
+
+  // 2. Announcements bucket — Screener mixes everything here, so we
+  //    must read the link text. Use a tighter regex per type and
+  //    fall through to 'other' if nothing matches (still low
+  //    confidence so the analyst can audit).
+  const isAnnouncements = /\bannouncements?\b/.test(catLower);
+  if (isAnnouncements) {
+    if (/\b(concall|conference call|earnings call|transcript)\b/.test(textHaystack))
+      return { type: "concall_transcript", confidence: "high", source: "link-text" };
+    if (
+      /\b(investor presentation|investor deck|presentation|\.ppt|\.pptx)\b/.test(
+        textHaystack
+      )
+    )
+      return {
+        type: "investor_presentation",
+        confidence: "high",
+        source: "link-text",
+      };
+    if (/\b(earnings release|results release|results announcement)\b/.test(textHaystack))
+      return { type: "earnings_release", confidence: "high", source: "link-text" };
+    if (/\bpress release\b/.test(textHaystack))
+      return { type: "press_release", confidence: "high", source: "link-text" };
+    if (/\b(credit rating|rating)\b/.test(textHaystack))
+      return { type: "credit_rating", confidence: "high", source: "link-text" };
+    return { type: "other", confidence: "low", source: "default" };
+  }
+
+  // 3. Legacy keyword scan — runs only when category is unknown
+  //    (no <h3> found, or Screener changes its labels). Confidence
+  //    stays 'medium' because we matched without a category anchor.
+  const haystack = `${catLower} ${linkLower} ${hrefLower}`;
   if (/\b(concall|conference call|earnings call|transcript)\b/.test(haystack))
-    return { type: "concall_transcript", confidence: "high" };
-  if (/\b(investor presentation|investor deck|presentation|\.ppt)\b/.test(haystack))
-    return { type: "investor_presentation", confidence: "high" };
+    return { type: "concall_transcript", confidence: "medium", source: "link-text" };
+  if (
+    /\b(investor presentation|investor deck|presentation|\.ppt|\.pptx)\b/.test(
+      haystack
+    )
+  )
+    return {
+      type: "investor_presentation",
+      confidence: "medium",
+      source: "link-text",
+    };
   if (/\bannual report\b/.test(haystack))
-    return { type: "annual_report", confidence: "high" };
+    return { type: "annual_report", confidence: "medium", source: "link-text" };
   if (/\b(credit rating|rating)\b/.test(haystack))
-    return { type: "credit_rating", confidence: "high" };
-  if (/\bearnings release|results release|results announcement\b/.test(haystack))
-    return { type: "earnings_release", confidence: "high" };
+    return { type: "credit_rating", confidence: "medium", source: "link-text" };
+  if (/\b(earnings release|results release|results announcement)\b/.test(haystack))
+    return { type: "earnings_release", confidence: "medium", source: "link-text" };
   if (/\bpress release\b/.test(haystack))
-    return { type: "press_release", confidence: "high" };
-  // No firm category but Screener listed it under Documents — keep at low
-  // confidence rather than dropping the row, so the manifest still records
-  // that the link exists.
-  return { type: "other", confidence: "low" };
+    return { type: "press_release", confidence: "medium", source: "link-text" };
+
+  // 4. Nothing matched — keep the link at low confidence so the
+  //    manifest still records its existence.
+  return { type: "other", confidence: "low", source: "default" };
 }
 
 // Pull a period token like "Q1FY25", "Jun 2024", "FY24" out of the
@@ -518,7 +611,11 @@ function extractPeriodToken(text: string): string | null {
   return null;
 }
 
-function extractScreenerDocuments(
+// Exported for unit/fixture testing of the category-aware classifier.
+// The discovery script itself doesn't import it from outside; this
+// stays a side-effect-free pure function so tests can drive it with
+// a hand-built cheerio root.
+export function extractScreenerDocuments(
   $: cheerio.CheerioAPI,
   baseUrl: string,
   maxDocuments: number
@@ -562,7 +659,7 @@ function extractScreenerDocuments(
     }
 
     const documentUrl = absoluteUrl(href, baseUrl);
-    const { type, confidence } = classifyScreenerLink(
+    const classification = classifyScreenerLink(
       category,
       linkText,
       documentUrl
@@ -570,20 +667,18 @@ function extractScreenerDocuments(
     const period = extractPeriodToken(`${linkText} ${category ?? ""}`);
 
     out.push({
-      documentType: type,
+      documentType: classification.type,
       title: linkText,
       documentUrl,
       category,
+      classifySource: classification.source,
+      confidence: classification.confidence,
       period,
       // Real publishedDate would require either a sibling <time> element
       // or a server-rendered date string; Screener publishes dates only
       // for some categories. Leave null when not parseable.
       publishedDate: null,
     });
-    // also pin confidence onto the object via a closure variable below
-    (out[out.length - 1] as DiscoveredDocument & {
-      confidence?: DiscoveryConfidence;
-    }).confidence = confidence;
     return undefined;
   });
 
@@ -693,20 +788,25 @@ async function discoverScreener(
   }
 
   for (const doc of documents) {
-    const confidence =
-      (doc as DiscoveredDocument & { confidence?: DiscoveryConfidence })
-        .confidence ?? "medium";
+    // Notes embed the classifier trail so an analyst auditing false
+    // positives knows: which Screener category the link came from,
+    // whether the classification was driven by the category header
+    // or by the link text, and which Screener page URL produced the
+    // link.
+    const categoryFragment =
+      doc.category !== null ? `category="${doc.category}"` : "category=(unknown)";
+    const notes =
+      `Screener documents section · ${categoryFragment} · ` +
+      `classified-by=${doc.classifySource} · ` +
+      `source-url=${landedUrl}`;
     rows.push(
-      makeProbeRow(company, "screener", landedUrl, "discovered", confidence, {
+      makeProbeRow(company, "screener", landedUrl, "discovered", doc.confidence, {
         documentType: doc.documentType,
         title: doc.title,
         documentUrl: doc.documentUrl,
         period: doc.period,
         publishedDate: doc.publishedDate,
-        notes:
-          doc.category !== null
-            ? `Screener documents section · category="${doc.category}"`
-            : "Screener documents section",
+        notes,
       })
     );
   }
@@ -924,7 +1024,19 @@ async function main(): Promise<void> {
   );
 }
 
-main().catch((err) => {
-  console.error("[guidance:sources] failed:", err);
-  process.exitCode = 1;
-});
+// Only run main() when this file is invoked directly (e.g.,
+// `tsx scripts/ingest/guidance-sources.ts`). When the module is
+// imported for unit-testing the classifier or extractor we don't
+// want a stray run that touches the network or rewrites the
+// manifest. Compares the resolved path of the entry script with
+// this module's URL.
+const isDirectInvocation =
+  typeof process.argv[1] === "string" &&
+  import.meta.url === `file://${resolve(process.argv[1])}`;
+
+if (isDirectInvocation) {
+  main().catch((err) => {
+    console.error("[guidance:sources] failed:", err);
+    process.exitCode = 1;
+  });
+}
