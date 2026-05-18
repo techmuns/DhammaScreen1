@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "quarterly-financials",
     "description": "Last 5 quarters of P&L line items per company, derived from NSE/BSE quarterly filings.",
-    "generatedAt": "2026-05-14T07:47:36.390Z",
+    "generatedAt": "2026-05-18T14:47:22.502Z",
     "rowCount": 0,
     "status": "empty",
     "notes": "Discovery is wired; extraction is not. Filings appear in filing-manifest.json but are not parsed into rows yet.",
@@ -10,7 +10,7 @@
       "sourceClass": "nse_bse_filing",
       "sourceUrl": null,
       "sourceLabel": "Discovery adapters wired; financial-row extraction not yet implemented (Audit-status).",
-      "fetchedAt": "2026-05-14T07:46:25.450Z",
+      "fetchedAt": "2026-05-18T14:47:01.180Z",
       "publishedAt": null,
       "notes": "Quarterly/annual financial rows still require a parser. See dhamma-dashboard-1-metric-audit.md."
     },

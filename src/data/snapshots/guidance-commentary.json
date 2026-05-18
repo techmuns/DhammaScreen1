@@ -1,20 +1,51 @@
 {
   "meta": {
+    "source": "Concall transcript extraction",
     "snapshotId": "guidance-commentary",
-    "description": "Extracted forward-looking statements from earnings call transcripts.",
-    "generatedAt": "2026-05-14T07:47:36.391Z",
-    "rowCount": 0,
-    "status": "empty",
-    "notes": "Transcript extraction is Audit-status and intentionally not wired in Step 2.",
-    "source": {
-      "sourceClass": "concall_transcript",
-      "sourceUrl": null,
-      "sourceLabel": "Discovery adapters wired; financial-row extraction not yet implemented (Audit-status).",
-      "fetchedAt": "2026-05-14T07:46:25.450Z",
-      "publishedAt": null,
-      "notes": "Quarterly/annual financial rows still require a parser. See dhamma-dashboard-1-metric-audit.md."
-    },
-    "errors": []
+    "description": "Verbatim guidance commentary candidates extracted from concall transcripts and other source documents. Every row is reviewStatus='needs_review' until an analyst approves. The dashboard only renders rows with reviewStatus='approved'.",
+    "generatedAt": "2026-05-18T14:50:00.560Z",
+    "rowCount": 1,
+    "status": "partial",
+    "notes": "Documents attempted: 2. New rows this run: 1. Errors: 1. Preserved (prior reviews): 0.",
+    "errors": [
+      {
+        "sourceId": "guidance-extract",
+        "companyId": "infosys",
+        "documentUrl": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/2ab7badf-388c-4dab-bfcc-3e128677734c.pdf",
+        "message": "infosys: downloaded payload is not a PDF (content-type=text/html; charset=utf-8, byteLength=8405)",
+        "occurredAt": "2026-05-18T14:50:00.294Z"
+      }
+    ]
   },
-  "rows": []
+  "rows": [
+    {
+      "commentaryId": "tcs::e338ee7d::p8::o428::b33cce0555",
+      "companyId": "tcs",
+      "companyName": "TCS",
+      "sourceProvider": "screener",
+      "sourceUrl": "https://www.screener.in/company/TCS/consolidated/",
+      "documentUrl": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/07ae2d32-1050-4e80-96ff-eb2d98378d4e.pdf",
+      "documentTitle": "Transcript",
+      "documentType": "concall_transcript",
+      "commentaryPeriod": null,
+      "targetPeriod": null,
+      "speaker": null,
+      "speakerRole": null,
+      "topic": "tax_rate",
+      "metric": null,
+      "expectedDirection": "qualitative",
+      "rawQuote": "Our effective tax rate for the year was   24.6% .",
+      "cleanedQuote": "Our effective tax rate for the year was 24.6% .",
+      "pageIndex": 8,
+      "charOffset": 428,
+      "quoteLength": 49,
+      "numericLow": 24.6,
+      "numericHigh": 24.6,
+      "numericUnit": "percent",
+      "confidence": "medium",
+      "reviewStatus": "needs_review",
+      "extractedAt": "2026-05-18T14:49:58.826Z",
+      "notes": "Pattern=tax-rate-percent · doc=https://www.bseindia.com/xml-data/corpfiling/AttachHis/07ae2d32-1050-4e80-96ff-eb2d98378d4e.pdf"
+    }
+  ]
 }
