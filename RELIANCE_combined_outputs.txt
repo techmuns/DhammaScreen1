@@ -1,0 +1,359 @@
+Ticker: RELIANCE
+Fetched at: Tuesday 19 May 2026 03:32:15 AM IST
+
+
+============================================================
+TOOL: /get_concalls | TIME TAKEN: 1s
+============================================================
+
+{
+  "ok": true,
+  "api": "get_concalls",
+  "result": [
+    {
+      "month": "Apr 2026",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/971d8c86-397a-4780-b843-5a84d3006d0b.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/5145c56f-ff81-4812-9663-f9b2461c4b2c.pdf"
+    },
+    {
+      "month": "Jan 2026",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/26290395-526a-441f-a347-c8ac12e4adf3.pdf"
+    },
+    {
+      "month": "Jan 2026",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/26290395-526a-441f-a347-c8ac12e4adf3.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/d0e06e07-5a3e-4bc0-a6a6-76635bc53238.pdf",
+      "recording": "https://www.youtube.com/watch?v=k7YqZJ4TY8A"
+    },
+    {
+      "month": "Oct 2025",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/f2454c0f-aad9-4d23-add0-dfe3d49aa8d6.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/b74bb5fb-c15b-42f1-b853-34231e587f46.pdf",
+      "recording": "https://youtu.be/mU39C6sNUNM"
+    },
+    {
+      "month": "Oct 2025",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/7a050d55-ad53-4d57-8735-cbcf20bb412b.pdf"
+    },
+    {
+      "month": "Aug 2025",
+      "recording": "https://www.youtube.com/live/4Y1cd2SLoo8?si=b4cZ3ALJKDyHxM2b"
+    },
+    {
+      "month": "Jul 2025",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/38a33049-ed9e-4544-ace5-a92e5f984f23.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/49a01d99-854c-4c3a-b62c-e1fb3619029f.pdf"
+    },
+    {
+      "month": "Apr 2025",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/3e36b485-0a6c-4f84-bf74-7d60b0e26d9d.pdf"
+    },
+    {
+      "month": "Apr 2025",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/b6203612-be21-4d28-ace9-6496cd3fb8b2.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/ac3d5e8f-9a84-4510-99e8-71eabcf49a01.pdf",
+      "recording": "https://www.youtube.com/watch?v=Tj8c9UfTdXw"
+    },
+    {
+      "month": "Jan 2025",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/aa0547ba-09ef-404d-b57d-c216d1513f17.pdf"
+    },
+    {
+      "month": "Jan 2025",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/89c33a3e-5683-4a1d-b8f9-1952ff4df63f.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/cb5da39b-b46a-45f7-b2b6-932a4f2ecf91.pdf"
+    },
+    {
+      "month": "Oct 2024",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/0e6309fa-450f-4db6-88b2-d76d9a3ff756.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/fd1fe004-0eb0-4a2b-9859-7b62a89e451c.pdf"
+    },
+    {
+      "month": "Aug 2024",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/9364b18a-7921-4029-bcfa-78921cd7807e.pdf"
+    },
+    {
+      "month": "Jul 2024",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/191e6ab9-4751-4017-ba5f-bb63daf2d871.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/24faf885-ece1-4852-b0fe-91fc8643dc1c.pdf"
+    },
+    {
+      "month": "Apr 2024",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/06b05d06-8c38-4aee-aa5b-5e7108ae3871.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/0501df4e-7d64-455d-bbb0-4b2118067e51.pdf",
+      "recording": "https://www.ril.com/investors/events-presentations#webcast-sec"
+    },
+    {
+      "month": "Jan 2024",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/de3e8ff3-efca-4266-9bc8-7509f48574a4.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/1cb66ca2-dfd5-4f46-986f-03b0661bd486.pdf"
+    },
+    {
+      "month": "Oct 2023",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/ef9baa21-923a-48ad-9fb7-2157af59ae16.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/f9c9eba2-4b08-430f-a3a0-0dd5419b7f8f.pdf"
+    },
+    {
+      "month": "Aug 2023",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/7cf2df9a-51bb-45d4-9004-3cad20b5920b.pdf"
+    },
+    {
+      "month": "Jul 2023",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/f2fa506f-675b-46db-9f7b-26303a05d6b9.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/dc6d4a06-e2bc-4df4-8b8a-5db0f50b1918.pdf"
+    },
+    {
+      "month": "Apr 2023",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/9c8c3f07-883a-476b-8fb2-8fe74078e9f5.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/7c228ccc-99ad-4bd9-be72-0a746c30ebee.pdf"
+    },
+    {
+      "month": "Jan 2023",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/dfb275bd-fd47-4a38-964e-21a67e26b3c2.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/1ef9c86c-8f99-4791-a677-ea8a65e4ef28.pdf"
+    },
+    {
+      "month": "Oct 2022",
+      "transcript": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/aa7a60c6-791d-4e59-94e6-9f94c3a506fc.pdf",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/d6182ad1-6f8e-4112-b865-984ea1035107.pdf"
+    },
+    {
+      "month": "Jul 2022",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/9e81c058-6b85-4f18-ba5a-bbdd72156edf.pdf"
+    },
+    {
+      "month": "May 2022",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/bf7646f7-940a-429b-b3eb-0625715f6aeb.pdf"
+    },
+    {
+      "month": "Feb 2022",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/7d172a7c-9056-4588-ad0c-d5c114ff902a.pdf"
+    },
+    {
+      "month": "Jan 2022",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/6047c516-bdab-4a88-9103-81d6ddad23d5.pdf"
+    },
+    {
+      "month": "Oct 2021",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/1008c763-0d31-4432-a031-6dd4afda0c72.pdf"
+    },
+    {
+      "month": "Jul 2021",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/33e997e6-025e-478e-b71f-fb59dca2a4ef.pdf"
+    },
+    {
+      "month": "Apr 2021",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/b9139079-b211-4486-a604-ef5b85a7985e.pdf"
+    },
+    {
+      "month": "Feb 2021",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/caff4f40-fd8f-49ae-929c-f5dae4c98ec3.pdf"
+    },
+    {
+      "month": "Feb 2021",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/4c079f28-425e-4fb4-a830-ae9f4fde355d.pdf"
+    },
+    {
+      "month": "Jan 2021",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/c44095c1-55cb-4048-a235-6f776dd054e9.pdf"
+    },
+    {
+      "month": "Jan 2021",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/ee845952-2c47-4abc-b15a-ab759c068efe.pdf"
+    },
+    {
+      "month": "Oct 2020",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/ef91573e-ebb9-4257-8209-b684d9380a3e.pdf"
+    },
+    {
+      "month": "Jul 2020",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/c9c7754a-ab5a-4463-a5cb-3baafbef135d.pdf"
+    },
+    {
+      "month": "May 2020",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/8841c2b4-6659-4ea6-aefd-9874fee15705.pdf"
+    },
+    {
+      "month": "Jan 2020",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/a738dab1-1698-4a4f-b863-148b5c5023e0.pdf"
+    },
+    {
+      "month": "Oct 2019",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/5f6d2f75-5b1f-4c8b-87eb-34e3c8246fb1.pdf"
+    },
+    {
+      "month": "Oct 2019",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/bcf1b986-0d58-4126-b3fa-cf67e7b44e14.pdf"
+    },
+    {
+      "month": "Apr 2019",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/05c527f3-c7ff-4e83-a2b3-d7d92b20969d.pdf"
+    },
+    {
+      "month": "Jan 2019",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/CorpAttachment/2019/1/040c976b-6d40-4903-905e-27820f21eb05.pdf"
+    },
+    {
+      "month": "Oct 2018",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/CorpAttachment/2018/10/d71a237f-6917-4594-969d-cfd62d1849d9.pdf"
+    },
+    {
+      "month": "Apr 2018",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/CorpAttachment/2018/4/e0357498-61d2-405d-98c9-02a1e83b556b.pdf"
+    },
+    {
+      "month": "Jan 2018",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/CorpAttachment/2018/1/1a49913c-4798-4f48-ab39-e187ea89caf2.pdf"
+    },
+    {
+      "month": "Oct 2017",
+      "ppt": "https://www.bseindia.com/xml-data/corpfiling/CorpAttachment/2017/10/421cf002-f53b-4c1c-a8be-de2fdda6fd05.pdf"
+    },
+    {
+      "month": "Jun 2016",
+      "ppt": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=6669EE6F_088E_4C15_9839_E2DBB861749D_110427.pdf"
+    }
+  ]
+}
+
+====================== END OF /get_concalls ====================
+
+
+============================================================
+TOOL: /get_credit_rating | TIME TAKEN: 1s
+============================================================
+
+{
+  "ok": true,
+  "api": "get_credit_rating",
+  "result": [
+    {
+      "title": "Rating update",
+      "date": "30 Mar",
+      "source": "crisil",
+      "link": "https://www.crisil.com/mnt/winshare/Ratings/RatingList/RatingDocs/RelianceIndustriesLimited_March 30_ 2026_RR_392495.html"
+    },
+    {
+      "title": "Rating update",
+      "date": "30 Jan",
+      "source": "crisil",
+      "link": "https://www.crisil.com/mnt/winshare/Ratings/RatingList/RatingDocs/FirstBusinessReceivablesTrust_January 30_ 2026_RR_387316.html"
+    },
+    {
+      "title": "Rating update",
+      "date": "29 Jan",
+      "source": "icra",
+      "link": "https://www.icra.in/Rationale/ShowRationaleReport/?Id=140636"
+    },
+    {
+      "title": "Rating update",
+      "date": "30 Oct 2025",
+      "source": "crisil",
+      "link": "https://www.crisil.com/mnt/winshare/Ratings/RatingList/RatingDocs/RelianceIndustriesLimited_October 30_ 2025_RR_379987.html"
+    },
+    {
+      "title": "Rating update",
+      "date": "30 Jul 2025",
+      "source": "crisil",
+      "link": "https://www.crisil.com/mnt/winshare/Ratings/RatingList/RatingDocs/FirstBusinessReceivablesTrust_July 30_ 2025_RR_374300.html"
+    },
+    {
+      "title": "Rating update",
+      "date": "4 Jul 2025",
+      "source": "care",
+      "link": "https://www.careratings.com/upload/CompanyFiles/PR/202507130705_Reliance_Industries_Limited.pdf"
+    }
+  ]
+}
+
+====================== END OF /get_credit_rating ====================
+
+
+============================================================
+TOOL: /get_annual_reports | TIME TAKEN: 1s
+============================================================
+
+{
+  "ok": true,
+  "api": "get_annual_reports",
+  "result": [
+    {
+      "year": "Financial Year 2025",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/468b09a3-a212-4066-bbaa-4b0ba524d2ce.pdf"
+    },
+    {
+      "year": "Financial Year 2024",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/d473280d-1c2b-4037-8ff9-dfbb82aa2c7e.pdf"
+    },
+    {
+      "year": "Financial Year 2023",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/b55b5dfc-a3bf-4f24-9d7f-ca09774a1dd9.pdf"
+    },
+    {
+      "year": "Financial Year 2022",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/74185500325.pdf"
+    },
+    {
+      "year": "Financial Year 2021",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/68509500325.pdf"
+    },
+    {
+      "year": "Financial Year 2020",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/5003250320.pdf"
+    },
+    {
+      "year": "Financial Year 2019",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/5003250319.pdf"
+    },
+    {
+      "year": "Financial Year 2018",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/5003250318.pdf"
+    },
+    {
+      "year": "Financial Year 2017",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/5003250317.pdf"
+    },
+    {
+      "year": "Financial Year 2016",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/5003250316.pdf"
+    },
+    {
+      "year": "Financial Year 2015",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/5003250315.pdf"
+    },
+    {
+      "year": "Financial Year 2014",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/5003250314.pdf"
+    },
+    {
+      "year": "Financial Year 2013",
+      "source": "from nse",
+      "link": "https://archives.nseindia.com/annual_reports/AR_19_RELIANCE_2012_2013_08052013171218.zip"
+    },
+    {
+      "year": "Financial Year 2013",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/5003250313.pdf"
+    },
+    {
+      "year": "Financial Year 2012",
+      "source": "from bse",
+      "link": "https://www.bseindia.com/bseplus/AnnualReport/500325/5003250312.pdf"
+    }
+  ]
+}
+
+====================== END OF /get_annual_reports ====================
+
