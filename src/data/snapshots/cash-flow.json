@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "cash-flow",
     "description": "Condensed cash flow rows: CFO, working capital changes, CFI, CFF.",
-    "generatedAt": "2026-05-25T14:21:48.084Z",
+    "generatedAt": "2026-06-01T09:01:47.890Z",
     "rowCount": 0,
     "status": "empty",
     "notes": "Most Indian listed companies file CFS half-yearly/annually only.",
@@ -10,7 +10,7 @@
       "sourceClass": "annual_report",
       "sourceUrl": null,
       "sourceLabel": "Discovery adapters wired; financial-row extraction not yet implemented (Audit-status).",
-      "fetchedAt": "2026-05-25T14:21:23.241Z",
+      "fetchedAt": "2026-06-01T09:01:17.762Z",
       "publishedAt": null,
       "notes": "Quarterly/annual financial rows still require a parser. See dhamma-dashboard-1-metric-audit.md."
     },
