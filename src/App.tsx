@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { CompanySelector } from "./components/CompanySelector";
 import { DashboardHeader } from "./components/DashboardHeader";
@@ -12,6 +12,7 @@ import { KpiSummaryCards } from "./components/KpiSummaryCards";
 // kept in src/components/PeerComparisonTable.tsx for reference / future
 // reactivation if the client asks for a standalone table.
 import { PeriodToggle, type PeriodView } from "./components/PeriodToggle";
+import { SdkStatusPanel } from "./components/SdkStatusPanel";
 import { WidgetCard } from "./components/WidgetCard";
 import {
   formatGenerationTimestamp,
@@ -21,6 +22,10 @@ import {
   ALL_SNAPSHOT_METAS,
   companyMasterSnapshot,
 } from "./data/helpers/snapshotLoader";
+import { useMunshotSdk } from "./sdk/useMunshotSdk";
+
+const DASHBOARD_ID = "dhamma-earnings-1";
+const DASHBOARD_NAME = "Dhamma Earnings Dashboard 1";
 
 export function App() {
   const companies = companyMasterSnapshot.rows;
@@ -28,6 +33,62 @@ export function App() {
     companies[0]?.companyId ?? null
   );
   const [periodView, setPeriodView] = useState<PeriodView>("quarters");
+
+  const sdk = useMunshotSdk({
+    dashboardId: DASHBOARD_ID,
+    dashboardName: DASHBOARD_NAME,
+  });
+
+  // 6. Host-pushed ticker → drive the selected company. We do this from
+  // App.tsx (not the hook) because only the dashboard knows the company
+  // master and what counts as a match.
+  useEffect(() => {
+    const hostTicker = pickHostTicker(sdk.context);
+    if (!hostTicker) return;
+    const match = companies.find(
+      (c) =>
+        (c.nseSymbol && c.nseSymbol === hostTicker) ||
+        c.companyId === hostTicker
+    );
+    if (match && match.companyId !== companyId) {
+      setCompanyId(match.companyId);
+    }
+    // companies is build-time static so it's safe to exclude from deps.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sdk.context]);
+
+  // Publish dashboard.* telemetry when the user changes inputs. Guarded
+  // on a "ready to emit" ref so we don't fire on mount before the SDK is
+  // connected.
+  const didConnect = useRef(false);
+  useEffect(() => {
+    if (sdk.status === "connected") {
+      didConnect.current = true;
+    }
+  }, [sdk.status]);
+
+  useEffect(() => {
+    if (!didConnect.current) return;
+    if (!companyId) return;
+    const company = companies.find((c) => c.companyId === companyId);
+    sdk.publish("portfolio.ticker.select", {
+      companyId,
+      ticker: company?.nseSymbol ?? null,
+      displayName: company?.displayName ?? null,
+      source: "dashboard-user",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [companyId]);
+
+  useEffect(() => {
+    if (!didConnect.current) return;
+    sdk.publish("analytics.filter.change", {
+      filter: "period",
+      value: periodView,
+      dashboardId: DASHBOARD_ID,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [periodView]);
 
   const selectedCompany =
     companies.find((c) => c.companyId === companyId) ?? null;
@@ -44,15 +105,16 @@ export function App() {
         ticker={tickerLabel}
         company={companyLabel}
         lastUpdated={lastUpdated}
+        sdkStatus={sdk.status}
         actions={<PeriodToggle value={periodView} onChange={setPeriodView} />}
       />
 
       <main className="dashboard-main">
-        {/* Row 1: filters / context + data source status */}
+        {/* Row 1: filters / context + Munshot SDK status + data source status */}
         <div className="widget-grid widget-grid--wide">
           <WidgetCard
             title="Company"
-            subtitle="Selected company defines every metric, table, and benchmark below."
+            subtitle="Selected company drives every metric, table, and benchmark below."
             bodyPadding="padded"
           >
             <CompanySelector
@@ -60,6 +122,14 @@ export function App() {
               value={companyId}
               onChange={setCompanyId}
             />
+          </WidgetCard>
+
+          <WidgetCard
+            title="Munshot SDK"
+            subtitle="Host integration · use the buttons to verify the round-trip."
+            bodyPadding="flush"
+          >
+            <SdkStatusPanel sdk={sdk} dashboardId={DASHBOARD_ID} />
           </WidgetCard>
 
           <WidgetCard
@@ -121,4 +191,14 @@ export function App() {
       </main>
     </div>
   );
+}
+
+function pickHostTicker(context: unknown): string | null {
+  if (!context || typeof context !== "object") return null;
+  const ctx = context as Record<string, unknown>;
+  for (const key of ["ticker", "symbol", "nseSymbol"]) {
+    const v = ctx[key];
+    if (typeof v === "string" && v.length > 0) return v;
+  }
+  return null;
 }

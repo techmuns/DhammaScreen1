@@ -1,18 +1,38 @@
 import type { ReactNode } from "react";
 
+import type { SdkStatus } from "../sdk/useMunshotSdk";
+
 interface DashboardHeaderProps {
   title: string;
   ticker?: string | null;
   company?: string | null;
   lastUpdated?: string | null;
+  sdkStatus?: SdkStatus;
   actions?: ReactNode;
 }
+
+const SDK_DOT_LABEL: Record<SdkStatus, string> = {
+  loading: "SDK loading",
+  standalone: "SDK standalone",
+  connecting: "SDK connecting",
+  connected: "SDK connected",
+  error: "SDK error",
+};
+
+const SDK_DOT_MODIFIER: Record<SdkStatus, string> = {
+  loading: "connecting",
+  standalone: "standalone",
+  connecting: "connecting",
+  connected: "connected",
+  error: "error",
+};
 
 export function DashboardHeader({
   title,
   ticker,
   company,
   lastUpdated,
+  sdkStatus,
   actions,
 }: DashboardHeaderProps) {
   return (
@@ -25,6 +45,15 @@ export function DashboardHeader({
         {lastUpdated ? (
           <span className="dashboard-header__meta" title="Latest snapshot">
             Updated {lastUpdated}
+          </span>
+        ) : null}
+        {sdkStatus ? (
+          <span
+            className={`sdk-dot sdk-dot--${SDK_DOT_MODIFIER[sdkStatus]}`}
+            title={SDK_DOT_LABEL[sdkStatus]}
+          >
+            <span className="sdk-dot__indicator" aria-hidden="true" />
+            {SDK_DOT_LABEL[sdkStatus]}
           </span>
         ) : null}
         {actions}
