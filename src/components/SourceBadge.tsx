@@ -9,11 +9,11 @@ interface SourceBadgeProps {
 }
 
 const PROVENANCE_CLASS: Record<DataProvenance, string> = {
-  "official-filing": "badge badge--official",
-  "screener-fetch": "badge badge--screener-fetch",
-  "screener-import": "badge badge--screener",
-  audit: "badge badge--audit",
-  pending: "badge badge--pending",
+  "official-filing": "source-badge source-badge--official",
+  "screener-fetch": "source-badge source-badge--screener-fetch",
+  "screener-import": "source-badge source-badge--screener-import",
+  audit: "source-badge source-badge--audit",
+  pending: "source-badge source-badge--pending",
 };
 
 export function SourceBadge({ provenance, label }: SourceBadgeProps) {

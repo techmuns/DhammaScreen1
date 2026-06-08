@@ -42,6 +42,7 @@ import {
 } from "../data/helpers/snapshotLoader";
 import type { PeriodView } from "./PeriodToggle";
 import { SourceBadge } from "./SourceBadge";
+import { WidgetCard } from "./WidgetCard";
 
 interface KpiSummaryCardsProps {
   companyId: string | null;
@@ -216,15 +217,14 @@ export function KpiSummaryCards({
 
   if (cards.length === 0) {
     return (
-      <section className="kpi-benchmarks" aria-label="KPI peer benchmarks">
-        <div className="kpi-benchmarks__head">
-          <h2 className="section-title">KPI peer benchmarks</h2>
-          <span className="section-subtitle">
-            Select a company to compare against the tracked IT peer group.
-            Consolidated data only.
-          </span>
-        </div>
-      </section>
+      <WidgetCard
+        title="KPI peer benchmarks"
+        subtitle="Select a company to compare against the tracked IT peer group. Consolidated data only."
+        bodyPadding="padded"
+        span={2}
+      >
+        <EmptyKpi />
+      </WidgetCard>
     );
   }
 
@@ -257,36 +257,43 @@ export function KpiSummaryCards({
     cards[0]?.benchmark.selfDisplayName ?? "Selected company";
 
   return (
-    <section className="kpi-benchmarks" aria-label="KPI peer benchmarks">
-      <div className="kpi-benchmarks__head">
-        <h2 className="section-title">KPI peer benchmarks</h2>
-        <span className="section-subtitle">
-          Selected company vs. tracked IT peer group. Consolidated data only.
-          Source: cached Screener fetch · Consolidated.
-        </span>
-      </div>
-      {consolidatedWarning && (
-        <div
-          className="kpi-benchmarks__warning"
-          role="status"
-          aria-live="polite"
-        >
-          No consolidated Screener rows for this company yet. Standalone /
-          legacy rows are excluded by policy. Run the consolidated fetch
-          workflow to populate.
-        </div>
-      )}
+    <section
+      aria-label="KPI peer benchmarks"
+      style={{ display: "flex", flexDirection: "column", gap: 12 }}
+    >
       <OverallReadStrip
         tone={overallRead.tone}
         sentence={overallRead.sentence}
         selfDisplayName={selfDisplayName}
       />
-      <div className="kpi-benchmarks__grid">
+      {consolidatedWarning && (
+        <div className="kpi-warning" role="status" aria-live="polite">
+          No consolidated Screener rows for this company yet. Standalone /
+          legacy rows are excluded by policy. Run the consolidated fetch
+          workflow to populate.
+        </div>
+      )}
+      <div className="widget-grid">
         {cards.map((card) => (
           <BenchmarkCard key={card.spec.key} card={card} />
         ))}
       </div>
     </section>
+  );
+}
+
+function EmptyKpi() {
+  return (
+    <div className="empty-state" style={{ minHeight: 120 }}>
+      <span className="empty-state__icon" aria-hidden="true">
+        ⌕
+      </span>
+      <p className="empty-state__title">No company selected</p>
+      <p className="empty-state__message">
+        Pick a company in the selector above to compare its KPIs against
+        the tracked IT peer group.
+      </p>
+    </div>
   );
 }
 
@@ -328,79 +335,83 @@ function BenchmarkCard({ card }: { card: BenchmarkCardModel }) {
   const stripRows = compactStrip(benchmark);
   const isRisk = spec.category === "balance-sheet-risk";
 
+  const actions = (
+    <>
+      {isRisk ? (
+        <span
+          className="category-badge category-badge--india"
+          title="Balance-sheet risk"
+        >
+          risk
+        </span>
+      ) : null}
+      <SourceBadge provenance="screener-fetch" />
+    </>
+  );
+
   return (
-    <article
-      className={`benchmark-card${isRisk ? " benchmark-card--risk" : ""}`}
+    <WidgetCard
+      title={spec.label}
+      subtitle={benchmark.selfPeriod ?? "—"}
+      actions={actions}
+      bodyPadding="flush"
     >
-      <header className="benchmark-card__header">
-        <div className="benchmark-card__label-row">
-          <span className="benchmark-card__label">{spec.label}</span>
-          {isRisk && (
-            <span className="benchmark-card__category-tag">
-              Balance-sheet risk
+      <div className="benchmark-card">
+        <div className="benchmark-card__primary">
+          <div>
+            <div className="benchmark-card__value">
+              {tableValueOrDash(benchmark.selfValue, format)}
+            </div>
+          </div>
+          <div className="benchmark-card__rank">
+            <span className="benchmark-card__rank-number">
+              {benchmark.rank !== null ? `${benchmark.rank}` : "—"}
             </span>
-          )}
+            <span className="benchmark-card__rank-of">
+              {benchmark.rankOf > 0 ? ` / ${benchmark.rankOf}` : ""}
+            </span>
+          </div>
         </div>
-        <SourceBadge provenance="screener-fetch" />
-      </header>
 
-      <div className="benchmark-card__primary">
-        <div className="benchmark-card__value-block">
-          <span className="benchmark-card__value">
-            {tableValueOrDash(benchmark.selfValue, format)}
+        <div className="benchmark-card__secondary">
+          <span className="benchmark-card__peer-avg">
+            Peer median{" "}
+            <strong>{tableValueOrDash(benchmark.peerMedian, format)}</strong>
           </span>
-          <span className="benchmark-card__period">
-            {benchmark.selfPeriod ?? "—"}
-          </span>
+          <PositionChip
+            position={benchmark.position}
+            sentiment={benchmark.sentiment}
+          />
         </div>
-        <div className="benchmark-card__rank">
-          <span className="benchmark-card__rank-number">
-            {benchmark.rank !== null ? `${benchmark.rank}` : "—"}
+
+        <ul className="benchmark-card__peers">
+          {stripRows.map((row) => (
+            <li
+              key={row.tag}
+              className={`benchmark-card__peer benchmark-card__peer--${row.tag}${
+                row.entry.isSelf ? " benchmark-card__peer--self" : ""
+              }`}
+            >
+              <span className="benchmark-card__peer-tag">{row.label}</span>
+              <span className="benchmark-card__peer-name">
+                {row.entry.displayName}
+              </span>
+              <span className="benchmark-card__peer-value">
+                {tableValueOrDash(row.entry.value, format)}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <p className="benchmark-card__hint">
+          <span className="benchmark-card__peer-count">
+            Peer count: {benchmark.peerCount}
           </span>
-          <span className="benchmark-card__rank-of">
-            {benchmark.rankOf > 0 ? `/ ${benchmark.rankOf}` : ""}
-          </span>
-        </div>
+          {" · "}
+          {spec.hint}
+        </p>
       </div>
-
-      <div className="benchmark-card__secondary">
-        <span className="benchmark-card__peer-avg">
-          Peer median{" "}
-          <strong>{tableValueOrDash(benchmark.peerMedian, format)}</strong>
-        </span>
-        <PositionChip
-          position={benchmark.position}
-          sentiment={benchmark.sentiment}
-        />
-      </div>
-
-      <ul className="benchmark-card__peers benchmark-card__peers--compact">
-        {stripRows.map((row) => (
-          <li
-            key={row.tag}
-            className={`benchmark-card__peer benchmark-card__peer--${row.tag}${
-              row.entry.isSelf ? " benchmark-card__peer--self" : ""
-            }`}
-          >
-            <span className="benchmark-card__peer-tag">{row.label}</span>
-            <span className="benchmark-card__peer-name">
-              {row.entry.displayName}
-            </span>
-            <span className="benchmark-card__peer-value">
-              {tableValueOrDash(row.entry.value, format)}
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      <p className="benchmark-card__hint">
-        <span className="benchmark-card__peer-count">
-          Peer count: {benchmark.peerCount}
-        </span>
-        <span className="benchmark-card__hint-dot"> · </span>
-        {spec.hint}
-      </p>
-    </article>
+    </WidgetCard>
   );
 }
 

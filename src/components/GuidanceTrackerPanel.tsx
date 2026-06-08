@@ -77,59 +77,52 @@ export function GuidanceTrackerPanel({
   const companyLabel = company?.displayName ?? "the selected company";
 
   return (
-    <section className="guidance-section" aria-label="Guidance tracker">
-      <div className="section-head">
-        <h2 className="section-title">Guidance tracker</h2>
-        <SourceBadge provenance="audit" />
+    <div className="guidance-planned" role="group">
+      <div>
+        <p className="guidance-planned__title">
+          Planned module · not yet live <SourceBadge provenance="audit" />
+        </p>
+        <p className="guidance-planned__lede">
+          Lines up prior-quarter management commentary for {companyLabel}{" "}
+          against the actual financial result, with a verified source link.
+          The dashboard renders zero guidance rows today — it never invents
+          quotes or match statuses.
+        </p>
       </div>
 
-      <div className="guidance-planned" role="group">
-        <div className="guidance-planned__intro">
-          <p className="guidance-planned__title">
-            Planned module · not yet live
-          </p>
-          <p className="guidance-planned__lede">
-            Lines up prior-quarter management commentary for {companyLabel}{" "}
-            against the actual financial result, with a verified source
-            link. The dashboard renders zero guidance rows today — it never
-            invents quotes or match statuses.
-          </p>
-        </div>
-
-        <div className="guidance-planned__columns">
-          <h3 className="guidance-planned__subtitle">
-            Pipeline (each row needs all three)
-          </h3>
-          <ol className="guidance-planned__steps">
-            {PIPELINE_STEPS.map((step) => (
-              <li key={step.label} className="guidance-planned__step">
-                <span className="guidance-planned__step-label">
-                  {step.label}
-                </span>
-                <span className="guidance-planned__step-status">Pending</span>
-                <p className="guidance-planned__step-detail">{step.detail}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="guidance-planned__preview">
-          <h3 className="guidance-planned__subtitle">
-            What this view will show
-          </h3>
-          <p className="guidance-planned__columns-list">
-            {PLANNED_COLUMNS.join(" · ")}
-          </p>
-        </div>
-
-        {hasRealData && (
-          <div className="guidance-planned__upgrade" role="status">
-            Real guidance rows are now available for {companyLabel}. This
-            placeholder will be replaced by the live table on the next
-            UI build.
-          </div>
-        )}
+      <div>
+        <h4 className="guidance-planned__subtitle">
+          Pipeline (each row needs all three)
+        </h4>
+        <ol className="guidance-planned__steps">
+          {PIPELINE_STEPS.map((step) => (
+            <li key={step.label} className="guidance-planned__step">
+              <span className="guidance-planned__step-label">
+                {step.label}
+              </span>
+              <span className="guidance-planned__step-status">Pending</span>
+              <p className="guidance-planned__step-detail">{step.detail}</p>
+            </li>
+          ))}
+        </ol>
       </div>
-    </section>
+
+      <div>
+        <h4 className="guidance-planned__subtitle">
+          What this view will show
+        </h4>
+        <p className="guidance-planned__columns-list">
+          {PLANNED_COLUMNS.join(" · ")}
+        </p>
+      </div>
+
+      {hasRealData && (
+        <div className="guidance-planned__upgrade" role="status">
+          Real guidance rows are now available for {companyLabel}. This
+          placeholder will be replaced by the live table on the next UI
+          build.
+        </div>
+      )}
+    </div>
   );
 }

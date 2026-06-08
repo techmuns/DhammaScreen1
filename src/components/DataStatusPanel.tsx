@@ -162,15 +162,15 @@ function paths(): PathStatus[] {
 export function DataStatusPanel() {
   const items = paths();
   return (
-    <div className="data-status-panel" aria-label="Data source status">
+    <div className="status-pill-strip" aria-label="Data source status">
       {items.map((item) => (
         <div
           key={item.label}
-          className={`data-status-pill data-status-pill--${item.tone}`}
+          className={`status-pill status-pill--${item.tone}`}
         >
-          <span className="data-status-pill__label">{item.label}</span>
-          <span className="data-status-pill__status">{item.status}</span>
-          <span className="data-status-pill__detail">{item.detail}</span>
+          <span className="status-pill__label">{item.label}</span>
+          <span className="status-pill__status">{item.status}</span>
+          <span className="status-pill__detail">{item.detail}</span>
         </div>
       ))}
     </div>

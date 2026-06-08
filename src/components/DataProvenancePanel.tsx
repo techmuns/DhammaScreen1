@@ -127,15 +127,11 @@ export function DataProvenancePanel() {
   const groups = groupSnapshots();
   const summary = buildSummary();
   return (
-    <section className="provenance-section" aria-label="Data provenance">
-      <div className="section-head">
-        <h2 className="section-title">Data provenance</h2>
-        <span className="section-subtitle">
-          Cached snapshots only. The UI never live-fetches.
-        </span>
-      </div>
-
-      <dl className="provenance-summary" aria-label="Data provenance summary">
+    <div aria-label="Data provenance">
+      <dl
+        className="provenance-summary"
+        aria-label="Data provenance summary"
+      >
         <SummaryStat
           label="Consolidated rows"
           value={summary.consolidatedRows.toLocaleString("en-IN")}
@@ -149,7 +145,7 @@ export function DataProvenancePanel() {
         <SummaryStat
           label="Official filings discovered"
           value={summary.officialFilingsDiscovered.toLocaleString("en-IN")}
-          hint="Discovery only; financial extraction pending"
+          hint="Discovery only; extraction pending"
         />
         <SummaryStat
           label="Last refresh"
@@ -162,15 +158,13 @@ export function DataProvenancePanel() {
         <summary className="provenance-details__summary">
           Per-snapshot detail
         </summary>
-        <div className="provenance-details__body">
+        <div>
           {groups.map((group) => (
             <div key={group.title} className="provenance-group">
-              <div className="provenance-group__head">
-                <h3 className="provenance-group__title">{group.title}</h3>
-                <span className="provenance-group__desc">
-                  {group.description}
-                </span>
-              </div>
+              <h4 className="provenance-group__title">{group.title}</h4>
+              <span className="provenance-group__desc">
+                {group.description}
+              </span>
               <div className="table-wrap">
                 <table className="data-table data-table--compact">
                   <thead>
@@ -210,7 +204,7 @@ export function DataProvenancePanel() {
           ))}
         </div>
       </details>
-    </section>
+    </div>
   );
 }
 
@@ -224,10 +218,10 @@ function SummaryStat({
   hint: string;
 }) {
   return (
-    <div className="provenance-summary__stat">
-      <dt className="provenance-summary__label">{label}</dt>
-      <dd className="provenance-summary__value">{value}</dd>
-      <span className="provenance-summary__hint">{hint}</span>
+    <div className="provenance-stat">
+      <dt className="provenance-stat__label">{label}</dt>
+      <dd className="provenance-stat__value">{value}</dd>
+      <span className="provenance-stat__hint">{hint}</span>
     </div>
   );
 }

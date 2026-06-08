@@ -66,22 +66,28 @@ export function FinancialStatementTables({
   const [tab, setTab] = useState<StatementTab>("pl");
 
   return (
-    <section className="statements" aria-label="Financial statements">
-      <div className="statements__tabs" role="tablist">
+    <div aria-label="Financial statements">
+      <div
+        role="tablist"
+        className="statements-tabs"
+        style={{ margin: "10px 16px" }}
+      >
         {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
             role="tab"
             aria-selected={tab === t.id}
-            className={`statements__tab ${tab === t.id ? "statements__tab--active" : ""}`}
+            className={`statements-tab ${
+              tab === t.id ? "statements-tab--active" : ""
+            }`}
             onClick={() => setTab(t.id)}
           >
             {t.label}
           </button>
         ))}
       </div>
-      <div className="statements__body">
+      <div className="statements-body">
         {tab === "pl" && (
           <ProfitLossTable companyId={companyId} periodView={periodView} />
         )}
@@ -95,7 +101,7 @@ export function FinancialStatementTables({
           <CashFlowTable companyId={companyId} periodView={periodView} />
         )}
       </div>
-    </section>
+    </div>
   );
 }
 
