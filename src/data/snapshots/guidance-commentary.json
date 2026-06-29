@@ -3,19 +3,11 @@
     "source": "Concall transcript extraction",
     "snapshotId": "guidance-commentary",
     "description": "Verbatim guidance commentary candidates extracted from concall transcripts and other source documents. Every row is reviewStatus='needs_review' until an analyst approves. The dashboard only renders rows with reviewStatus='approved'.",
-    "generatedAt": "2026-06-22T09:31:12.953Z",
+    "generatedAt": "2026-06-29T08:35:18.828Z",
     "rowCount": 1,
-    "status": "partial",
-    "notes": "Documents attempted: 2. New rows this run: 1. Errors: 1. Preserved (prior reviews): 0.",
-    "errors": [
-      {
-        "sourceId": "guidance-extract",
-        "companyId": "infosys",
-        "documentUrl": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=2ab7badf-388c-4dab-bfcc-3e128677734c.pdf",
-        "message": "infosys: downloaded payload is not a PDF (content-type=text/html; charset=utf-8, byteLength=8405)",
-        "occurredAt": "2026-06-22T09:31:12.256Z"
-      }
-    ]
+    "status": "ok",
+    "notes": "Documents attempted: 2. New rows this run: 1. Errors: 0. Preserved (prior reviews): 0.",
+    "errors": []
   },
   "rows": [
     {
@@ -44,7 +36,7 @@
       "numericUnit": "percent",
       "confidence": "medium",
       "reviewStatus": "needs_review",
-      "extractedAt": "2026-06-22T09:31:09.552Z",
+      "extractedAt": "2026-06-29T08:35:17.731Z",
       "notes": "Pattern=tax-rate-percent · doc=https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=07ae2d32-1050-4e80-96ff-eb2d98378d4e.pdf"
     }
   ]
