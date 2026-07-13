@@ -3,7 +3,7 @@
     "source": "Concall transcript extraction",
     "snapshotId": "guidance-commentary",
     "description": "Verbatim guidance commentary candidates extracted from concall transcripts and other source documents. Every row is reviewStatus='needs_review' until an analyst approves. The dashboard only renders rows with reviewStatus='approved'.",
-    "generatedAt": "2026-07-06T08:06:37.972Z",
+    "generatedAt": "2026-07-13T06:40:59.098Z",
     "rowCount": 1,
     "status": "ok",
     "notes": "Documents attempted: 2. New rows this run: 1. Errors: 0. Preserved (prior reviews): 0.",
@@ -36,7 +36,7 @@
       "numericUnit": "percent",
       "confidence": "medium",
       "reviewStatus": "needs_review",
-      "extractedAt": "2026-07-06T08:06:37.203Z",
+      "extractedAt": "2026-07-13T06:40:58.510Z",
       "notes": "Pattern=tax-rate-percent · doc=https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=07ae2d32-1050-4e80-96ff-eb2d98378d4e.pdf"
     }
   ]
