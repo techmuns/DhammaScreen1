@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "source-health",
     "description": "Per (sourceId, companyId) probe of source reachability and freshness.",
-    "generatedAt": "2026-07-13T06:38:21.363Z",
+    "generatedAt": "2026-07-20T06:38:13.298Z",
     "rowCount": 40,
     "status": "ok",
     "notes": null,
@@ -10,7 +10,7 @@
       "sourceClass": "derived",
       "sourceUrl": null,
       "sourceLabel": "Derived from discovery adapter results",
-      "fetchedAt": "2026-07-13T06:38:21.363Z",
+      "fetchedAt": "2026-07-20T06:38:13.298Z",
       "publishedAt": null,
       "notes": null
     },
@@ -20,17 +20,17 @@
     {
       "sourceId": "nse",
       "companyId": "tcs",
-      "checkedAt": "2026-07-13T06:37:58.639Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "17-Jan-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:33:11.182Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "tcs",
-      "checkedAt": "2026-07-13T06:37:59.986Z",
+      "checkedAt": "2026-07-20T06:33:26.185Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -40,17 +40,17 @@
     {
       "sourceId": "nse",
       "companyId": "infosys",
-      "checkedAt": "2026-07-13T06:38:00.357Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "28-Sep-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:33:26.692Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "infosys",
-      "checkedAt": "2026-07-13T06:38:02.013Z",
+      "checkedAt": "2026-07-20T06:33:41.693Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -60,17 +60,17 @@
     {
       "sourceId": "nse",
       "companyId": "hcltech",
-      "checkedAt": "2026-07-13T06:38:02.277Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "29-Aug-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:33:42.140Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "hcltech",
-      "checkedAt": "2026-07-13T06:38:03.840Z",
+      "checkedAt": "2026-07-20T06:33:57.141Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -80,17 +80,17 @@
     {
       "sourceId": "nse",
       "companyId": "wipro",
-      "checkedAt": "2026-07-13T06:38:04.170Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "30-Jan-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:33:57.644Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "wipro",
-      "checkedAt": "2026-07-13T06:38:06.002Z",
+      "checkedAt": "2026-07-20T06:34:12.645Z",
       "status": "ok",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -100,17 +100,17 @@
     {
       "sourceId": "nse",
       "companyId": "techm",
-      "checkedAt": "2026-07-13T06:38:06.315Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "30-Jan-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:34:13.285Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "techm",
-      "checkedAt": "2026-07-13T06:38:07.553Z",
+      "checkedAt": "2026-07-20T06:34:28.286Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -120,17 +120,17 @@
     {
       "sourceId": "nse",
       "companyId": "ltim",
-      "checkedAt": "2026-07-13T06:38:07.553Z",
-      "status": "ok",
+      "checkedAt": "2026-07-20T06:34:28.286Z",
+      "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
-      "errorMessage": null,
-      "notes": "Source reachable; no filings matched the discovery filter."
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "ltim",
-      "checkedAt": "2026-07-13T06:38:07.945Z",
+      "checkedAt": "2026-07-20T06:34:43.287Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -140,17 +140,17 @@
     {
       "sourceId": "nse",
       "companyId": "ofss",
-      "checkedAt": "2026-07-13T06:38:07.945Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "28-Jul-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:34:43.287Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "ofss",
-      "checkedAt": "2026-07-13T06:38:09.041Z",
+      "checkedAt": "2026-07-20T06:34:58.287Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -160,17 +160,17 @@
     {
       "sourceId": "nse",
       "companyId": "persistent",
-      "checkedAt": "2026-07-13T06:38:09.041Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "30-Apr-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:34:58.287Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "persistent",
-      "checkedAt": "2026-07-13T06:38:10.241Z",
+      "checkedAt": "2026-07-20T06:35:13.288Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -180,17 +180,17 @@
     {
       "sourceId": "nse",
       "companyId": "coforge",
-      "checkedAt": "2026-07-13T06:38:10.241Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "29-Jul-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:35:13.288Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "coforge",
-      "checkedAt": "2026-07-13T06:38:11.313Z",
+      "checkedAt": "2026-07-20T06:35:28.288Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -200,17 +200,17 @@
     {
       "sourceId": "nse",
       "companyId": "mphasis",
-      "checkedAt": "2026-07-13T06:38:11.313Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "31-Oct-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:35:28.288Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "mphasis",
-      "checkedAt": "2026-07-13T06:38:12.396Z",
+      "checkedAt": "2026-07-20T06:35:43.289Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -220,17 +220,17 @@
     {
       "sourceId": "nse",
       "companyId": "ltts",
-      "checkedAt": "2026-07-13T06:38:12.396Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "27-Aug-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:35:43.289Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "ltts",
-      "checkedAt": "2026-07-13T06:38:13.348Z",
+      "checkedAt": "2026-07-20T06:35:58.289Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -240,17 +240,17 @@
     {
       "sourceId": "nse",
       "companyId": "hexaware",
-      "checkedAt": "2026-07-13T06:38:13.348Z",
-      "status": "ok",
-      "filingsDiscovered": 7,
-      "latestFilingDate": "28-Apr-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:35:58.289Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "hexaware",
-      "checkedAt": "2026-07-13T06:38:13.605Z",
+      "checkedAt": "2026-07-20T06:36:13.290Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -260,17 +260,17 @@
     {
       "sourceId": "nse",
       "companyId": "tatatech",
-      "checkedAt": "2026-07-13T06:38:13.605Z",
-      "status": "ok",
-      "filingsDiscovered": 13,
-      "latestFilingDate": "28-Oct-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:36:13.290Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "tatatech",
-      "checkedAt": "2026-07-13T06:38:14.546Z",
+      "checkedAt": "2026-07-20T06:36:28.290Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -280,17 +280,17 @@
     {
       "sourceId": "nse",
       "companyId": "tataelxsi",
-      "checkedAt": "2026-07-13T06:38:14.546Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "27-Jan-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:36:28.290Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "tataelxsi",
-      "checkedAt": "2026-07-13T06:38:15.556Z",
+      "checkedAt": "2026-07-20T06:36:43.289Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -300,17 +300,17 @@
     {
       "sourceId": "nse",
       "companyId": "kpittech",
-      "checkedAt": "2026-07-13T06:38:15.556Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "31-Jan-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:36:43.289Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "kpittech",
-      "checkedAt": "2026-07-13T06:38:16.674Z",
+      "checkedAt": "2026-07-20T06:36:58.290Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -320,17 +320,17 @@
     {
       "sourceId": "nse",
       "companyId": "zensartech",
-      "checkedAt": "2026-07-13T06:38:16.674Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "31-Oct-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:36:58.290Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "zensartech",
-      "checkedAt": "2026-07-13T06:38:17.779Z",
+      "checkedAt": "2026-07-20T06:37:13.291Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -340,17 +340,17 @@
     {
       "sourceId": "nse",
       "companyId": "intellect",
-      "checkedAt": "2026-07-13T06:38:17.779Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "30-Jan-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:37:13.291Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "intellect",
-      "checkedAt": "2026-07-13T06:38:18.154Z",
+      "checkedAt": "2026-07-20T06:37:28.293Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -360,17 +360,17 @@
     {
       "sourceId": "nse",
       "companyId": "cyient",
-      "checkedAt": "2026-07-13T06:38:18.154Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "25-Jul-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:37:28.293Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "cyient",
-      "checkedAt": "2026-07-13T06:38:19.196Z",
+      "checkedAt": "2026-07-20T06:37:43.293Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -380,17 +380,17 @@
     {
       "sourceId": "nse",
       "companyId": "birlasoft",
-      "checkedAt": "2026-07-13T06:38:19.196Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "31-Oct-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:37:43.293Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "birlasoft",
-      "checkedAt": "2026-07-13T06:38:20.254Z",
+      "checkedAt": "2026-07-20T06:37:58.294Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
@@ -400,17 +400,17 @@
     {
       "sourceId": "nse",
       "companyId": "sonata",
-      "checkedAt": "2026-07-13T06:38:20.254Z",
-      "status": "ok",
-      "filingsDiscovered": 25,
-      "latestFilingDate": "31-Jul-202",
-      "errorMessage": null,
-      "notes": null
+      "checkedAt": "2026-07-20T06:37:58.294Z",
+      "status": "blocked",
+      "filingsDiscovered": 0,
+      "latestFilingDate": null,
+      "errorMessage": "NSE fetch failed: The operation was aborted due to timeout",
+      "notes": "Source returned an error; see errorMessage."
     },
     {
       "sourceId": "bse",
       "companyId": "sonata",
-      "checkedAt": "2026-07-13T06:38:21.361Z",
+      "checkedAt": "2026-07-20T06:38:13.295Z",
       "status": "blocked",
       "filingsDiscovered": 0,
       "latestFilingDate": null,
