@@ -3,7 +3,7 @@
     "source": "Concall transcript extraction",
     "snapshotId": "guidance-commentary",
     "description": "Verbatim guidance commentary candidates extracted from concall transcripts and other source documents. Every row is reviewStatus='needs_review' until an analyst approves. The dashboard only renders rows with reviewStatus='approved'.",
-    "generatedAt": "2026-07-20T06:40:51.329Z",
+    "generatedAt": "2026-07-27T06:52:17.034Z",
     "rowCount": 1,
     "status": "ok",
     "notes": "Documents attempted: 2. New rows this run: 2. Errors: 0. Preserved (prior reviews): -1.",
@@ -36,7 +36,7 @@
       "numericUnit": "bps",
       "confidence": "low",
       "reviewStatus": "needs_review",
-      "extractedAt": "2026-07-20T06:40:51.095Z",
+      "extractedAt": "2026-07-27T06:52:16.832Z",
       "notes": "Pattern=margin-bps · doc=https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=27523cab-de62-4f78-939a-6d9853bbd060.pdf"
     }
   ]
