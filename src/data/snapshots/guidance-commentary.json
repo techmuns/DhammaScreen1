@@ -3,11 +3,19 @@
     "source": "Concall transcript extraction",
     "snapshotId": "guidance-commentary",
     "description": "Verbatim guidance commentary candidates extracted from concall transcripts and other source documents. Every row is reviewStatus='needs_review' until an analyst approves. The dashboard only renders rows with reviewStatus='approved'.",
-    "generatedAt": "2026-08-03T06:47:29.350Z",
+    "generatedAt": "2026-08-10T05:09:09.823Z",
     "rowCount": 1,
-    "status": "ok",
-    "notes": "Documents attempted: 2. New rows this run: 2. Errors: 0. Preserved (prior reviews): -1.",
-    "errors": []
+    "status": "partial",
+    "notes": "Documents attempted: 2. New rows this run: 1. Errors: 1. Preserved (prior reviews): 0.",
+    "errors": [
+      {
+        "sourceId": "guidance-extract",
+        "companyId": "tcs",
+        "documentUrl": "https://www.tcs.com/content/dam/tcs/investor-relations/financial-statements/2025-26/q1/Management%20Commentary/Transcript%20of%20the%20Q1%202025-26%20Earnings%20Conference%20Call%20held%20at%201900%20hrs%20IST%20on%20Jul%2010,%202025.pdf",
+        "message": "tcs: download failed (HTTP 403, content-type=text/html)",
+        "occurredAt": "2026-08-10T05:09:09.502Z"
+      }
+    ]
   },
   "rows": [
     {
@@ -36,7 +44,7 @@
       "numericUnit": "bps",
       "confidence": "low",
       "reviewStatus": "needs_review",
-      "extractedAt": "2026-08-03T06:47:28.986Z",
+      "extractedAt": "2026-08-10T05:09:07.406Z",
       "notes": "Pattern=margin-bps · doc=https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=27523cab-de62-4f78-939a-6d9853bbd060.pdf"
     }
   ]
