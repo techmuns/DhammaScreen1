@@ -2,7 +2,7 @@
   "meta": {
     "snapshotId": "screener-peer-comparison",
     "description": "Peer-comparison rows from Screener (fetched or manually imported).",
-    "generatedAt": "2026-11-02T11:38:05.754Z",
+    "generatedAt": "2026-11-09T12:01:39.596Z",
     "rowCount": 0,
     "status": "empty",
     "notes": "No Screener peer comparison data yet.",
@@ -10,7 +10,7 @@
       "sourceClass": "manual",
       "sourceUrl": null,
       "sourceLabel": "data/manual/screener/ — client-provided exports",
-      "fetchedAt": "2026-11-02T11:38:05.655Z",
+      "fetchedAt": "2026-11-09T12:01:39.466Z",
       "publishedAt": null,
       "notes": "Import-backed. Never merged into the official financial snapshots."
     },
