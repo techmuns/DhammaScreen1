@@ -3,7 +3,7 @@
     "source": "Concall transcript extraction",
     "snapshotId": "guidance-commentary",
     "description": "Verbatim guidance commentary candidates extracted from concall transcripts and other source documents. Every row is reviewStatus='needs_review' until an analyst approves. The dashboard only renders rows with reviewStatus='approved'.",
-    "generatedAt": "2026-11-09T12:01:47.815Z",
+    "generatedAt": "2026-11-16T11:58:28.818Z",
     "rowCount": 5,
     "status": "ok",
     "notes": "Documents attempted: 2. New rows this run: 5. Errors: 0. Preserved (prior reviews): 0.",
@@ -15,7 +15,7 @@
       "companyId": "tcs",
       "companyName": "TCS",
       "sourceProvider": "screener",
-      "sourceUrl": "https://www.screener.in/company/TCS/",
+      "sourceUrl": "https://www.screener.in/company/TCS/consolidated/",
       "documentUrl": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7dc14216-f892-46f1-bf82-5c7b387a83b9.pdf",
       "documentTitle": "Transcript",
       "documentType": "concall_transcript",
@@ -36,7 +36,7 @@
       "numericUnit": "percent",
       "confidence": "medium",
       "reviewStatus": "needs_review",
-      "extractedAt": "2026-11-09T12:01:44.689Z",
+      "extractedAt": "2026-11-16T11:58:26.936Z",
       "notes": "Pattern=attrition-percent · doc=https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7dc14216-f892-46f1-bf82-5c7b387a83b9.pdf"
     },
     {
@@ -46,7 +46,7 @@
       "sourceProvider": "screener",
       "sourceUrl": "https://www.screener.in/company/INFY/consolidated/",
       "documentUrl": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7982fc61-7765-4981-ab3d-6aec36ba2137.pdf",
-      "documentTitle": "Announcement under Regulation 30 (LODR)-Earnings Call Transcript 28 Oct",
+      "documentTitle": "Transcript",
       "documentType": "concall_transcript",
       "commentaryPeriod": null,
       "targetPeriod": null,
@@ -65,7 +65,7 @@
       "numericUnit": "percent",
       "confidence": "medium",
       "reviewStatus": "needs_review",
-      "extractedAt": "2026-11-09T12:01:47.063Z",
+      "extractedAt": "2026-11-16T11:58:28.190Z",
       "notes": "Pattern=attrition-percent · doc=https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7982fc61-7765-4981-ab3d-6aec36ba2137.pdf"
     },
     {
@@ -75,7 +75,7 @@
       "sourceProvider": "screener",
       "sourceUrl": "https://www.screener.in/company/INFY/consolidated/",
       "documentUrl": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7982fc61-7765-4981-ab3d-6aec36ba2137.pdf",
-      "documentTitle": "Announcement under Regulation 30 (LODR)-Earnings Call Transcript 28 Oct",
+      "documentTitle": "Transcript",
       "documentType": "concall_transcript",
       "commentaryPeriod": null,
       "targetPeriod": null,
@@ -94,7 +94,7 @@
       "numericUnit": "percent",
       "confidence": "medium",
       "reviewStatus": "needs_review",
-      "extractedAt": "2026-11-09T12:01:47.063Z",
+      "extractedAt": "2026-11-16T11:58:28.190Z",
       "notes": "Pattern=tax-rate-percent · doc=https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7982fc61-7765-4981-ab3d-6aec36ba2137.pdf"
     },
     {
@@ -104,7 +104,7 @@
       "sourceProvider": "screener",
       "sourceUrl": "https://www.screener.in/company/INFY/consolidated/",
       "documentUrl": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7982fc61-7765-4981-ab3d-6aec36ba2137.pdf",
-      "documentTitle": "Announcement under Regulation 30 (LODR)-Earnings Call Transcript 28 Oct",
+      "documentTitle": "Transcript",
       "documentType": "concall_transcript",
       "commentaryPeriod": null,
       "targetPeriod": null,
@@ -123,7 +123,7 @@
       "numericUnit": "percent",
       "confidence": "low",
       "reviewStatus": "needs_review",
-      "extractedAt": "2026-11-09T12:01:47.063Z",
+      "extractedAt": "2026-11-16T11:58:28.190Z",
       "notes": "Pattern=margin-bps · doc=https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7982fc61-7765-4981-ab3d-6aec36ba2137.pdf"
     },
     {
@@ -133,7 +133,7 @@
       "sourceProvider": "screener",
       "sourceUrl": "https://www.screener.in/company/INFY/consolidated/",
       "documentUrl": "https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7982fc61-7765-4981-ab3d-6aec36ba2137.pdf",
-      "documentTitle": "Announcement under Regulation 30 (LODR)-Earnings Call Transcript 28 Oct",
+      "documentTitle": "Transcript",
       "documentType": "concall_transcript",
       "commentaryPeriod": null,
       "targetPeriod": null,
@@ -152,7 +152,7 @@
       "numericUnit": "bps",
       "confidence": "low",
       "reviewStatus": "needs_review",
-      "extractedAt": "2026-11-09T12:01:47.063Z",
+      "extractedAt": "2026-11-16T11:58:28.190Z",
       "notes": "Pattern=margin-bps · doc=https://www.bseindia.com/stockinfo/AnnPdfOpen.aspx?Pname=7982fc61-7765-4981-ab3d-6aec36ba2137.pdf"
     }
   ]
